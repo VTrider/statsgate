@@ -1,0 +1,88 @@
+edition = "2023";
+
+import "google/protobuf/timestamp.proto";
+
+package statsgate;
+
+message Vec3 {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+// Players are identified by their steam64 id
+
+message StatHeader {
+  string map = 1;
+  google.protobuf.Timestamp start_time = 2;
+  string author_nickname = 3;
+  uint64 author_steam64 = 4;
+  uint32 tick_rate = 5;
+  map<uint64, string> s64_to_nick = 6;
+  map<int32, string> teamnum_to_nick = 7;
+  repeated int32 team_1 = 8; // player teamnums that are on team 1
+  repeated int32 team_2 = 9; // player teamnums that are on team 2
+  string active_config_mod = 10;
+}
+
+message BulletInit {
+  uint32 tick = 1;
+  uint64 shooter = 2;
+  string ordnance_odf = 3;
+}
+
+message BulletHit {
+  uint32 tick = 1;
+  uint64 shooter = 2;
+  string ordnance_odf = 3;
+}
+
+// Note on damage messages: shooter/victim are the steam64 id of the player if applicable,
+// otherwise the field is undefined. Team is the team slot that the message is associated with
+// (may not be a player, could be an ai or structure). If a player owns AI or structures
+// they will have the same team slot as the player.
+
+message DamageDealt {
+  uint32 tick = 1;
+  uint64 shooter = 2;
+  int32 team = 3;
+  string ordnance_odf = 4;
+  float amount = 5;
+}
+
+message DamageReceived {
+  uint32 tick = 1;
+  uint64 victim = 2;
+  int32 team = 3;
+  string ordnance_odf = 4;
+  float amount = 5;
+}
+
+message PlayerState {
+  uint64 player = 1;
+  Vec3 position = 2;
+  float speed = 3;
+  float health = 4;
+  float ammo = 5;
+  string odf = 6;
+}
+
+message UpdateTick {
+  uint32 tick = 1;
+  repeated PlayerState players = 2;
+}
+
+message StatEvent {
+  oneof event_type {
+    BulletInit bullet_init = 1;
+    BulletHit bullet_hit = 2;
+    DamageDealt damage_dealt = 3;
+    DamageReceived damage_received = 4;
+    UpdateTick update_tick = 5;
+  }
+}
+
+message ClientStatSession {
+  StatHeader header = 1;
+  repeated StatEvent event_stream = 2;
+}
