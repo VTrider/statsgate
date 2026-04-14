@@ -1,2 +1,2 @@
-src/statsgate.pb.cc linguist-vendored
-src/statsgate.pb.h linguist-vendored
+src/statsgate.pb.cc linguist-generated
+src/statsgate.pb.h linguist-generated
