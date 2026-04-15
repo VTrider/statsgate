@@ -256,6 +256,7 @@ namespace statsgate
 		header.set_author_steam64(exu2::GetSteam64());
 		header.set_tick_rate(exu2::GetTPS());
 
+		// TODO: Rescan teamnums when players leave and join
 		for (int teamnum = 1; teamnum <= 10; teamnum++)
 		{
 			if (Handle h = GetPlayerHandle(teamnum))
