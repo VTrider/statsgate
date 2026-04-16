@@ -19,5 +19,9 @@ in the console for a list of commands. The stat sessions will be saved to the `s
 
 Make sure to run the powershell script to compile new protobuf headers if the schema changes.
 
+## Contributing Stats
+
+Just make a folder in the sessions folder with your known nick and add stat files to it, feel free to send a PR!
+
 The name is a VSR joke from when players stopped playing out of fear of their winrate
 decreasing after F9bomber started publishing stats.
