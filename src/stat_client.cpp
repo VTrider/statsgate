@@ -41,6 +41,12 @@ namespace statsgate
 		client()->hooks.get_mission().PostRun();
 	}
 
+	EjectKillRetCodes stat_client::ObjectKilled(Handle DeadObjectHandle, Handle KillersHandle)
+	{
+		client()->record_object_killed(DeadObjectHandle, KillersHandle);
+		return client()->hooks.get_mission().ObjectKilled(DeadObjectHandle, KillersHandle);
+	}
+
 	void stat_client::BulletHit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
 	{
 		client()->record_bullet_hit(shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF);
@@ -184,10 +190,25 @@ namespace statsgate
 			player->set_speed(std::hypot(veloc.x, veloc.y, veloc.z));
 			player->set_health(GetCurHealth(h));
 			player->set_ammo(GetCurAmmo(h));
-			char odf[ODF_MAX_LEN];
-			GetObjInfo(h, Get_ODF, odf);
-			player->set_odf(odf);
+			player->set_odf(get_odf(h));
 		}
+	}
+
+	void stat_client::record_object_killed(Handle DeadObjectHandle, Handle KillersHandle)
+	{
+		auto* unit = stat_session.add_event_stream()->mutable_unit_destroyed();
+		unit->set_tick(GetLockstepTurn());
+
+		// UNTESTED IDK IF ISPLAYER WORKS WHEN DEAD
+		if (IsPlayer(KillersHandle))
+			unit->set_killer(s64_from_h(KillersHandle));
+		unit->set_killer_team(GetTeamNum(KillersHandle));
+		unit->set_killer_odf(get_odf(KillersHandle));
+
+		if (IsPlayer(DeadObjectHandle))
+			unit->set_victim(s64_from_h(KillersHandle));
+		unit->set_victim_team(GetTeamNum(KillersHandle));
+		unit->set_victim_odf(get_odf(KillersHandle));
 	}
 
 	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
@@ -199,17 +220,19 @@ namespace statsgate
 			return;
 
 		auto* hit = stat_session.add_event_stream()->mutable_bullet_hit();
+
 		hit->set_tick(GetLockstepTurn());
+
 		if (has_shooter)
 			hit->set_shooter(s64_from_h(shooterHandle));
+
 		hit->set_ordnance_odf(pOrdnanceODF);
+
 		if (has_victim)
 			hit->set_victim(s64_from_h(victimHandle));
-		char odf[ODF_MAX_LEN];
-		GetObjInfo(victimHandle, Get_ODF, odf);
-		hit->set_victim_odf(odf);
-		GetObjInfo(shooterHandle, Get_ODF, odf);
-		hit->set_shooter_odf(odf);
+
+		hit->set_victim_odf(get_odf(victimHandle));
+		hit->set_shooter_odf(get_odf(shooterHandle));
 	}
 
 	void stat_client::record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF)
@@ -298,7 +321,7 @@ namespace statsgate
 
 		google::protobuf::io::GzipOutputStream gzip_stream(&output_stream, options);
 
-		// If this ends up stalling the game for a non trival amount of time we can do it asynchronouSly
+		// This will cause a stutter in debug mode but it's still working
 		if (stat_session.SerializeToZeroCopyStream(&gzip_stream))
 		{
 			exu2::PrintConsoleMessage("Finalized stat session {}.binpb.gz", session_identifier);
@@ -322,5 +345,12 @@ namespace statsgate
 			return exu2::GetSteam64(GetTeamNum(h));
 
 		return 0;
+	}
+
+	std::string stat_client::get_odf(Handle h)
+	{
+		char odf[ODF_MAX_LEN];
+		GetObjInfo(h, Get_ODF, odf);
+		return std::string(odf);
 	}
 }

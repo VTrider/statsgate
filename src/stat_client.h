@@ -49,6 +49,7 @@ namespace statsgate
 		void poll_mission_change();
 
 		void record_update();
+		void record_object_killed(Handle DeadObjectHandle, Handle KillersHandle);
 		void record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);
 		void record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF);
 		void record_damage(const int curWorld, Handle h, const char* pContext, const DAMAGE& dmg);
@@ -59,6 +60,7 @@ namespace statsgate
 		// MisnExport
 		static void Update();
 		static void PostRun();
+		static EjectKillRetCodes ObjectKilled(Handle DeadObjectHandle, Handle KillersHandle);
 
 		// MisnExport2
 		static void BulletHit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);
@@ -80,5 +82,6 @@ namespace statsgate
 
 		void register_commands();
 		uint64_t s64_from_h(Handle h);
+		std::string get_odf(Handle h);
 	};
 }

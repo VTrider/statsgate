@@ -44,14 +44,13 @@ namespace statsgate
 
 		current_export = const_cast<MisnExport*>(exu2::GetMissionExport());
 		old_mission = *current_export;
+		// TODO: add the rest of these
 		if (hooks.Update)
-		{
 			current_export->Update = hooks.Update;
-		}
 		if (hooks.PostRun)
-		{
 			current_export->PostRun = hooks.PostRun;
-		}
+		if (hooks.ObjectKilled)
+			current_export->ObjectKilled = hooks.ObjectKilled;
 
 		// Fill misnImport for scriptutils
 		misnImport = *current_export->misnImport;
@@ -59,37 +58,21 @@ namespace statsgate
 		current_export2 = const_cast<MisnExport2*>(exu2::GetMissionExport2());
 		old_mission2 = *current_export2;
 		if (hooks2.m_pChatMessageSentCallback)
-		{
 			current_export2->m_pChatMessageSentCallback = hooks2.m_pChatMessageSentCallback;
-		}
 		if (hooks2.m_pPostTargetChangedCallback)
-		{
 			current_export2->m_pPostTargetChangedCallback = hooks2.m_pPostTargetChangedCallback;
-		}
 		if (hooks2.m_pPreGetInCallback)
-		{
 			current_export2->m_pPreGetInCallback = hooks2.m_pPreGetInCallback;
-		}
 		if (hooks2.m_pPreOrdnanceHitCallback)
-		{
 			current_export2->m_pPreOrdnanceHitCallback = hooks2.m_pPreOrdnanceHitCallback;
-		}
 		if (hooks2.m_pPrePickupPowerupCallback)
-		{
 			current_export2->m_pPrePickupPowerupCallback = hooks2.m_pPrePickupPowerupCallback;
-		}
 		if (hooks2.m_pPreSnipeCallback)
-		{
 			current_export2->m_pPreSnipeCallback = hooks2.m_pPreSnipeCallback;
-		}
 		if (hooks2.m_pPostBulletInitCallback)
-		{
 			current_export2->m_pPostBulletInitCallback = hooks2.m_pPostBulletInitCallback;
-		}
 		if (hooks2.m_pPreDamageCallback)
-		{
 			current_export2->m_pPreDamageCallback = hooks2.m_pPreDamageCallback;
-		}
 
 		hooks_enabled = true;
 	}

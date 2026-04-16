@@ -63,7 +63,7 @@ message DamageDealt {
   uint32 tick = 1;
   uint64 shooter = 2; // undefined if not a player
   int32 team = 3;
-  string ordnance_odf = 4;
+  string ordnance_odf = 4; // undefined for environmental damage (water, other unknown sources)
   float amount = 5;
 }
 
@@ -71,7 +71,7 @@ message DamageReceived {
   uint32 tick = 1;
   uint64 victim = 2; // undefined if not a player
   int32 team = 3;
-  string ordnance_odf = 4;
+  string ordnance_odf = 4; // undefined for environmental damage (water, other unknown sources) 
   float amount = 5;
 }
 
@@ -79,8 +79,8 @@ message PlayerState {
   uint64 player = 1;
   Vec3 position = 2;
   float speed = 3;
-  float health = 4;
-  float ammo = 5;
+  float health = 4; // Actual hp values not ratio
+  float ammo = 5;   // Same as health
   string odf = 6;
 }
 
@@ -102,7 +102,7 @@ message UnitDestroyed {
 }
 
 message UnitSniped {
-  // Todo:
+  uint32 tick = 1;
 }
 
 message StatEvent {
@@ -112,8 +112,8 @@ message StatEvent {
     DamageDealt damage_dealt = 3;
     DamageReceived damage_received = 4;
     UpdateTick update_tick = 5;
-    // UnitDestroyed unit_destroyed = 6;
-    // UnitSniped unit_sniped = 7;
+    UnitDestroyed unit_destroyed = 6;
+    UnitSniped unit_sniped = 7;
   }
 }
 

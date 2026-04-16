@@ -20,7 +20,6 @@
 #include "google/protobuf/io/coded_stream.h"
 #include "google/protobuf/arena.h"
 #include "google/protobuf/arenastring.h"
-#include "google/protobuf/generated_message_bases.h"
 #include "google/protobuf/generated_message_tctable_decl.h"
 #include "google/protobuf/generated_message_util.h"
 #include "google/protobuf/metadata_lite.h"
@@ -349,10 +348,11 @@ class Vec3 final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull Vec3_class_data_;
 // -------------------------------------------------------------------
 
-class UnitSniped final : public ::google::protobuf::internal::ZeroFieldsBase
+class UnitSniped final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:statsgate.UnitSniped) */ {
  public:
   inline UnitSniped() : UnitSniped(nullptr) {}
+  ~UnitSniped() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
   void operator delete(UnitSniped* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
@@ -422,21 +422,48 @@ class UnitSniped final : public ::google::protobuf::internal::ZeroFieldsBase
   // implements Message ----------------------------------------------
 
   UnitSniped* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::internal::ZeroFieldsBase::DefaultConstruct<UnitSniped>(arena);
+    return ::google::protobuf::Message::DefaultConstruct<UnitSniped>(arena);
   }
-  using ::google::protobuf::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const UnitSniped& from) {
-    ::google::protobuf::internal::ZeroFieldsBase::CopyImpl(*this, from);
-  }
-  using ::google::protobuf::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const UnitSniped& from) {
-    ::google::protobuf::internal::ZeroFieldsBase::MergeImpl(*this, from);
-  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const UnitSniped& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const UnitSniped& from) { UnitSniped::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
 
   public:
   bool IsInitialized() const {
     return true;
   }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(UnitSniped* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
@@ -462,11 +489,25 @@ class UnitSniped final : public ::google::protobuf::internal::ZeroFieldsBase
   // nested types ----------------------------------------------------
 
   // accessors -------------------------------------------------------
+  enum : int {
+    kTickFieldNumber = 1,
+  };
+  // uint32 tick = 1;
+  bool has_tick() const;
+  void clear_tick() ;
+  ::uint32_t tick() const;
+  void set_tick(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_tick() const;
+  void _internal_set_tick(::uint32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:statsgate.UnitSniped)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 0,
+  static const ::google::protobuf::internal::TcParseTable<0, 1,
                                    0, 0,
                                    2>
       _table_;
@@ -477,6 +518,21 @@ class UnitSniped final : public ::google::protobuf::internal::ZeroFieldsBase
   friend class ::google::protobuf::Arena::InternalHelper;
   using InternalArenaConstructable_ = void;
   using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const UnitSniped& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::uint32_t tick_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
   friend struct ::TableStruct_statsgate_2eproto;
 };
 
@@ -2765,6 +2821,8 @@ class StatEvent final : public ::google::protobuf::Message
     kDamageDealt = 3,
     kDamageReceived = 4,
     kUpdateTick = 5,
+    kUnitDestroyed = 6,
+    kUnitSniped = 7,
     EVENT_TYPE_NOT_SET = 0,
   };
   static constexpr int kIndexInFileMessages = 13;
@@ -2859,6 +2917,8 @@ class StatEvent final : public ::google::protobuf::Message
     kDamageDealtFieldNumber = 3,
     kDamageReceivedFieldNumber = 4,
     kUpdateTickFieldNumber = 5,
+    kUnitDestroyedFieldNumber = 6,
+    kUnitSnipedFieldNumber = 7,
   };
   // .statsgate.BulletInit bullet_init = 1;
   bool has_bullet_init() const;
@@ -2955,6 +3015,44 @@ class StatEvent final : public ::google::protobuf::Message
   ::statsgate::UpdateTick* PROTOBUF_NONNULL _internal_mutable_update_tick();
 
   public:
+  // .statsgate.UnitDestroyed unit_destroyed = 6;
+  bool has_unit_destroyed() const;
+  private:
+  bool _internal_has_unit_destroyed() const;
+
+  public:
+  void clear_unit_destroyed() ;
+  const ::statsgate::UnitDestroyed& unit_destroyed() const;
+  [[nodiscard]] ::statsgate::UnitDestroyed* PROTOBUF_NULLABLE release_unit_destroyed();
+  ::statsgate::UnitDestroyed* PROTOBUF_NONNULL mutable_unit_destroyed();
+  void set_allocated_unit_destroyed(::statsgate::UnitDestroyed* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_unit_destroyed(::statsgate::UnitDestroyed* PROTOBUF_NULLABLE value);
+  ::statsgate::UnitDestroyed* PROTOBUF_NULLABLE unsafe_arena_release_unit_destroyed();
+
+  private:
+  const ::statsgate::UnitDestroyed& _internal_unit_destroyed() const;
+  ::statsgate::UnitDestroyed* PROTOBUF_NONNULL _internal_mutable_unit_destroyed();
+
+  public:
+  // .statsgate.UnitSniped unit_sniped = 7;
+  bool has_unit_sniped() const;
+  private:
+  bool _internal_has_unit_sniped() const;
+
+  public:
+  void clear_unit_sniped() ;
+  const ::statsgate::UnitSniped& unit_sniped() const;
+  [[nodiscard]] ::statsgate::UnitSniped* PROTOBUF_NULLABLE release_unit_sniped();
+  ::statsgate::UnitSniped* PROTOBUF_NONNULL mutable_unit_sniped();
+  void set_allocated_unit_sniped(::statsgate::UnitSniped* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_unit_sniped(::statsgate::UnitSniped* PROTOBUF_NULLABLE value);
+  ::statsgate::UnitSniped* PROTOBUF_NULLABLE unsafe_arena_release_unit_sniped();
+
+  private:
+  const ::statsgate::UnitSniped& _internal_unit_sniped() const;
+  ::statsgate::UnitSniped* PROTOBUF_NONNULL _internal_mutable_unit_sniped();
+
+  public:
   void clear_event_type();
   EventTypeCase event_type_case() const;
   // @@protoc_insertion_point(class_scope:statsgate.StatEvent)
@@ -2965,11 +3063,13 @@ class StatEvent final : public ::google::protobuf::Message
   void set_has_damage_dealt();
   void set_has_damage_received();
   void set_has_update_tick();
+  void set_has_unit_destroyed();
+  void set_has_unit_sniped();
   inline bool has_event_type() const;
   inline void clear_has_event_type();
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 5,
-                                   5, 0,
+  static const ::google::protobuf::internal::TcParseTable<0, 7,
+                                   7, 0,
                                    2>
       _table_;
 
@@ -2996,6 +3096,8 @@ class StatEvent final : public ::google::protobuf::Message
       ::google::protobuf::Message* PROTOBUF_NULLABLE damage_dealt_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE damage_received_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE update_tick_;
+      ::google::protobuf::Message* PROTOBUF_NULLABLE unit_destroyed_;
+      ::google::protobuf::Message* PROTOBUF_NULLABLE unit_sniped_;
     } event_type_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint32_t _oneof_case_[1];
@@ -5321,6 +5423,35 @@ inline void UnitDestroyed::set_allocated_victim_odf(::std::string* PROTOBUF_NULL
 
 // UnitSniped
 
+// uint32 tick = 1;
+inline bool UnitSniped::has_tick() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000001U);
+  return value;
+}
+inline void UnitSniped::clear_tick() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tick_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline ::uint32_t UnitSniped::tick() const {
+  // @@protoc_insertion_point(field_get:statsgate.UnitSniped.tick)
+  return _internal_tick();
+}
+inline void UnitSniped::set_tick(::uint32_t value) {
+  _internal_set_tick(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_set:statsgate.UnitSniped.tick)
+}
+inline ::uint32_t UnitSniped::_internal_tick() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.tick_;
+}
+inline void UnitSniped::_internal_set_tick(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tick_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // StatEvent
@@ -5732,6 +5863,170 @@ inline ::statsgate::UpdateTick* PROTOBUF_NONNULL StatEvent::mutable_update_tick(
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   ::statsgate::UpdateTick* _msg = _internal_mutable_update_tick();
   // @@protoc_insertion_point(field_mutable:statsgate.StatEvent.update_tick)
+  return _msg;
+}
+
+// .statsgate.UnitDestroyed unit_destroyed = 6;
+inline bool StatEvent::has_unit_destroyed() const {
+  return event_type_case() == kUnitDestroyed;
+}
+inline bool StatEvent::_internal_has_unit_destroyed() const {
+  return event_type_case() == kUnitDestroyed;
+}
+inline void StatEvent::set_has_unit_destroyed() {
+  _impl_._oneof_case_[0] = kUnitDestroyed;
+}
+inline void StatEvent::clear_unit_destroyed() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (event_type_case() == kUnitDestroyed) {
+    if (GetArena() == nullptr) {
+      delete _impl_.event_type_.unit_destroyed_;
+    } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+      ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.event_type_.unit_destroyed_);
+    }
+    clear_has_event_type();
+  }
+}
+inline ::statsgate::UnitDestroyed* PROTOBUF_NULLABLE StatEvent::release_unit_destroyed() {
+  // @@protoc_insertion_point(field_release:statsgate.StatEvent.unit_destroyed)
+  if (event_type_case() == kUnitDestroyed) {
+    clear_has_event_type();
+    auto* temp = reinterpret_cast<::statsgate::UnitDestroyed*>(_impl_.event_type_.unit_destroyed_);
+    if (GetArena() != nullptr) {
+      temp = ::google::protobuf::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.event_type_.unit_destroyed_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::statsgate::UnitDestroyed& StatEvent::_internal_unit_destroyed() const {
+  return event_type_case() == kUnitDestroyed ? static_cast<const ::statsgate::UnitDestroyed&>(*reinterpret_cast<::statsgate::UnitDestroyed*>(_impl_.event_type_.unit_destroyed_))
+                     : reinterpret_cast<const ::statsgate::UnitDestroyed&>(::statsgate::_UnitDestroyed_default_instance_);
+}
+inline const ::statsgate::UnitDestroyed& StatEvent::unit_destroyed() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.StatEvent.unit_destroyed)
+  return _internal_unit_destroyed();
+}
+inline ::statsgate::UnitDestroyed* PROTOBUF_NULLABLE StatEvent::unsafe_arena_release_unit_destroyed() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:statsgate.StatEvent.unit_destroyed)
+  if (event_type_case() == kUnitDestroyed) {
+    clear_has_event_type();
+    auto* temp = reinterpret_cast<::statsgate::UnitDestroyed*>(_impl_.event_type_.unit_destroyed_);
+    _impl_.event_type_.unit_destroyed_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void StatEvent::unsafe_arena_set_allocated_unit_destroyed(
+    ::statsgate::UnitDestroyed* PROTOBUF_NULLABLE value) {
+  // We rely on the oneof clear method to free the earlier contents
+  // of this oneof. We can directly use the pointer we're given to
+  // set the new value.
+  clear_event_type();
+  if (value) {
+    set_has_unit_destroyed();
+    _impl_.event_type_.unit_destroyed_ = reinterpret_cast<::google::protobuf::Message*>(value);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.StatEvent.unit_destroyed)
+}
+inline ::statsgate::UnitDestroyed* PROTOBUF_NONNULL StatEvent::_internal_mutable_unit_destroyed() {
+  if (event_type_case() != kUnitDestroyed) {
+    clear_event_type();
+    set_has_unit_destroyed();
+    _impl_.event_type_.unit_destroyed_ = reinterpret_cast<::google::protobuf::Message*>(
+        ::google::protobuf::Message::DefaultConstruct<::statsgate::UnitDestroyed>(GetArena()));
+  }
+  return reinterpret_cast<::statsgate::UnitDestroyed*>(_impl_.event_type_.unit_destroyed_);
+}
+inline ::statsgate::UnitDestroyed* PROTOBUF_NONNULL StatEvent::mutable_unit_destroyed()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::statsgate::UnitDestroyed* _msg = _internal_mutable_unit_destroyed();
+  // @@protoc_insertion_point(field_mutable:statsgate.StatEvent.unit_destroyed)
+  return _msg;
+}
+
+// .statsgate.UnitSniped unit_sniped = 7;
+inline bool StatEvent::has_unit_sniped() const {
+  return event_type_case() == kUnitSniped;
+}
+inline bool StatEvent::_internal_has_unit_sniped() const {
+  return event_type_case() == kUnitSniped;
+}
+inline void StatEvent::set_has_unit_sniped() {
+  _impl_._oneof_case_[0] = kUnitSniped;
+}
+inline void StatEvent::clear_unit_sniped() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (event_type_case() == kUnitSniped) {
+    if (GetArena() == nullptr) {
+      delete _impl_.event_type_.unit_sniped_;
+    } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+      ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.event_type_.unit_sniped_);
+    }
+    clear_has_event_type();
+  }
+}
+inline ::statsgate::UnitSniped* PROTOBUF_NULLABLE StatEvent::release_unit_sniped() {
+  // @@protoc_insertion_point(field_release:statsgate.StatEvent.unit_sniped)
+  if (event_type_case() == kUnitSniped) {
+    clear_has_event_type();
+    auto* temp = reinterpret_cast<::statsgate::UnitSniped*>(_impl_.event_type_.unit_sniped_);
+    if (GetArena() != nullptr) {
+      temp = ::google::protobuf::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.event_type_.unit_sniped_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::statsgate::UnitSniped& StatEvent::_internal_unit_sniped() const {
+  return event_type_case() == kUnitSniped ? static_cast<const ::statsgate::UnitSniped&>(*reinterpret_cast<::statsgate::UnitSniped*>(_impl_.event_type_.unit_sniped_))
+                     : reinterpret_cast<const ::statsgate::UnitSniped&>(::statsgate::_UnitSniped_default_instance_);
+}
+inline const ::statsgate::UnitSniped& StatEvent::unit_sniped() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.StatEvent.unit_sniped)
+  return _internal_unit_sniped();
+}
+inline ::statsgate::UnitSniped* PROTOBUF_NULLABLE StatEvent::unsafe_arena_release_unit_sniped() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:statsgate.StatEvent.unit_sniped)
+  if (event_type_case() == kUnitSniped) {
+    clear_has_event_type();
+    auto* temp = reinterpret_cast<::statsgate::UnitSniped*>(_impl_.event_type_.unit_sniped_);
+    _impl_.event_type_.unit_sniped_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void StatEvent::unsafe_arena_set_allocated_unit_sniped(
+    ::statsgate::UnitSniped* PROTOBUF_NULLABLE value) {
+  // We rely on the oneof clear method to free the earlier contents
+  // of this oneof. We can directly use the pointer we're given to
+  // set the new value.
+  clear_event_type();
+  if (value) {
+    set_has_unit_sniped();
+    _impl_.event_type_.unit_sniped_ = reinterpret_cast<::google::protobuf::Message*>(value);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.StatEvent.unit_sniped)
+}
+inline ::statsgate::UnitSniped* PROTOBUF_NONNULL StatEvent::_internal_mutable_unit_sniped() {
+  if (event_type_case() != kUnitSniped) {
+    clear_event_type();
+    set_has_unit_sniped();
+    _impl_.event_type_.unit_sniped_ = reinterpret_cast<::google::protobuf::Message*>(
+        ::google::protobuf::Message::DefaultConstruct<::statsgate::UnitSniped>(GetArena()));
+  }
+  return reinterpret_cast<::statsgate::UnitSniped*>(_impl_.event_type_.unit_sniped_);
+}
+inline ::statsgate::UnitSniped* PROTOBUF_NONNULL StatEvent::mutable_unit_sniped()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::statsgate::UnitSniped* _msg = _internal_mutable_unit_sniped();
+  // @@protoc_insertion_point(field_mutable:statsgate.StatEvent.unit_sniped)
   return _msg;
 }
 
