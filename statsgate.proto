@@ -40,12 +40,15 @@ message BulletInit {
   string ordnance_odf = 3;
 }
 
+// Either shooter or victim must be a player for this event to be recorded right now,
+// but if there is interest in AI vs AI hits we can implement that
 message BulletHit {
   uint32 tick = 1;
-  uint64 shooter = 2;
+  uint64 shooter = 2; // undefined if not a player
   string ordnance_odf = 3;
   uint64 victim = 4; // undefined if not a player
   string victim_odf = 5;
+  string shooter_odf = 6;
 }
 
 // Note on damage messages: shooter/victim are the steam64 id of the player if applicable,

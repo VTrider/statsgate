@@ -192,18 +192,24 @@ namespace statsgate
 
 	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
 	{
-		if (!stat_session.header().s64_to_nick().contains(s64_from_h(shooterHandle)))
+		// Do not record AI vs AI hits, but AI vs player hits may be interesting
+		bool has_shooter = stat_session.header().s64_to_nick().contains(s64_from_h(shooterHandle));
+		bool has_victim = stat_session.header().s64_to_nick().contains(s64_from_h(victimHandle));
+		if (!has_shooter || !has_victim)
 			return;
 
 		auto* hit = stat_session.add_event_stream()->mutable_bullet_hit();
 		hit->set_tick(GetLockstepTurn());
-		hit->set_shooter(s64_from_h(shooterHandle));
+		if (has_shooter)
+			hit->set_shooter(s64_from_h(shooterHandle));
 		hit->set_ordnance_odf(pOrdnanceODF);
-		if (stat_session.header().teamnum_to_s64().contains(GetTeamNum(victimHandle)))
+		if (has_victim)
 			hit->set_victim(s64_from_h(victimHandle));
 		char odf[ODF_MAX_LEN];
 		GetObjInfo(victimHandle, Get_ODF, odf);
 		hit->set_victim_odf(odf);
+		GetObjInfo(shooterHandle, Get_ODF, odf);
+		hit->set_shooter_odf(odf);
 	}
 
 	void stat_client::record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF)
