@@ -169,7 +169,7 @@ namespace statsgate
 
 		auto* tick = stat_session.add_event_stream()->mutable_update_tick();
 		tick->set_tick(GetLockstepTurn());
-		for (auto& [teamnum, nick] : stat_session.header().teamnum_to_nick())
+		for (auto& [teamnum, nick] : stat_session.header().teamnum_to_s64())
 		{
 			auto* player = tick->add_players();
 			player->set_player(exu2::GetSteam64(teamnum));
@@ -185,7 +185,7 @@ namespace statsgate
 			player->set_health(GetCurHealth(h));
 			player->set_ammo(GetCurAmmo(h));
 			char odf[ODF_MAX_LEN];
-			GetObjInfo(h, Get_ODF, odf); // TODO: maybe use cfg string if it's guaranteed to be the odf minus file extension to save space
+			GetObjInfo(h, Get_ODF, odf);
 			player->set_odf(odf);
 		}
 	}
@@ -199,6 +199,11 @@ namespace statsgate
 		hit->set_tick(GetLockstepTurn());
 		hit->set_shooter(s64_from_h(shooterHandle));
 		hit->set_ordnance_odf(pOrdnanceODF);
+		if (stat_session.header().teamnum_to_s64().contains(GetTeamNum(victimHandle)))
+			hit->set_victim(s64_from_h(victimHandle));
+		char odf[ODF_MAX_LEN];
+		GetObjInfo(victimHandle, Get_ODF, odf);
+		hit->set_victim_odf(odf);
 	}
 
 	void stat_client::record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF)
@@ -261,21 +266,11 @@ namespace statsgate
 		{
 			if (Handle h = GetPlayerHandle(teamnum))
 			{
-				header.mutable_s64_to_nick()->emplace(exu2::GetSteam64(teamnum), GetPlayerName(h));
-				header.mutable_teamnum_to_nick()->emplace(teamnum, GetPlayerName(h));
-				int group = WhichTeamGroup(teamnum);
-				switch (group)
-				{
-				case 0:
-					header.add_team_1(teamnum);
-					break;
-				case 1:
-					header.add_team_2(teamnum);
-					break;
-				case 0xA5A5A5A5:
-				default:
-					std::unreachable();
-				}
+				uint64_t s64 = exu2::GetSteam64(teamnum);
+				header.mutable_s64_to_nick()->emplace(s64, GetPlayerName(h));
+				header.mutable_teamnum_to_s64()->emplace(teamnum, s64);
+				header.mutable_s64_to_teamnum()->emplace(s64, teamnum);
+				header.set_player_count(header.player_count() + 1);
 			}
 		}
 
@@ -286,6 +281,8 @@ namespace statsgate
 
 	void stat_client::last_tick()
 	{
+		stat_session.mutable_header()->set_last_tick(GetLockstepTurn());
+
 		std::ofstream file = std::ofstream(mod_folder / "stats" / std::format("{}.binpb.gz", session_identifier), std::ios::binary);
 		google::protobuf::io::OstreamOutputStream output_stream(&file);
 

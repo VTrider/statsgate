@@ -25,11 +25,14 @@ message StatHeader {
   uint64 author_steam64 = 4;
   uint32 tick_rate = 5;
   map<uint64, string> s64_to_nick = 6;
-  map<int32, string> teamnum_to_nick = 7;
-  repeated int32 team_1 = 8; // DEPRECATED SUBJECT TO REMOVAL
-  repeated int32 team_2 = 9; // DEPRECATED SUBJECT TO REMOVAL
-  string active_config_mod = 10;
+  map<int32, uint64> teamnum_to_s64 = 7;
+  string active_config_mod = 8;
+  map<uint64, int32> s64_to_teamnum = 9;
+  uint32 player_count = 10;
+  uint32 last_tick = 11;
 }
+
+// As of now these events only track player shots
 
 message BulletInit {
   uint32 tick = 1;
@@ -41,6 +44,8 @@ message BulletHit {
   uint32 tick = 1;
   uint64 shooter = 2;
   string ordnance_odf = 3;
+  uint64 victim = 4; // undefined if not a player
+  string victim_odf = 5;
 }
 
 // Note on damage messages: shooter/victim are the steam64 id of the player if applicable,
@@ -93,6 +98,10 @@ message UnitDestroyed {
   string victim_odf = 7;
 }
 
+message UnitSniped {
+  // Todo:
+}
+
 message StatEvent {
   oneof event_type {
     BulletInit bullet_init = 1;
@@ -100,7 +109,8 @@ message StatEvent {
     DamageDealt damage_dealt = 3;
     DamageReceived damage_received = 4;
     UpdateTick update_tick = 5;
-    UnitDestroyed unit_destroyed = 6;
+    // UnitDestroyed unit_destroyed = 6;
+    // UnitSniped unit_sniped = 7;
   }
 }
 
