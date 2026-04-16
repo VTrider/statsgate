@@ -79,6 +79,6 @@ namespace statsgate
 		static MisnExport2 export2_hook;
 
 		void register_commands();
-		uint64_t s64_from_h(Handle h); // no validation, ensure this is actually a player or it will return 0
+		uint64_t s64_from_h(Handle h);
 	};
 }

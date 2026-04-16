@@ -318,6 +318,9 @@ namespace statsgate
 
 	uint64_t stat_client::s64_from_h(Handle h)
 	{
-		return exu2::GetSteam64(GetTeamNum(h));
+		if (IsPlayer(h))
+			return exu2::GetSteam64(GetTeamNum(h));
+
+		return 0;
 	}
 }
