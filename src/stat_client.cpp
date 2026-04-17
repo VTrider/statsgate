@@ -20,7 +20,8 @@ namespace statsgate
 {
 	MisnExport stat_client::export_hook{
 		.Update = stat_client::Update, 
-		.PostRun = stat_client::PostRun
+		.PostRun = stat_client::PostRun,
+		.ObjectKilled = stat_client::ObjectKilled
 	};
 
 	MisnExport2 stat_client::export2_hook{
@@ -206,9 +207,9 @@ namespace statsgate
 		unit->set_killer_odf(get_odf(KillersHandle));
 
 		if (IsPlayer(DeadObjectHandle))
-			unit->set_victim(s64_from_h(KillersHandle));
-		unit->set_victim_team(GetTeamNum(KillersHandle));
-		unit->set_victim_odf(get_odf(KillersHandle));
+			unit->set_victim(s64_from_h(DeadObjectHandle));
+		unit->set_victim_team(GetTeamNum(DeadObjectHandle));
+		unit->set_victim_odf(get_odf(DeadObjectHandle));
 	}
 
 	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
