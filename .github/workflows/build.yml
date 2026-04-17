@@ -18,6 +18,12 @@ jobs:
       with:
         vcpkgJsonGlob: 'vcpkg.json'
 
+    - name: Restore vcpkg cache
+      id: vcpkg-cache
+      uses: TAServers/vcpkg-cache@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Integrate vcpkg
       run: vcpkg integrate install
 
