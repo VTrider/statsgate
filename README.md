@@ -19,6 +19,8 @@ in the console for a list of commands. The stat sessions will be saved to the `s
 
 Make sure to run the powershell script to compile new protobuf headers if the schema changes.
 
+[Download the nightly binaries here](https://nightly.link/vtrider/statsgate/workflows/build/main/nightly-binaries.zip)
+
 ## Contributing Stats
 
 Just make a folder in the sessions folder with your known nick and add stat files to it, feel free to send a PR!
