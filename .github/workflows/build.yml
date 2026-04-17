@@ -18,6 +18,9 @@ jobs:
       with:
         vcpkgJsonGlob: 'vcpkg.json'
 
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
     - name: Build solution
       run: msbuild statsgate.sln /p:Configuration=Release /p:Platform=x86 /t:Rebuild /m /verbosity:minimal
 
