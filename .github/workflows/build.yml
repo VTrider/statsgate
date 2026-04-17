@@ -17,7 +17,6 @@ jobs:
       uses: lukka/run-vcpkg@v11
       with:
         vcpkgJsonGlob: 'vcpkg.json'
-        vcpkgTriplet: 'x86-windows-static-md'
 
     - name: Build protobuf headers
       run: ./build_protobuf_headers.ps1
