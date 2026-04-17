@@ -17,7 +17,9 @@ jobs:
       uses: lukka/run-vcpkg@v11
       with:
         vcpkgJsonGlob: 'vcpkg.json'
-        vcpkgTriplet: 'x86-windows-static-md'
+        runVcpkgInstall: true
+      env:
+        VCPKG_DEFAULT_TRIPLET: x86-windows-static-md
 
     - name: Build protobuf headers
       run: ./build_protobuf_headers.ps1
@@ -31,5 +33,5 @@ jobs:
       with:
         name: nightly-binaries
         path: |
-          Release/*.exe
-          Release/*.dll
+          Win32/Release/*.exe
+          Win32/Release/*.dll
