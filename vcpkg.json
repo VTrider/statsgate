@@ -1,4 +1,5 @@
 {
+    "builtin-baseline": "b8922ae57c61d4192a504bbb955d19599fa68f2a",
     "dependencies": [
         {
             "name": "protobuf",
