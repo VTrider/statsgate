@@ -18,10 +18,6 @@ jobs:
       with:
         vcpkgJsonGlob: 'vcpkg.json'
 
-    - name: Build protobuf headers
-      run: ./build_protobuf_headers.ps1
-      shell: powershell
-
     - name: Build solution
       run: msbuild statsgate.sln /p:Configuration=Release /p:Platform=x86 /t:Rebuild /m /verbosity:minimal
 
