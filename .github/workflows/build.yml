@@ -1,0 +1,35 @@
+name: Build Binaries
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgJsonGlob: 'vcpkg.json'
+        vcpkgTriplet: 'x86-windows-static-md'
+
+    - name: Build protobuf headers
+      run: ./build_protobuf_headers.ps1
+      shell: powershell
+
+    - name: Build solution
+      run: msbuild statsgate.sln /p:Configuration=Release /p:Platform=x86 /t:Rebuild /m /verbosity:minimal
+
+    - name: Upload binaries
+      uses: actions/upload-artifact@v4
+      with:
+        name: nightly-binaries
+        path: |
+          Release/*.exe
+          Release/*.dll
