@@ -200,7 +200,7 @@ namespace statsgate
 		auto* unit = stat_session.add_event_stream()->mutable_unit_destroyed();
 		unit->set_tick(GetLockstepTurn());
 
-		// UNTESTED IDK IF ISPLAYER WORKS WHEN DEAD
+		// appears to work fine but picks up on pods getting picked up presumably, not sure if we want this
 		if (IsPlayer(KillersHandle))
 			unit->set_killer(s64_from_h(KillersHandle));
 		unit->set_killer_team(GetTeamNum(KillersHandle));
