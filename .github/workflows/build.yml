@@ -18,6 +18,8 @@ jobs:
       with:
         vcpkgJsonGlob: 'vcpkg.json'
 
+    - name: Integrate vcpkg
+      run: vcpkg integrate install
 
     # Source - https://stackoverflow.com/a/79852893
     # Posted by Amit, modified by community. See post 'Timeline' for change history
