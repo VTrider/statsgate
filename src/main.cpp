@@ -52,7 +52,7 @@ int main()
         if (!processID)
             throw std::runtime_error("Couldn't find BZCC process id");
 
-        HANDLE targetHandle = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_QUERY_INFORMATION | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_VM_READ, FALSE, processID);
+        HANDLE targetHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID);
         if (!targetHandle)
             throw std::runtime_error("OpenProcess failed");
 
