@@ -181,17 +181,23 @@ namespace statsgate
 			auto* player = tick->add_players();
 			player->set_player(exu2::GetSteam64(teamnum));
 			Handle h = GetPlayerHandle(teamnum); // teamnum should be guaranteed to be a player at this point
+
 			Vector pos = GetPosition(h);
 			Vec3 message_pos;
 			message_pos.set_x(pos.x);
 			message_pos.set_y(pos.y);
 			message_pos.set_z(pos.z);
 			*player->mutable_position() = message_pos;
+
 			Vector veloc = GetVelocity(h);
 			player->set_speed(std::hypot(veloc.x, veloc.y, veloc.z));
+
 			player->set_health(GetCurHealth(h));
 			player->set_ammo(GetCurAmmo(h));
 			player->set_odf(get_odf(h));
+
+			if (Handle target = GetUserTarget(teamnum))
+				player->set_has_target(true);
 		}
 	}
 

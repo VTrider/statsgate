@@ -82,6 +82,7 @@ message PlayerState {
   float health = 4; // Actual hp values not ratio
   float ammo = 5;   // Same as health
   string odf = 6;
+  bool has_target = 7; // are they using the T key?
 }
 
 message UpdateTick {

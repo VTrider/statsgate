@@ -2433,6 +2433,7 @@ class PlayerState final : public ::google::protobuf::Message
     kSpeedFieldNumber = 3,
     kHealthFieldNumber = 4,
     kAmmoFieldNumber = 5,
+    kHasTargetFieldNumber = 7,
   };
   // string odf = 6;
   bool has_odf() const;
@@ -2509,11 +2510,22 @@ class PlayerState final : public ::google::protobuf::Message
   void _internal_set_ammo(float value);
 
   public:
+  // bool has_target = 7;
+  bool has_has_target() const;
+  void clear_has_target() ;
+  bool has_target() const;
+  void set_has_target(bool value);
+
+  private:
+  bool _internal_has_target() const;
+  void _internal_set_has_target(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:statsgate.PlayerState)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 6,
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
                                    1, 33,
                                    2>
       _table_;
@@ -2541,6 +2553,7 @@ class PlayerState final : public ::google::protobuf::Message
     float speed_;
     float health_;
     float ammo_;
+    bool has_target_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -5041,6 +5054,35 @@ inline void PlayerState::set_allocated_odf(::std::string* PROTOBUF_NULLABLE valu
     _impl_.odf_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:statsgate.PlayerState.odf)
+}
+
+// bool has_target = 7;
+inline bool PlayerState::has_has_target() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
+  return value;
+}
+inline void PlayerState::clear_has_target() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.has_target_ = false;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000040U);
+}
+inline bool PlayerState::has_target() const {
+  // @@protoc_insertion_point(field_get:statsgate.PlayerState.has_target)
+  return _internal_has_target();
+}
+inline void PlayerState::set_has_target(bool value) {
+  _internal_set_has_target(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  // @@protoc_insertion_point(field_set:statsgate.PlayerState.has_target)
+}
+inline bool PlayerState::_internal_has_target() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.has_target_;
+}
+inline void PlayerState::_internal_set_has_target(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.has_target_ = value;
 }
 
 // -------------------------------------------------------------------
