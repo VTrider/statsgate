@@ -175,7 +175,8 @@ namespace statsgate
 		}
 
 		auto* tick = stat_session.add_event_stream()->mutable_update_tick();
-		tick->set_tick(GetLockstepTurn());
+		long cur_turn = GetLockstepTurn();
+		tick->set_tick(cur_turn);
 		for (auto& [teamnum, nick] : stat_session.header().teamnum_to_s64())
 		{
 			auto* player = tick->add_players();
@@ -199,6 +200,7 @@ namespace statsgate
 			if (Handle target = GetUserTarget(teamnum))
 				player->set_has_target(true);
 		}
+		stat_session.mutable_header()->set_last_tick(cur_turn);
 	}
 
 	void stat_client::record_object_killed(Handle DeadObjectHandle, Handle KillersHandle)
@@ -317,7 +319,8 @@ namespace statsgate
 
 	void stat_client::last_tick()
 	{
-		stat_session.mutable_header()->set_last_tick(GetLockstepTurn());
+		// Not sure why this returns 0 in last tick so we'll just do it in update instead
+		// stat_session.mutable_header()->set_last_tick(GetLockstepTurn());
 
 		std::ofstream file = std::ofstream(mod_folder / "stats" / std::format("{}.binpb.gz", session_identifier), std::ios::binary);
 		google::protobuf::io::OstreamOutputStream output_stream(&file);
