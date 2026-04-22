@@ -2074,6 +2074,12 @@ class StatHeader final : public ::google::protobuf::Message
     kTickRateFieldNumber = 5,
     kPlayerCountFieldNumber = 10,
     kLastTickFieldNumber = 11,
+    kTerrainMinXFieldNumber = 12,
+    kTerrainMaxXFieldNumber = 13,
+    kTerrainMinYFieldNumber = 14,
+    kTerrainMaxYFieldNumber = 15,
+    kTerrainMinZFieldNumber = 16,
+    kTerrainMaxZFieldNumber = 17,
     kS64ToNickFieldNumber = 6,
     kTeamnumToS64FieldNumber = 7,
     kS64ToTeamnumFieldNumber = 9,
@@ -2185,6 +2191,72 @@ class StatHeader final : public ::google::protobuf::Message
   void _internal_set_last_tick(::uint32_t value);
 
   public:
+  // float terrain_min_x = 12;
+  bool has_terrain_min_x() const;
+  void clear_terrain_min_x() ;
+  float terrain_min_x() const;
+  void set_terrain_min_x(float value);
+
+  private:
+  float _internal_terrain_min_x() const;
+  void _internal_set_terrain_min_x(float value);
+
+  public:
+  // float terrain_max_x = 13;
+  bool has_terrain_max_x() const;
+  void clear_terrain_max_x() ;
+  float terrain_max_x() const;
+  void set_terrain_max_x(float value);
+
+  private:
+  float _internal_terrain_max_x() const;
+  void _internal_set_terrain_max_x(float value);
+
+  public:
+  // float terrain_min_y = 14;
+  bool has_terrain_min_y() const;
+  void clear_terrain_min_y() ;
+  float terrain_min_y() const;
+  void set_terrain_min_y(float value);
+
+  private:
+  float _internal_terrain_min_y() const;
+  void _internal_set_terrain_min_y(float value);
+
+  public:
+  // float terrain_max_y = 15;
+  bool has_terrain_max_y() const;
+  void clear_terrain_max_y() ;
+  float terrain_max_y() const;
+  void set_terrain_max_y(float value);
+
+  private:
+  float _internal_terrain_max_y() const;
+  void _internal_set_terrain_max_y(float value);
+
+  public:
+  // float terrain_min_z = 16;
+  bool has_terrain_min_z() const;
+  void clear_terrain_min_z() ;
+  float terrain_min_z() const;
+  void set_terrain_min_z(float value);
+
+  private:
+  float _internal_terrain_min_z() const;
+  void _internal_set_terrain_min_z(float value);
+
+  public:
+  // float terrain_max_z = 17;
+  bool has_terrain_max_z() const;
+  void clear_terrain_max_z() ;
+  float terrain_max_z() const;
+  void set_terrain_max_z(float value);
+
+  private:
+  float _internal_terrain_max_z() const;
+  void _internal_set_terrain_max_z(float value);
+
+  public:
   // map<uint64, string> s64_to_nick = 6;
   int s64_to_nick_size() const;
   private:
@@ -2234,8 +2306,8 @@ class StatHeader final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 11,
-                                   4, 83,
+  static const ::google::protobuf::internal::TcParseTable<5, 17,
+                                   4, 91,
                                    2>
       _table_;
 
@@ -2264,6 +2336,12 @@ class StatHeader final : public ::google::protobuf::Message
     ::uint32_t tick_rate_;
     ::uint32_t player_count_;
     ::uint32_t last_tick_;
+    float terrain_min_x_;
+    float terrain_max_x_;
+    float terrain_min_y_;
+    float terrain_max_y_;
+    float terrain_min_z_;
+    float terrain_max_z_;
     ::google::protobuf::internal::MapField<StatHeader_S64ToNickEntry_DoNotUse, ::uint64_t, ::std::string,
                       ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
                       ::google::protobuf::internal::WireFormatLite::TYPE_STRING>
@@ -3749,7 +3827,7 @@ inline void StatHeader::clear_s64_to_nick() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.s64_to_nick_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00000100U);
+                  0x00004000U);
 }
 inline const ::google::protobuf::Map<::uint64_t, ::std::string>& StatHeader::_internal_s64_to_nick() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -3765,7 +3843,7 @@ inline ::google::protobuf::Map<::uint64_t, ::std::string>* PROTOBUF_NONNULL Stat
 }
 inline ::google::protobuf::Map<::uint64_t, ::std::string>* PROTOBUF_NONNULL StatHeader::mutable_s64_to_nick()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000100U);
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00004000U);
   // @@protoc_insertion_point(field_mutable_map:statsgate.StatHeader.s64_to_nick)
   return _internal_mutable_s64_to_nick();
 }
@@ -3781,7 +3859,7 @@ inline void StatHeader::clear_teamnum_to_s64() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.teamnum_to_s64_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00000200U);
+                  0x00008000U);
 }
 inline const ::google::protobuf::Map<::int32_t, ::uint64_t>& StatHeader::_internal_teamnum_to_s64() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -3797,7 +3875,7 @@ inline ::google::protobuf::Map<::int32_t, ::uint64_t>* PROTOBUF_NONNULL StatHead
 }
 inline ::google::protobuf::Map<::int32_t, ::uint64_t>* PROTOBUF_NONNULL StatHeader::mutable_teamnum_to_s64()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000200U);
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00008000U);
   // @@protoc_insertion_point(field_mutable_map:statsgate.StatHeader.teamnum_to_s64)
   return _internal_mutable_teamnum_to_s64();
 }
@@ -3882,7 +3960,7 @@ inline void StatHeader::clear_s64_to_teamnum() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.s64_to_teamnum_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00000400U);
+                  0x00010000U);
 }
 inline const ::google::protobuf::Map<::uint64_t, ::int32_t>& StatHeader::_internal_s64_to_teamnum() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -3898,7 +3976,7 @@ inline ::google::protobuf::Map<::uint64_t, ::int32_t>* PROTOBUF_NONNULL StatHead
 }
 inline ::google::protobuf::Map<::uint64_t, ::int32_t>* PROTOBUF_NONNULL StatHeader::mutable_s64_to_teamnum()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000400U);
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00010000U);
   // @@protoc_insertion_point(field_mutable_map:statsgate.StatHeader.s64_to_teamnum)
   return _internal_mutable_s64_to_teamnum();
 }
@@ -3959,6 +4037,180 @@ inline ::uint32_t StatHeader::_internal_last_tick() const {
 inline void StatHeader::_internal_set_last_tick(::uint32_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.last_tick_ = value;
+}
+
+// float terrain_min_x = 12;
+inline bool StatHeader::has_terrain_min_x() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000100U);
+  return value;
+}
+inline void StatHeader::clear_terrain_min_x() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_min_x_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000100U);
+}
+inline float StatHeader::terrain_min_x() const {
+  // @@protoc_insertion_point(field_get:statsgate.StatHeader.terrain_min_x)
+  return _internal_terrain_min_x();
+}
+inline void StatHeader::set_terrain_min_x(float value) {
+  _internal_set_terrain_min_x(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
+  // @@protoc_insertion_point(field_set:statsgate.StatHeader.terrain_min_x)
+}
+inline float StatHeader::_internal_terrain_min_x() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.terrain_min_x_;
+}
+inline void StatHeader::_internal_set_terrain_min_x(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_min_x_ = value;
+}
+
+// float terrain_max_x = 13;
+inline bool StatHeader::has_terrain_max_x() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000200U);
+  return value;
+}
+inline void StatHeader::clear_terrain_max_x() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_max_x_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000200U);
+}
+inline float StatHeader::terrain_max_x() const {
+  // @@protoc_insertion_point(field_get:statsgate.StatHeader.terrain_max_x)
+  return _internal_terrain_max_x();
+}
+inline void StatHeader::set_terrain_max_x(float value) {
+  _internal_set_terrain_max_x(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000200U);
+  // @@protoc_insertion_point(field_set:statsgate.StatHeader.terrain_max_x)
+}
+inline float StatHeader::_internal_terrain_max_x() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.terrain_max_x_;
+}
+inline void StatHeader::_internal_set_terrain_max_x(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_max_x_ = value;
+}
+
+// float terrain_min_y = 14;
+inline bool StatHeader::has_terrain_min_y() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000400U);
+  return value;
+}
+inline void StatHeader::clear_terrain_min_y() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_min_y_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000400U);
+}
+inline float StatHeader::terrain_min_y() const {
+  // @@protoc_insertion_point(field_get:statsgate.StatHeader.terrain_min_y)
+  return _internal_terrain_min_y();
+}
+inline void StatHeader::set_terrain_min_y(float value) {
+  _internal_set_terrain_min_y(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000400U);
+  // @@protoc_insertion_point(field_set:statsgate.StatHeader.terrain_min_y)
+}
+inline float StatHeader::_internal_terrain_min_y() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.terrain_min_y_;
+}
+inline void StatHeader::_internal_set_terrain_min_y(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_min_y_ = value;
+}
+
+// float terrain_max_y = 15;
+inline bool StatHeader::has_terrain_max_y() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000800U);
+  return value;
+}
+inline void StatHeader::clear_terrain_max_y() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_max_y_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000800U);
+}
+inline float StatHeader::terrain_max_y() const {
+  // @@protoc_insertion_point(field_get:statsgate.StatHeader.terrain_max_y)
+  return _internal_terrain_max_y();
+}
+inline void StatHeader::set_terrain_max_y(float value) {
+  _internal_set_terrain_max_y(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000800U);
+  // @@protoc_insertion_point(field_set:statsgate.StatHeader.terrain_max_y)
+}
+inline float StatHeader::_internal_terrain_max_y() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.terrain_max_y_;
+}
+inline void StatHeader::_internal_set_terrain_max_y(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_max_y_ = value;
+}
+
+// float terrain_min_z = 16;
+inline bool StatHeader::has_terrain_min_z() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00001000U);
+  return value;
+}
+inline void StatHeader::clear_terrain_min_z() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_min_z_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00001000U);
+}
+inline float StatHeader::terrain_min_z() const {
+  // @@protoc_insertion_point(field_get:statsgate.StatHeader.terrain_min_z)
+  return _internal_terrain_min_z();
+}
+inline void StatHeader::set_terrain_min_z(float value) {
+  _internal_set_terrain_min_z(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00001000U);
+  // @@protoc_insertion_point(field_set:statsgate.StatHeader.terrain_min_z)
+}
+inline float StatHeader::_internal_terrain_min_z() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.terrain_min_z_;
+}
+inline void StatHeader::_internal_set_terrain_min_z(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_min_z_ = value;
+}
+
+// float terrain_max_z = 17;
+inline bool StatHeader::has_terrain_max_z() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00002000U);
+  return value;
+}
+inline void StatHeader::clear_terrain_max_z() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_max_z_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00002000U);
+}
+inline float StatHeader::terrain_max_z() const {
+  // @@protoc_insertion_point(field_get:statsgate.StatHeader.terrain_max_z)
+  return _internal_terrain_max_z();
+}
+inline void StatHeader::set_terrain_max_z(float value) {
+  _internal_set_terrain_max_z(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00002000U);
+  // @@protoc_insertion_point(field_set:statsgate.StatHeader.terrain_max_z)
+}
+inline float StatHeader::_internal_terrain_max_z() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.terrain_max_z_;
+}
+inline void StatHeader::_internal_set_terrain_max_z(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.terrain_max_z_ = value;
 }
 
 // -------------------------------------------------------------------

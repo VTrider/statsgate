@@ -314,6 +314,13 @@ namespace statsgate
 
 		header.set_active_config_mod(exu2::GetActiveConfigMod());
 
+		header.set_terrain_min_x(GetTerrainMinX());
+		header.set_terrain_max_x(GetTerrainMaxX());
+		header.set_terrain_min_y(GetTerrainMinY());
+		header.set_terrain_max_y(GetTerrainMaxY());
+		header.set_terrain_min_z(GetTerrainMinZ());
+		header.set_terrain_max_z(GetTerrainMaxZ());
+
 		*stat_session.mutable_header() = header;
 	}
 

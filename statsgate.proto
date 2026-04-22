@@ -30,6 +30,12 @@ message StatHeader {
   map<uint64, int32> s64_to_teamnum = 9;
   uint32 player_count = 10;
   uint32 last_tick = 11;
+  float terrain_min_x = 12;
+  float terrain_max_x = 13;
+  float terrain_min_y = 14;
+  float terrain_max_y = 15;
+  float terrain_min_z = 16;
+  float terrain_max_z = 17;
 }
 
 // As of now these events only track player shots
