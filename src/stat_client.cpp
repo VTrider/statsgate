@@ -274,6 +274,10 @@ namespace statsgate
 				curWorld, pContext ? pContext : "nullptr", dmg.value, std::to_underlying(dmg.damageType));
 		}
 
+		// Unless there's evidence this is important we should ignore it
+		if (dmg.damageType == DAMAGE_TYPE_UNKNOWN)
+			return;
+
 		auto* damage = stat_session.add_event_stream()->mutable_damage_dealt();
 		damage->set_tick(current_tick);
 
