@@ -263,20 +263,11 @@ namespace statsgate
 		if (dmg.damageType == DAMAGE_TYPE_COLLISION)
 			return;
 
-		long current_tick = GetLockstepTurn();
-
-		// We encountered strange damage values of 2^28, but anything this high won't happen in a normal game
-		if (dmg.value > 1e6)
-		{
-			exu2::PrintConsoleMessage("statsgate: encountered unusual damage value at tick {} - writing to log", current_tick);
-			std::ofstream log(mod_folder / "unusual_damage.txt", std::ios::app);
-			log << std::format("curWorld: {}, pContext: {}, dmg value: {} dmg type: {}\n",
-				curWorld, pContext ? pContext : "nullptr", dmg.value, std::to_underlying(dmg.damageType));
-		}
-
 		// Unless there's evidence this is important we should ignore it
 		if (dmg.damageType == DAMAGE_TYPE_UNKNOWN)
 			return;
+
+		long current_tick = GetLockstepTurn();
 
 		auto* damage = stat_session.add_event_stream()->mutable_damage_dealt();
 		damage->set_tick(current_tick);
