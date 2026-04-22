@@ -13,6 +13,7 @@
 #endif
 
 #include <chrono>
+#include <cmath>
 #include <filesystem>
 #include <fstream>
 
@@ -193,8 +194,9 @@ namespace statsgate
 			Vector veloc = GetVelocity(h);
 			player->set_speed(std::hypot(veloc.x, veloc.y, veloc.z));
 
-			player->set_health(GetCurHealth(h));
-			player->set_ammo(GetCurAmmo(h));
+			// I didn't realize these were integers but it's probably better to process this data as float
+			player->set_health(static_cast<float>(GetCurHealth(h)));
+			player->set_ammo(static_cast<float>(GetCurAmmo(h)));
 			player->set_odf(get_odf(h));
 
 			if (Handle target = GetUserTarget(teamnum))
@@ -263,12 +265,21 @@ namespace statsgate
 
 		long current_tick = GetLockstepTurn();
 
+		// We encountered strange damage values of 2^28, but anything this high won't happen in a normal game
+		if (dmg.value > 1e6)
+		{
+			exu2::PrintConsoleMessage("statsgate: encountered unusual damage value at tick {} - writing to log", current_tick);
+			std::ofstream log(mod_folder / "unusual_damage.txt", std::ios::app);
+			log << std::format("curWorld: {}, pContext: {}, dmg value: {} dmg type: {}\n",
+				curWorld, pContext ? pContext : "nullptr", dmg.value, std::to_underlying(dmg.damageType));
+		}
+
 		auto* damage = stat_session.add_event_stream()->mutable_damage_dealt();
 		damage->set_tick(current_tick);
+
 		if (IsPlayer(dmg.owner))
-		{
 			damage->set_shooter(s64_from_h(dmg.owner));
-		}
+
 		damage->set_team(GetTeamNum(dmg.owner));
 		if (pContext) // pContext can be null if the damage is water and some other weird stuff
 			damage->set_ordnance_odf(pContext);
@@ -277,9 +288,8 @@ namespace statsgate
 		auto* d2 = stat_session.add_event_stream()->mutable_damage_received();
 		d2->set_tick(current_tick);
 		if (IsPlayer(h))
-		{
 			d2->set_victim(s64_from_h(h));
-		}
+
 		d2->set_team(GetTeamNum(h));
 		if (pContext)
 			d2->set_ordnance_odf(pContext);
