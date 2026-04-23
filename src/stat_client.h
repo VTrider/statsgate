@@ -6,6 +6,7 @@
 
 #include <cstring>
 #include <fstream>
+#include <optional>
 
 namespace statsgate
 {
@@ -51,6 +52,8 @@ namespace statsgate
 		void record_update();
 		void record_object_killed(Handle DeadObjectHandle, Handle KillersHandle);
 		void record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);
+		void record_pickup_powerup(const int curWorld, Handle me, Handle powerupHandle);
+		void record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);
 		void record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF);
 		void record_damage(const int curWorld, Handle h, const char* pContext, const DAMAGE& dmg);
 
@@ -64,6 +67,10 @@ namespace statsgate
 
 		// MisnExport2
 		static void BulletHit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);
+		static PrePickupPowerupReturnCodes PickupPowerup(const int curWorld, Handle me, Handle powerupHandle);
+		// I'm not sure if PreSnipe is the best callback to use over the ObjectSniped callback in MisnExport,
+		// but I think it might be more likely to give valid data since it's before the snipe actually happens.
+		static PreSnipeReturnCodes PreSnipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);
 		static void BulletInit(Handle shooterHandle, const Matrix &ordnanceMat, const Vector &ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF);
 		static void PreDamage(const int curWorld, Handle h, const char* pContext, DAMAGE& dmg);
 
@@ -80,8 +87,10 @@ namespace statsgate
 		static MisnExport export_hook;
 		static MisnExport2 export2_hook;
 
+		// Helper functions
 		void register_commands();
 		uint64_t s64_from_h(Handle h);
 		std::string get_odf(Handle h);
+		std::optional<uint64_t> is_player(Handle h); // is this handle a player that's currently registered in the stat session?
 	};
 }

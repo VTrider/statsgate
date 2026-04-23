@@ -56,7 +56,17 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 inline constexpr UnitSniped::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
-        tick_{0u} {}
+        shooter_odf_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        victim_odf_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        shooter_{::uint64_t{0u}},
+        tick_{0u},
+        shooter_team_{0u},
+        victim_{::uint64_t{0u}},
+        victim_team_{0u} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR UnitSniped::UnitSniped(::_pbi::ConstantInitialized)
@@ -619,9 +629,21 @@ const ::uint32_t
         1,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitSniped, _impl_._has_bits_),
-        4, // hasbit index offset
+        10, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitSniped, _impl_.tick_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::UnitSniped, _impl_.shooter_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::UnitSniped, _impl_.shooter_team_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::UnitSniped, _impl_.shooter_odf_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::UnitSniped, _impl_.victim_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::UnitSniped, _impl_.victim_team_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::UnitSniped, _impl_.victim_odf_),
+        3,
+        2,
+        4,
         0,
+        5,
+        6,
+        1,
         0x004, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_._oneof_case_[0]),
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
@@ -656,8 +678,8 @@ static const ::_pbi::MigrationSchema
         {134, sizeof(::statsgate::UpdateTick)},
         {141, sizeof(::statsgate::UnitDestroyed)},
         {158, sizeof(::statsgate::UnitSniped)},
-        {163, sizeof(::statsgate::StatEvent)},
-        {173, sizeof(::statsgate::ClientStatSession)},
+        {175, sizeof(::statsgate::StatEvent)},
+        {185, sizeof(::statsgate::ClientStatSession)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::statsgate::_Vec3_default_instance_._instance,
@@ -716,20 +738,23 @@ const char descriptor_table_protodef_statsgate_2eproto[] ABSL_ATTRIBUTE_SECTION_
     "\217\001\n\rUnitDestroyed\022\014\n\004tick\030\001 \001(\r\022\016\n\006kille"
     "r\030\002 \001(\004\022\023\n\013killer_team\030\003 \001(\r\022\022\n\nkiller_o"
     "df\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022\023\n\013victim_team\030"
-    "\006 \001(\r\022\022\n\nvictim_odf\030\007 \001(\t\"\032\n\nUnitSniped\022"
-    "\014\n\004tick\030\001 \001(\r\"\351\002\n\tStatEvent\022,\n\013bullet_in"
-    "it\030\001 \001(\0132\025.statsgate.BulletInitH\000\022*\n\nbul"
-    "let_hit\030\002 \001(\0132\024.statsgate.BulletHitH\000\022.\n"
-    "\014damage_dealt\030\003 \001(\0132\026.statsgate.DamageDe"
-    "altH\000\0224\n\017damage_received\030\004 \001(\0132\031.statsga"
-    "te.DamageReceivedH\000\022,\n\013update_tick\030\005 \001(\013"
-    "2\025.statsgate.UpdateTickH\000\0222\n\016unit_destro"
-    "yed\030\006 \001(\0132\030.statsgate.UnitDestroyedH\000\022,\n"
-    "\013unit_sniped\030\007 \001(\0132\025.statsgate.UnitSnipe"
-    "dH\000B\014\n\nevent_type\"f\n\021ClientStatSession\022%"
-    "\n\006header\030\001 \001(\0132\025.statsgate.StatHeader\022*\n"
-    "\014event_stream\030\002 \003(\0132\024.statsgate.StatEven"
-    "tb\010editionsp\350\007"
+    "\006 \001(\r\022\022\n\nvictim_odf\030\007 \001(\t\"\217\001\n\nUnitSniped"
+    "\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014shoot"
+    "er_team\030\003 \001(\r\022\023\n\013shooter_odf\030\004 \001(\t\022\016\n\006vi"
+    "ctim\030\005 \001(\004\022\023\n\013victim_team\030\006 \001(\r\022\022\n\nvicti"
+    "m_odf\030\007 \001(\t\"\351\002\n\tStatEvent\022,\n\013bullet_init"
+    "\030\001 \001(\0132\025.statsgate.BulletInitH\000\022*\n\nbulle"
+    "t_hit\030\002 \001(\0132\024.statsgate.BulletHitH\000\022.\n\014d"
+    "amage_dealt\030\003 \001(\0132\026.statsgate.DamageDeal"
+    "tH\000\0224\n\017damage_received\030\004 \001(\0132\031.statsgate"
+    ".DamageReceivedH\000\022,\n\013update_tick\030\005 \001(\0132\025"
+    ".statsgate.UpdateTickH\000\0222\n\016unit_destroye"
+    "d\030\006 \001(\0132\030.statsgate.UnitDestroyedH\000\022,\n\013u"
+    "nit_sniped\030\007 \001(\0132\025.statsgate.UnitSnipedH"
+    "\000B\014\n\nevent_type\"f\n\021ClientStatSession\022%\n\006"
+    "header\030\001 \001(\0132\025.statsgate.StatHeader\022*\n\014e"
+    "vent_stream\030\002 \003(\0132\024.statsgate.StatEventb"
+    "\010editionsp\350\007"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_statsgate_2eproto_deps[1] = {
@@ -739,7 +764,7 @@ static ::absl::once_flag descriptor_table_statsgate_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_statsgate_2eproto = {
     false,
     false,
-    2054,
+    2172,
     descriptor_table_protodef_statsgate_2eproto,
     "statsgate.proto",
     &descriptor_table_statsgate_2eproto_once,
@@ -4783,25 +4808,53 @@ UnitSniped::UnitSniped(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
   SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:statsgate.UnitSniped)
 }
+PROTOBUF_NDEBUG_INLINE UnitSniped::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::statsgate::UnitSniped& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        shooter_odf_(arena, from.shooter_odf_),
+        victim_odf_(arena, from.victim_odf_) {}
+
 UnitSniped::UnitSniped(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const UnitSniped& from)
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const UnitSniped& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, UnitSniped_class_data_.base()),
+    : ::google::protobuf::Message(arena, UnitSniped_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena),
+    : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(from._impl_) {
+  UnitSniped* const _this = this;
+  (void)_this;
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::memcpy(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, shooter_),
+           reinterpret_cast<const char*>(&from._impl_) +
+               offsetof(Impl_, shooter_),
+           offsetof(Impl_, victim_team_) -
+               offsetof(Impl_, shooter_) +
+               sizeof(Impl_::victim_team_));
+
+  // @@protoc_insertion_point(copy_constructor:statsgate.UnitSniped)
 }
 PROTOBUF_NDEBUG_INLINE UnitSniped::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0} {}
+      : _cached_size_{0},
+        shooter_odf_(arena),
+        victim_odf_(arena) {}
 
 inline void UnitSniped::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
-  _impl_.tick_ = {};
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, shooter_),
+           0,
+           offsetof(Impl_, victim_team_) -
+               offsetof(Impl_, shooter_) +
+               sizeof(Impl_::victim_team_));
 }
 UnitSniped::~UnitSniped() {
   // @@protoc_insertion_point(destructor:statsgate.UnitSniped)
@@ -4814,6 +4867,8 @@ inline void UnitSniped::SharedDtor(MessageLite& self) {
   }
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.shooter_odf_.Destroy();
+  this_._impl_.victim_odf_.Destroy();
   this_._impl_.~Impl_();
 }
 
@@ -4823,7 +4878,7 @@ inline void* PROTOBUF_NONNULL UnitSniped::PlacementNew_(
   return ::new (mem) UnitSniped(arena);
 }
 constexpr auto UnitSniped::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(UnitSniped),
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(UnitSniped),
                                             alignof(UnitSniped));
 }
 constexpr auto UnitSniped::InternalGenerateClassData_() {
@@ -4860,16 +4915,16 @@ UnitSniped::GetClassData() const {
   return UnitSniped_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 0, 2>
+const ::_pbi::TcParseTable<3, 7, 0, 50, 2>
 UnitSniped::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_._has_bits_),
     0, // no _extensions_
-    1, 0,  // max_field_number, fast_idx_mask
+    7, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967294,  // skipmap
+    4294967168,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    1,  // num_field_entries
+    7,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     UnitSniped_class_data_.base(),
@@ -4879,18 +4934,59 @@ UnitSniped::_table_ = {
     ::_pbi::TcParser::GetTable<::statsgate::UnitSniped>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
+    {::_pbi::TcParser::MiniParse, {}},
     // uint32 tick = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(UnitSniped, _impl_.tick_), 0>(),
-     {8, 0, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(UnitSniped, _impl_.tick_), 3>(),
+     {8, 3, 0,
       PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.tick_)}},
+    // uint64 shooter = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(UnitSniped, _impl_.shooter_), 2>(),
+     {16, 2, 0,
+      PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.shooter_)}},
+    // uint32 shooter_team = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(UnitSniped, _impl_.shooter_team_), 4>(),
+     {24, 4, 0,
+      PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.shooter_team_)}},
+    // string shooter_odf = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 0, 0,
+      PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.shooter_odf_)}},
+    // uint64 victim = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(UnitSniped, _impl_.victim_), 5>(),
+     {40, 5, 0,
+      PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.victim_)}},
+    // uint32 victim_team = 6;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(UnitSniped, _impl_.victim_team_), 6>(),
+     {48, 6, 0,
+      PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.victim_team_)}},
+    // string victim_odf = 7;
+    {::_pbi::TcParser::FastUS1,
+     {58, 1, 0,
+      PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.victim_odf_)}},
   }}, {{
     65535, 65535
   }}, {{
     // uint32 tick = 1;
-    {PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.tick_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    {PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.tick_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint64 shooter = 2;
+    {PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.shooter_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint32 shooter_team = 3;
+    {PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.shooter_team_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // string shooter_odf = 4;
+    {PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.shooter_odf_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // uint64 victim = 5;
+    {PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.victim_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint32 victim_team = 6;
+    {PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.victim_team_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // string victim_odf = 7;
+    {PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.victim_odf_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   // no aux_entries
   {{
+    "\24\0\0\0\13\0\0\12"
+    "statsgate.UnitSniped"
+    "shooter_odf"
+    "victim_odf"
   }},
 };
 PROTOBUF_NOINLINE void UnitSniped::Clear() {
@@ -4900,7 +4996,20 @@ PROTOBUF_NOINLINE void UnitSniped::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.tick_ = 0u;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _impl_.shooter_odf_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _impl_.victim_odf_.ClearNonDefaultToEmpty();
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007cU)) {
+    ::memset(&_impl_.shooter_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.victim_team_) -
+        reinterpret_cast<char*>(&_impl_.shooter_)) + sizeof(_impl_.victim_team_));
+  }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -4925,10 +5034,54 @@ PROTOBUF_NOINLINE void UnitSniped::Clear() {
 
   cached_has_bits = this_._impl_._has_bits_[0];
   // uint32 tick = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
         1, this_._internal_tick(), target);
+  }
+
+  // uint64 shooter = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+        2, this_._internal_shooter(), target);
+  }
+
+  // uint32 shooter_team = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        3, this_._internal_shooter_team(), target);
+  }
+
+  // string shooter_odf = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    const ::std::string& _s = this_._internal_shooter_odf();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "statsgate.UnitSniped.shooter_odf");
+    target = stream->WriteStringMaybeAliased(4, _s, target);
+  }
+
+  // uint64 victim = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+        5, this_._internal_victim(), target);
+  }
+
+  // uint32 victim_team = 6;
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        6, this_._internal_victim_team(), target);
+  }
+
+  // string victim_odf = 7;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    const ::std::string& _s = this_._internal_victim_odf();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "statsgate.UnitSniped.victim_odf");
+    target = stream->WriteStringMaybeAliased(7, _s, target);
   }
 
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
@@ -4954,12 +5107,43 @@ PROTOBUF_NOINLINE void UnitSniped::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void)cached_has_bits;
 
-   {
-    // uint32 tick = 1;
-    cached_has_bits = this_._impl_._has_bits_[0];
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+    // string shooter_odf = 4;
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                      this_._internal_shooter_odf());
+    }
+    // string victim_odf = 7;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                      this_._internal_victim_odf());
+    }
+    // uint64 shooter = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+          this_._internal_shooter());
+    }
+    // uint32 tick = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
           this_._internal_tick());
+    }
+    // uint32 shooter_team = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_shooter_team());
+    }
+    // uint64 victim = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+          this_._internal_victim());
+    }
+    // uint32 victim_team = 6;
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_victim_team());
     }
   }
   return this_.MaybeComputeUnknownFieldsSize(total_size,
@@ -4980,8 +5164,28 @@ void UnitSniped::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    _this->_impl_.tick_ = from._impl_.tick_;
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _this->_internal_set_shooter_odf(from._internal_shooter_odf());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _this->_internal_set_victim_odf(from._internal_victim_odf());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _this->_impl_.shooter_ = from._impl_.shooter_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      _this->_impl_.tick_ = from._impl_.tick_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      _this->_impl_.shooter_team_ = from._impl_.shooter_team_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      _this->_impl_.victim_ = from._impl_.victim_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      _this->_impl_.victim_team_ = from._impl_.victim_team_;
+    }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
@@ -4998,9 +5202,18 @@ void UnitSniped::CopyFrom(const UnitSniped& from) {
 
 void UnitSniped::InternalSwap(UnitSniped* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  swap(_impl_.tick_, other->_impl_.tick_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.shooter_odf_, &other->_impl_.shooter_odf_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.victim_odf_, &other->_impl_.victim_odf_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.victim_team_)
+      + sizeof(UnitSniped::_impl_.victim_team_)
+      - PROTOBUF_FIELD_OFFSET(UnitSniped, _impl_.shooter_)>(
+          reinterpret_cast<char*>(&_impl_.shooter_),
+          reinterpret_cast<char*>(&other->_impl_.shooter_));
 }
 
 ::google::protobuf::Metadata UnitSniped::GetMetadata() const {

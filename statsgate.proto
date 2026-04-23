@@ -108,8 +108,18 @@ message UnitDestroyed {
   string victim_odf = 7;
 }
 
+// Shooter and undefined if they are not players, this is probably rare but it might occur in mods that use
+// sniping ai, or projectiles that are sniper shells with travel time (shooter might be dead)
 message UnitSniped {
   uint32 tick = 1;
+
+  uint64 shooter = 2;
+  uint32 shooter_team = 3;
+  string shooter_odf = 4;
+
+  uint64 victim = 5;
+  uint32 victim_team = 6;
+  string victim_odf = 7;
 }
 
 message StatEvent {

@@ -27,6 +27,7 @@ namespace statsgate
 
 	MisnExport2 stat_client::export2_hook{
 		.m_pPreOrdnanceHitCallback = stat_client::BulletHit,
+		.m_pPreSnipeCallback = stat_client::PreSnipe,
 		.m_pPostBulletInitCallback = stat_client::BulletInit,
 		.m_pPreDamageCallback = stat_client::PreDamage
 	};
@@ -54,6 +55,22 @@ namespace statsgate
 		client()->record_bullet_hit(shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF);
 		if (auto* cb = client()->hooks.get_mission2().m_pPreOrdnanceHitCallback)
 			cb(shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF);
+	}
+
+	PrePickupPowerupReturnCodes stat_client::PickupPowerup(const int curWorld, Handle me, Handle powerupHandle)
+	{
+		client()->record_pickup_powerup(curWorld, me, powerupHandle);
+		if (auto* cb = client()->hooks.get_mission2().m_pPrePickupPowerupCallback)
+			return cb(curWorld, me, powerupHandle);
+		return PREPICKUPPOWERUP_ALLOW; // untested
+	}
+
+	PreSnipeReturnCodes stat_client::PreSnipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
+	{
+		client()->record_snipe(curWorld, shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF);
+		if (auto* cb = client()->hooks.get_mission2().m_pPreSnipeCallback)
+			return cb(curWorld, shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF);
+		return PRESNIPE_KILLPILOT; // appears to be the default if no callback is registered, no resyncs so far
 	}
 
 	void stat_client::BulletInit(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel,
@@ -210,6 +227,9 @@ namespace statsgate
 		auto* unit = stat_session.add_event_stream()->mutable_unit_destroyed();
 		unit->set_tick(GetLockstepTurn());
 
+		// TODO: exclude service pods and crates that don't have a killer (that means someone picked it up normally)
+		// implement that in the pickup callback, idk exacty gameobject class or whatever needs testing
+
 		// appears to work fine but picks up on pods getting picked up presumably, not sure if we want this
 		if (IsPlayer(KillersHandle))
 			unit->set_killer(s64_from_h(KillersHandle));
@@ -225,8 +245,8 @@ namespace statsgate
 	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
 	{
 		// Do not record AI vs AI hits, but AI vs player hits may be interesting
-		bool has_shooter = stat_session.header().s64_to_nick().contains(s64_from_h(shooterHandle));
-		bool has_victim = stat_session.header().s64_to_nick().contains(s64_from_h(victimHandle));
+		bool has_shooter = is_player(shooterHandle).has_value();
+		bool has_victim = is_player(victimHandle).has_value();
 		if (!has_shooter || !has_victim)
 			return;
 
@@ -244,6 +264,28 @@ namespace statsgate
 
 		hit->set_victim_odf(get_odf(victimHandle));
 		hit->set_shooter_odf(get_odf(shooterHandle));
+	}
+
+	void stat_client::record_pickup_powerup(const int curWorld, Handle me, Handle powerupHandle)
+	{
+
+	}
+
+	void stat_client::record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
+	{
+		auto* snipe = stat_session.add_event_stream()->mutable_unit_sniped();
+
+		snipe->set_tick(GetLockstepTurn());
+		
+		if (is_player(shooterHandle))
+			snipe->set_shooter(s64_from_h(shooterHandle));
+		snipe->set_shooter_team(GetTeamNum(shooterHandle));
+		snipe->set_shooter_odf(get_odf(shooterHandle));
+
+		if (is_player(victimHandle))
+			snipe->set_shooter(s64_from_h(victimHandle));
+		snipe->set_victim_team(GetTeamNum(victimHandle));
+		snipe->set_victim_odf(get_odf(victimHandle));
 	}
 
 	void stat_client::record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF)
@@ -374,5 +416,14 @@ namespace statsgate
 		char odf[ODF_MAX_LEN];
 		GetObjInfo(h, Get_ODF, odf);
 		return std::string(odf);
+	}
+
+	std::optional<uint64_t> stat_client::is_player(Handle h)
+	{
+		uint64_t maybe_s64 = s64_from_h(h);
+		if (!stat_session.header().s64_to_nick().contains(maybe_s64))
+			return std::nullopt;
+
+		return maybe_s64;
 	}
 }
