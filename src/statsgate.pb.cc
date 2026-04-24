@@ -177,6 +177,40 @@ struct StatHeader_S64ToNickEntry_DoNotUseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StatHeader_S64ToNickEntry_DoNotUseDefaultTypeInternal _StatHeader_S64ToNickEntry_DoNotUse_default_instance_;
 
+inline constexpr PickupPowerup::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        picker_odf_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        powerup_odf_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        picker_{::uint64_t{0u}},
+        tick_{0u},
+        picker_team_{0u},
+        powerup_team_{0u} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR PickupPowerup::PickupPowerup(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(PickupPowerup_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct PickupPowerupDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PickupPowerupDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PickupPowerupDefaultTypeInternal() {}
+  union {
+    PickupPowerup _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PickupPowerupDefaultTypeInternal _PickupPowerup_default_instance_;
+
 inline constexpr DamageReceived::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -644,8 +678,24 @@ const ::uint32_t
         5,
         6,
         1,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::statsgate::PickupPowerup, _impl_._has_bits_),
+        9, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::statsgate::PickupPowerup, _impl_.tick_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::PickupPowerup, _impl_.picker_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::PickupPowerup, _impl_.picker_team_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::PickupPowerup, _impl_.picker_odf_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::PickupPowerup, _impl_.powerup_team_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::PickupPowerup, _impl_.powerup_odf_),
+        3,
+        2,
+        4,
+        0,
+        5,
+        1,
         0x004, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_._oneof_case_[0]),
+        PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
@@ -678,8 +728,9 @@ static const ::_pbi::MigrationSchema
         {134, sizeof(::statsgate::UpdateTick)},
         {141, sizeof(::statsgate::UnitDestroyed)},
         {158, sizeof(::statsgate::UnitSniped)},
-        {175, sizeof(::statsgate::StatEvent)},
-        {185, sizeof(::statsgate::ClientStatSession)},
+        {175, sizeof(::statsgate::PickupPowerup)},
+        {190, sizeof(::statsgate::StatEvent)},
+        {201, sizeof(::statsgate::ClientStatSession)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::statsgate::_Vec3_default_instance_._instance,
@@ -695,6 +746,7 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::statsgate::_UpdateTick_default_instance_._instance,
     &::statsgate::_UnitDestroyed_default_instance_._instance,
     &::statsgate::_UnitSniped_default_instance_._instance,
+    &::statsgate::_PickupPowerup_default_instance_._instance,
     &::statsgate::_StatEvent_default_instance_._instance,
     &::statsgate::_ClientStatSession_default_instance_._instance,
 };
@@ -742,19 +794,23 @@ const char descriptor_table_protodef_statsgate_2eproto[] ABSL_ATTRIBUTE_SECTION_
     "\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014shoot"
     "er_team\030\003 \001(\r\022\023\n\013shooter_odf\030\004 \001(\t\022\016\n\006vi"
     "ctim\030\005 \001(\004\022\023\n\013victim_team\030\006 \001(\r\022\022\n\nvicti"
-    "m_odf\030\007 \001(\t\"\351\002\n\tStatEvent\022,\n\013bullet_init"
-    "\030\001 \001(\0132\025.statsgate.BulletInitH\000\022*\n\nbulle"
-    "t_hit\030\002 \001(\0132\024.statsgate.BulletHitH\000\022.\n\014d"
-    "amage_dealt\030\003 \001(\0132\026.statsgate.DamageDeal"
-    "tH\000\0224\n\017damage_received\030\004 \001(\0132\031.statsgate"
-    ".DamageReceivedH\000\022,\n\013update_tick\030\005 \001(\0132\025"
-    ".statsgate.UpdateTickH\000\0222\n\016unit_destroye"
-    "d\030\006 \001(\0132\030.statsgate.UnitDestroyedH\000\022,\n\013u"
-    "nit_sniped\030\007 \001(\0132\025.statsgate.UnitSnipedH"
-    "\000B\014\n\nevent_type\"f\n\021ClientStatSession\022%\n\006"
-    "header\030\001 \001(\0132\025.statsgate.StatHeader\022*\n\014e"
-    "vent_stream\030\002 \003(\0132\024.statsgate.StatEventb"
-    "\010editionsp\350\007"
+    "m_odf\030\007 \001(\t\"\201\001\n\rPickupPowerup\022\014\n\004tick\030\001 "
+    "\001(\r\022\016\n\006picker\030\002 \001(\004\022\023\n\013picker_team\030\003 \001(\r"
+    "\022\022\n\npicker_odf\030\004 \001(\t\022\024\n\014powerup_team\030\005 \001"
+    "(\r\022\023\n\013powerup_odf\030\006 \001(\t\"\235\003\n\tStatEvent\022,\n"
+    "\013bullet_init\030\001 \001(\0132\025.statsgate.BulletIni"
+    "tH\000\022*\n\nbullet_hit\030\002 \001(\0132\024.statsgate.Bull"
+    "etHitH\000\022.\n\014damage_dealt\030\003 \001(\0132\026.statsgat"
+    "e.DamageDealtH\000\0224\n\017damage_received\030\004 \001(\013"
+    "2\031.statsgate.DamageReceivedH\000\022,\n\013update_"
+    "tick\030\005 \001(\0132\025.statsgate.UpdateTickH\000\0222\n\016u"
+    "nit_destroyed\030\006 \001(\0132\030.statsgate.UnitDest"
+    "royedH\000\022,\n\013unit_sniped\030\007 \001(\0132\025.statsgate"
+    ".UnitSnipedH\000\0222\n\016pickup_powerup\030\010 \001(\0132\030."
+    "statsgate.PickupPowerupH\000B\014\n\nevent_type\""
+    "f\n\021ClientStatSession\022%\n\006header\030\001 \001(\0132\025.s"
+    "tatsgate.StatHeader\022*\n\014event_stream\030\002 \003("
+    "\0132\024.statsgate.StatEventb\010editionsp\350\007"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_statsgate_2eproto_deps[1] = {
@@ -764,13 +820,13 @@ static ::absl::once_flag descriptor_table_statsgate_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_statsgate_2eproto = {
     false,
     false,
-    2172,
+    2356,
     descriptor_table_protodef_statsgate_2eproto,
     "statsgate.proto",
     &descriptor_table_statsgate_2eproto_once,
     descriptor_table_statsgate_2eproto_deps,
     1,
-    15,
+    16,
     schemas,
     file_default_instances,
     TableStruct_statsgate_2eproto::offsets,
@@ -5221,6 +5277,416 @@ void UnitSniped::InternalSwap(UnitSniped* PROTOBUF_RESTRICT PROTOBUF_NONNULL oth
 }
 // ===================================================================
 
+class PickupPowerup::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<PickupPowerup>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_._has_bits_);
+};
+
+PickupPowerup::PickupPowerup(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, PickupPowerup_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:statsgate.PickupPowerup)
+}
+PROTOBUF_NDEBUG_INLINE PickupPowerup::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::statsgate::PickupPowerup& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        picker_odf_(arena, from.picker_odf_),
+        powerup_odf_(arena, from.powerup_odf_) {}
+
+PickupPowerup::PickupPowerup(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const PickupPowerup& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, PickupPowerup_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  PickupPowerup* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::memcpy(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, picker_),
+           reinterpret_cast<const char*>(&from._impl_) +
+               offsetof(Impl_, picker_),
+           offsetof(Impl_, powerup_team_) -
+               offsetof(Impl_, picker_) +
+               sizeof(Impl_::powerup_team_));
+
+  // @@protoc_insertion_point(copy_constructor:statsgate.PickupPowerup)
+}
+PROTOBUF_NDEBUG_INLINE PickupPowerup::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        picker_odf_(arena),
+        powerup_odf_(arena) {}
+
+inline void PickupPowerup::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, picker_),
+           0,
+           offsetof(Impl_, powerup_team_) -
+               offsetof(Impl_, picker_) +
+               sizeof(Impl_::powerup_team_));
+}
+PickupPowerup::~PickupPowerup() {
+  // @@protoc_insertion_point(destructor:statsgate.PickupPowerup)
+  SharedDtor(*this);
+}
+inline void PickupPowerup::SharedDtor(MessageLite& self) {
+  PickupPowerup& this_ = static_cast<PickupPowerup&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.picker_odf_.Destroy();
+  this_._impl_.powerup_odf_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL PickupPowerup::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) PickupPowerup(arena);
+}
+constexpr auto PickupPowerup::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(PickupPowerup),
+                                            alignof(PickupPowerup));
+}
+constexpr auto PickupPowerup::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_PickupPowerup_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &PickupPowerup::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<PickupPowerup>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &PickupPowerup::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<PickupPowerup>(), &PickupPowerup::ByteSizeLong,
+              &PickupPowerup::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_._cached_size_),
+          false,
+      },
+      &PickupPowerup::kDescriptorMethods,
+      &descriptor_table_statsgate_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull PickupPowerup_class_data_ =
+        PickupPowerup::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+PickupPowerup::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&PickupPowerup_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(PickupPowerup_class_data_.tc_table);
+  return PickupPowerup_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 6, 0, 53, 2>
+PickupPowerup::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_._has_bits_),
+    0, // no _extensions_
+    6, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967232,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    6,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    PickupPowerup_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::statsgate::PickupPowerup>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // uint32 tick = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(PickupPowerup, _impl_.tick_), 3>(),
+     {8, 3, 0,
+      PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.tick_)}},
+    // uint64 picker = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(PickupPowerup, _impl_.picker_), 2>(),
+     {16, 2, 0,
+      PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.picker_)}},
+    // uint32 picker_team = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(PickupPowerup, _impl_.picker_team_), 4>(),
+     {24, 4, 0,
+      PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.picker_team_)}},
+    // string picker_odf = 4;
+    {::_pbi::TcParser::FastUS1,
+     {34, 0, 0,
+      PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.picker_odf_)}},
+    // uint32 powerup_team = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(PickupPowerup, _impl_.powerup_team_), 5>(),
+     {40, 5, 0,
+      PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.powerup_team_)}},
+    // string powerup_odf = 6;
+    {::_pbi::TcParser::FastUS1,
+     {50, 1, 0,
+      PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.powerup_odf_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // uint32 tick = 1;
+    {PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.tick_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint64 picker = 2;
+    {PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.picker_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint32 picker_team = 3;
+    {PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.picker_team_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // string picker_odf = 4;
+    {PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.picker_odf_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // uint32 powerup_team = 5;
+    {PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.powerup_team_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // string powerup_odf = 6;
+    {PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.powerup_odf_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\27\0\0\0\12\0\13\0"
+    "statsgate.PickupPowerup"
+    "picker_odf"
+    "powerup_odf"
+  }},
+};
+PROTOBUF_NOINLINE void PickupPowerup::Clear() {
+// @@protoc_insertion_point(message_clear_start:statsgate.PickupPowerup)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _impl_.picker_odf_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _impl_.powerup_odf_.ClearNonDefaultToEmpty();
+    }
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0000003cU)) {
+    ::memset(&_impl_.picker_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.powerup_team_) -
+        reinterpret_cast<char*>(&_impl_.picker_)) + sizeof(_impl_.powerup_team_));
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL PickupPowerup::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const PickupPowerup& this_ = static_cast<const PickupPowerup&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL PickupPowerup::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const PickupPowerup& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:statsgate.PickupPowerup)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // uint32 tick = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        1, this_._internal_tick(), target);
+  }
+
+  // uint64 picker = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+        2, this_._internal_picker(), target);
+  }
+
+  // uint32 picker_team = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        3, this_._internal_picker_team(), target);
+  }
+
+  // string picker_odf = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    const ::std::string& _s = this_._internal_picker_odf();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "statsgate.PickupPowerup.picker_odf");
+    target = stream->WriteStringMaybeAliased(4, _s, target);
+  }
+
+  // uint32 powerup_team = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        5, this_._internal_powerup_team(), target);
+  }
+
+  // string powerup_odf = 6;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    const ::std::string& _s = this_._internal_powerup_odf();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "statsgate.PickupPowerup.powerup_odf");
+    target = stream->WriteStringMaybeAliased(6, _s, target);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:statsgate.PickupPowerup)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t PickupPowerup::ByteSizeLong(const MessageLite& base) {
+  const PickupPowerup& this_ = static_cast<const PickupPowerup&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t PickupPowerup::ByteSizeLong() const {
+  const PickupPowerup& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:statsgate.PickupPowerup)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+    // string picker_odf = 4;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                      this_._internal_picker_odf());
+    }
+    // string powerup_odf = 6;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                      this_._internal_powerup_odf());
+    }
+    // uint64 picker = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+          this_._internal_picker());
+    }
+    // uint32 tick = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_tick());
+    }
+    // uint32 picker_team = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_picker_team());
+    }
+    // uint32 powerup_team = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_powerup_team());
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void PickupPowerup::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<PickupPowerup*>(&to_msg);
+  auto& from = static_cast<const PickupPowerup&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:statsgate.PickupPowerup)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _this->_internal_set_picker_odf(from._internal_picker_odf());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _this->_internal_set_powerup_odf(from._internal_powerup_odf());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _this->_impl_.picker_ = from._impl_.picker_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      _this->_impl_.tick_ = from._impl_.tick_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      _this->_impl_.picker_team_ = from._impl_.picker_team_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      _this->_impl_.powerup_team_ = from._impl_.powerup_team_;
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void PickupPowerup::CopyFrom(const PickupPowerup& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:statsgate.PickupPowerup)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void PickupPowerup::InternalSwap(PickupPowerup* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.picker_odf_, &other->_impl_.picker_odf_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.powerup_odf_, &other->_impl_.powerup_odf_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.powerup_team_)
+      + sizeof(PickupPowerup::_impl_.powerup_team_)
+      - PROTOBUF_FIELD_OFFSET(PickupPowerup, _impl_.picker_)>(
+          reinterpret_cast<char*>(&_impl_.picker_),
+          reinterpret_cast<char*>(&other->_impl_.picker_));
+}
+
+::google::protobuf::Metadata PickupPowerup::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
 class StatEvent::_Internal {
  public:
   static constexpr ::int32_t kOneofCaseOffset =
@@ -5318,6 +5784,19 @@ void StatEvent::set_allocated_unit_sniped(::statsgate::UnitSniped* PROTOBUF_NULL
   }
   // @@protoc_insertion_point(field_set_allocated:statsgate.StatEvent.unit_sniped)
 }
+void StatEvent::set_allocated_pickup_powerup(::statsgate::PickupPowerup* PROTOBUF_NULLABLE pickup_powerup) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  clear_event_type();
+  if (pickup_powerup) {
+    ::google::protobuf::Arena* submessage_arena = pickup_powerup->GetArena();
+    if (message_arena != submessage_arena) {
+      pickup_powerup = ::google::protobuf::internal::GetOwnedMessage(message_arena, pickup_powerup, submessage_arena);
+    }
+    set_has_pickup_powerup();
+    _impl_.event_type_.pickup_powerup_ = pickup_powerup;
+  }
+  // @@protoc_insertion_point(field_set_allocated:statsgate.StatEvent.pickup_powerup)
+}
 StatEvent::StatEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, StatEvent_class_data_.base()) {
@@ -5371,6 +5850,9 @@ StatEvent::StatEvent(
         break;
       case kUnitSniped:
         _impl_.event_type_.unit_sniped_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.unit_sniped_);
+        break;
+      case kPickupPowerup:
+        _impl_.event_type_.pickup_powerup_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.pickup_powerup_);
         break;
   }
 
@@ -5463,6 +5945,14 @@ void StatEvent::clear_event_type() {
       }
       break;
     }
+    case kPickupPowerup: {
+      if (GetArena() == nullptr) {
+        delete _impl_.event_type_.pickup_powerup_;
+      } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+        ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.event_type_.pickup_powerup_);
+      }
+      break;
+    }
     case EVENT_TYPE_NOT_SET: {
       break;
     }
@@ -5514,17 +6004,17 @@ StatEvent::GetClassData() const {
   return StatEvent_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 7, 7, 0, 2>
+const ::_pbi::TcParseTable<0, 8, 8, 0, 2>
 StatEvent::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    7, 0,  // max_field_number, fast_idx_mask
+    8, 0,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967168,  // skipmap
+    4294967040,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    7,  // num_field_entries
-    7,  // num_aux_entries
+    8,  // num_field_entries
+    8,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     StatEvent_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -5551,6 +6041,8 @@ StatEvent::_table_ = {
     {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.unit_destroyed_), _Internal::kOneofCaseOffset + 0, 5, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .statsgate.UnitSniped unit_sniped = 7;
     {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.unit_sniped_), _Internal::kOneofCaseOffset + 0, 6, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .statsgate.PickupPowerup pickup_powerup = 8;
+    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.pickup_powerup_), _Internal::kOneofCaseOffset + 0, 7, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::statsgate::BulletInit>()},
@@ -5560,6 +6052,7 @@ StatEvent::_table_ = {
       {::_pbi::TcParser::GetTable<::statsgate::UpdateTick>()},
       {::_pbi::TcParser::GetTable<::statsgate::UnitDestroyed>()},
       {::_pbi::TcParser::GetTable<::statsgate::UnitSniped>()},
+      {::_pbi::TcParser::GetTable<::statsgate::PickupPowerup>()},
   }},
   {{
   }},
@@ -5636,6 +6129,12 @@ PROTOBUF_NOINLINE void StatEvent::Clear() {
           stream);
       break;
     }
+    case kPickupPowerup: {
+      target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+          8, *this_._impl_.event_type_.pickup_powerup_, this_._impl_.event_type_.pickup_powerup_->GetCachedSize(), target,
+          stream);
+      break;
+    }
     default:
       break;
   }
@@ -5703,6 +6202,12 @@ PROTOBUF_NOINLINE void StatEvent::Clear() {
     case kUnitSniped: {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.event_type_.unit_sniped_);
+      break;
+    }
+    // .statsgate.PickupPowerup pickup_powerup = 8;
+    case kPickupPowerup: {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.event_type_.pickup_powerup_);
       break;
     }
     case EVENT_TYPE_NOT_SET: {
@@ -5792,6 +6297,14 @@ void StatEvent::MergeImpl(::google::protobuf::MessageLite& to_msg,
           _this->_impl_.event_type_.unit_sniped_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.unit_sniped_);
         } else {
           _this->_impl_.event_type_.unit_sniped_->MergeFrom(*from._impl_.event_type_.unit_sniped_);
+        }
+        break;
+      }
+      case kPickupPowerup: {
+        if (oneof_needs_init) {
+          _this->_impl_.event_type_.pickup_powerup_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.pickup_powerup_);
+        } else {
+          _this->_impl_.event_type_.pickup_powerup_->MergeFrom(*from._impl_.event_type_.pickup_powerup_);
         }
         break;
       }

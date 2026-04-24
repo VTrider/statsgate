@@ -122,6 +122,18 @@ message UnitSniped {
   string victim_odf = 7;
 }
 
+// This detects pod and crate pickups
+message PickupPowerup {
+  uint32 tick = 1;
+
+  uint64 picker = 2; // if an AI picks up the powerup this is undefined
+  uint32 picker_team = 3;
+  string picker_odf = 4;
+
+  uint32 powerup_team = 5; // the team that owns the powerup
+  string powerup_odf = 6;
+}
+
 message StatEvent {
   oneof event_type {
     BulletInit bullet_init = 1;
@@ -131,6 +143,7 @@ message StatEvent {
     UpdateTick update_tick = 5;
     UnitDestroyed unit_destroyed = 6;
     UnitSniped unit_sniped = 7;
+    PickupPowerup pickup_powerup = 8;
   }
 }
 

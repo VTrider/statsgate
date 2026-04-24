@@ -216,8 +216,7 @@ namespace statsgate
 			player->set_ammo(static_cast<float>(GetCurAmmo(h)));
 			player->set_odf(get_odf(h));
 
-			if (Handle target = GetUserTarget(teamnum))
-				player->set_has_target(true);
+			player->set_has_target(GetUserTarget(teamnum) ? true : false);
 		}
 		stat_session.mutable_header()->set_last_tick(cur_turn);
 	}
@@ -231,13 +230,13 @@ namespace statsgate
 		// implement that in the pickup callback, idk exacty gameobject class or whatever needs testing
 
 		// appears to work fine but picks up on pods getting picked up presumably, not sure if we want this
-		if (IsPlayer(KillersHandle))
-			unit->set_killer(s64_from_h(KillersHandle));
+		if (auto killer = is_player(KillersHandle))
+			unit->set_killer(*killer);
 		unit->set_killer_team(GetTeamNum(KillersHandle));
 		unit->set_killer_odf(get_odf(KillersHandle));
 
-		if (IsPlayer(DeadObjectHandle))
-			unit->set_victim(s64_from_h(DeadObjectHandle));
+		if (auto victim = is_player(DeadObjectHandle))
+			unit->set_victim(*victim);
 		unit->set_victim_team(GetTeamNum(DeadObjectHandle));
 		unit->set_victim_odf(get_odf(DeadObjectHandle));
 	}
@@ -245,22 +244,22 @@ namespace statsgate
 	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
 	{
 		// Do not record AI vs AI hits, but AI vs player hits may be interesting
-		bool has_shooter = is_player(shooterHandle).has_value();
-		bool has_victim = is_player(victimHandle).has_value();
-		if (!has_shooter || !has_victim)
+		auto shooter = is_player(shooterHandle);
+		auto victim = is_player(victimHandle);
+		if (!shooter || !victim)
 			return;
 
 		auto* hit = stat_session.add_event_stream()->mutable_bullet_hit();
 
 		hit->set_tick(GetLockstepTurn());
 
-		if (has_shooter)
-			hit->set_shooter(s64_from_h(shooterHandle));
+		if (shooter)
+			hit->set_shooter(*shooter);
 
 		hit->set_ordnance_odf(pOrdnanceODF);
 
-		if (has_victim)
-			hit->set_victim(s64_from_h(victimHandle));
+		if (victim)
+			hit->set_victim(*victim);
 
 		hit->set_victim_odf(get_odf(victimHandle));
 		hit->set_shooter_odf(get_odf(shooterHandle));
@@ -268,7 +267,12 @@ namespace statsgate
 
 	void stat_client::record_pickup_powerup(const int curWorld, Handle me, Handle powerupHandle)
 	{
+		auto* pickup = stat_session.add_event_stream()->mutable_pickup_powerup();
 
+		pickup->set_tick(GetLockstepTurn());
+
+		if (auto p = is_player(me))
+			pickup->set_picker(*p);
 	}
 
 	void stat_client::record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
@@ -277,13 +281,13 @@ namespace statsgate
 
 		snipe->set_tick(GetLockstepTurn());
 		
-		if (is_player(shooterHandle))
-			snipe->set_shooter(s64_from_h(shooterHandle));
+		if (auto p = is_player(shooterHandle))
+			snipe->set_shooter(*p);
 		snipe->set_shooter_team(GetTeamNum(shooterHandle));
 		snipe->set_shooter_odf(get_odf(shooterHandle));
 
-		if (is_player(victimHandle))
-			snipe->set_shooter(s64_from_h(victimHandle));
+		if (auto p = is_player(victimHandle))
+			snipe->set_shooter(*p);
 		snipe->set_victim_team(GetTeamNum(victimHandle));
 		snipe->set_victim_odf(get_odf(victimHandle));
 	}
@@ -314,8 +318,8 @@ namespace statsgate
 		auto* damage = stat_session.add_event_stream()->mutable_damage_dealt();
 		damage->set_tick(current_tick);
 
-		if (IsPlayer(dmg.owner))
-			damage->set_shooter(s64_from_h(dmg.owner));
+		if (auto shooter = is_player(dmg.owner))
+			damage->set_shooter(*shooter);
 
 		damage->set_team(GetTeamNum(dmg.owner));
 		if (pContext) // pContext can be null if the damage is water and some other weird stuff
@@ -324,8 +328,8 @@ namespace statsgate
 
 		auto* d2 = stat_session.add_event_stream()->mutable_damage_received();
 		d2->set_tick(current_tick);
-		if (IsPlayer(h))
-			d2->set_victim(s64_from_h(h));
+		if (auto victim = is_player(h))
+			d2->set_victim(*victim);
 
 		d2->set_team(GetTeamNum(h));
 		if (pContext)
