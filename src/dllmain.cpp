@@ -6,7 +6,6 @@
 
 #include <ExtraUtils.h>
 #include <windows.h>
-#include <ScriptUtils.h>
 
 #include <atomic>
 #include <chrono>
@@ -15,12 +14,34 @@
 #include <stacktrace>
 #include <thread>
 
+HANDLE singleton_mutex = NULL;  
+
+bool check_singleton()
+{
+	HANDLE m = CreateMutexW(NULL, false, L"statsgate-client-mutex");
+    if (GetLastError() == ERROR_ALREADY_EXISTS)
+    {
+        MessageBoxW(NULL, L"Only one instance of the stat client is allowed", L"statsgate", MB_ICONERROR);
+        if (m)
+			CloseHandle(m);
+        return false;
+    }
+    singleton_mutex = m;
+    return true;
+}
+
 using namespace statsgate;
 
 std::atomic_flag running_freestanding;
 
 extern "C" __declspec(dllexport) DWORD WINAPI run_freestanding(LPVOID hModule)
 {
+    if (!check_singleton())
+    {
+		FreeLibraryAndExitThread(static_cast<HMODULE>(hModule), 0);
+        return 0;
+    }
+    
     running_freestanding.test_and_set(std::memory_order::relaxed);
 
     std::unique_ptr<stat_client> client;
@@ -69,6 +90,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     }
     case DLL_PROCESS_DETACH:
         exu2::ProcessDetach();
+        if (singleton_mutex)
+            CloseHandle(singleton_mutex);
         break;
     }
     return TRUE;
