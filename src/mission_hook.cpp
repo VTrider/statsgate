@@ -86,14 +86,12 @@ namespace statsgate
 		if (exu2::GetMissionExport() == nullptr && hooks_enabled) // you left a mission
 		{
 			// The game automatically cleans up the current mission export so no need here
-			// MessageBox(0, "disable", "a", MB_OK | MB_APPLMODAL);
 			hooks_enabled = false;
 			current_export = nullptr;
 			old_mission = MisnExport();
 		}
 		else if (exu2::GetMissionExport() && !hooks_enabled) // you entered a mission
 		{
-			// MessageBox(0, "enable", "a", MB_OK | MB_APPLMODAL);
 			apply_hooks();
 		}
 	}

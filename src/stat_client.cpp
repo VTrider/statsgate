@@ -403,6 +403,8 @@ namespace statsgate
 		recording = false;
 	}
 
+	// Helper functions
+
 	uint64_t stat_client::s64_from_h(Handle h)
 	{
 		if (IsPlayer(h))

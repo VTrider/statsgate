@@ -5,7 +5,6 @@
 #include "statsgate.pb.h"
 
 #include <cstring>
-#include <fstream>
 #include <optional>
 
 namespace statsgate
