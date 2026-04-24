@@ -75,7 +75,7 @@ int main()
         if (!remoteModule)
             throw std::runtime_error("Failed to find statsgate.dll in target process");
 
-        HMODULE localModule = LoadLibraryExA(dll.c_str(), nullptr, LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE);
+        HMODULE localModule = LoadLibraryExA(dll.c_str(), nullptr, DONT_RESOLVE_DLL_REFERENCES);
         if (!localModule)
             throw std::runtime_error("LoadLibraryExA(DONT_RESOLVE_DLL_REFERENCES) failed");
 
