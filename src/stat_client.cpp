@@ -160,6 +160,8 @@ namespace statsgate
 	{
 		register_instance(this);
 		register_commands();
+		std::filesystem::create_directories(mod_folder);
+		std::filesystem::create_directories(mod_folder / "stats");
 	}
 
 	stat_client::~stat_client()
