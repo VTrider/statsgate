@@ -27,6 +27,7 @@ namespace statsgate
 
 	MisnExport2 stat_client::export2_hook{
 		.m_pPreOrdnanceHitCallback = stat_client::BulletHit,
+		.m_pPrePickupPowerupCallback = stat_client::PickupPowerup,
 		.m_pPreSnipeCallback = stat_client::PreSnipe,
 		.m_pPostBulletInitCallback = stat_client::BulletInit,
 		.m_pPreDamageCallback = stat_client::PreDamage
@@ -62,7 +63,7 @@ namespace statsgate
 		client()->record_pickup_powerup(curWorld, me, powerupHandle);
 		if (auto* cb = client()->hooks.get_mission2().m_pPrePickupPowerupCallback)
 			return cb(curWorld, me, powerupHandle);
-		return PREPICKUPPOWERUP_ALLOW; // untested
+		return PREPICKUPPOWERUP_ALLOW; // works
 	}
 
 	PreSnipeReturnCodes stat_client::PreSnipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
@@ -275,6 +276,11 @@ namespace statsgate
 
 		if (auto p = is_player(me))
 			pickup->set_picker(*p);
+		pickup->set_picker_team(GetTeamNum(me));
+		pickup->set_picker_odf(get_odf(me));
+
+		pickup->set_powerup_team(GetTeamNum(powerupHandle));
+		pickup->set_powerup_odf(get_odf(powerupHandle));
 	}
 
 	void stat_client::record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
