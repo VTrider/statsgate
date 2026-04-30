@@ -6,6 +6,7 @@
 
 #include <cstring>
 #include <optional>
+#include <unordered_set>
 
 namespace statsgate
 {
@@ -46,7 +47,11 @@ namespace statsgate
 		static stat_client* client();
 		static void register_instance(stat_client* self);
 
+		// Freestanding client function
 		void poll_mission_change();
+
+		// Hosted client function
+		void start_hosted();
 
 		void record_update();
 		void record_object_killed(Handle DeadObjectHandle, Handle KillersHandle);
@@ -83,8 +88,10 @@ namespace statsgate
 
 		static inline stat_client* current_instance = nullptr;
 		mission_hook hooks;
-		static MisnExport export_hook;
-		static MisnExport2 export2_hook;
+		static MisnExport export_funcs;
+		static MisnExport2 export2_funcs;
+
+		std::unordered_set<std::string> ignored_odfs; // any event containing these odfs will be ignored
 
 		// Helper functions
 		void register_commands();

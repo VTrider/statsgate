@@ -19,13 +19,13 @@
 
 namespace statsgate
 {
-	MisnExport stat_client::export_hook{
+	MisnExport stat_client::export_funcs{
 		.Update = stat_client::Update, 
 		.PostRun = stat_client::PostRun,
 		.ObjectKilled = stat_client::ObjectKilled
 	};
 
-	MisnExport2 stat_client::export2_hook{
+	MisnExport2 stat_client::export2_funcs{
 		.m_pPreOrdnanceHitCallback = stat_client::BulletHit,
 		.m_pPrePickupPowerupCallback = stat_client::PickupPowerup,
 		.m_pPreSnipeCallback = stat_client::PreSnipe,
@@ -157,7 +157,7 @@ namespace statsgate
 	}
 
 	stat_client::stat_client(type t, std::atomic_flag* running_freestanding)
-		: client_type(t), hooks(export_hook, export2_hook), running_freestanding(running_freestanding)
+		: client_type(t), hooks(export_funcs, export2_funcs), running_freestanding(running_freestanding)
 	{
 		register_instance(this);
 		register_commands();
@@ -187,12 +187,33 @@ namespace statsgate
 		hooks.update();
 	}
 
+	void stat_client::start_hosted()
+	{
+		if (client_type != type::hosted_dll &&
+			client_type != type::hosted_lua) [[unlikely]]
+			throw stat_exception("This function isn't supported on non-hosted clients"); // TODO: maybe don't throw exception across dll lol idk
+		hooks.apply_hooks();
+	}
+
 	void stat_client::record_update()
 	{
-		if (client_type == type::freestanding && !recording && running_freestanding->test(std::memory_order::acquire) == true)
+		if (!recording)
 		{
-			first_tick();
-			recording = true;
+			switch (client_type)
+			{
+				case type::freestanding:
+				{
+					if (running_freestanding->test(std::memory_order::acquire) == false)
+						break;
+					[[fallthrough]];
+				}
+				case type::hosted_dll:
+				case type::hosted_lua:
+				{
+					first_tick();
+					recording = true;
+				}
+			}
 		}
 
 		auto* tick = stat_session.add_event_stream()->mutable_update_tick();
@@ -229,19 +250,28 @@ namespace statsgate
 		auto* unit = stat_session.add_event_stream()->mutable_unit_destroyed();
 		unit->set_tick(GetLockstepTurn());
 
-		// TODO: exclude service pods and crates that don't have a killer (that means someone picked it up normally)
-		// implement that in the pickup callback, idk exacty gameobject class or whatever needs testing
+		int killer_team = GetTeamNum(KillersHandle);
+		std::string killer_odf = get_odf(KillersHandle);
+		std::string victim_odf = get_odf(DeadObjectHandle);
 
-		// appears to work fine but picks up on pods getting picked up presumably, not sure if we want this
+		if (ignored_odfs.contains(killer_odf) || ignored_odfs.contains(victim_odf))
+			return;
+
+		// This filters out pod/crate pickups, flame mine impacts and other misc things we shouldn't be recording
+		if (killer_team == 0 && killer_odf.empty())
+			return;
+
 		if (auto killer = is_player(KillersHandle))
 			unit->set_killer(*killer);
-		unit->set_killer_team(GetTeamNum(KillersHandle));
-		unit->set_killer_odf(get_odf(KillersHandle));
+		unit->set_killer_team(killer_team);
+		unit->set_killer_odf(std::move(killer_odf));
 
 		if (auto victim = is_player(DeadObjectHandle))
 			unit->set_victim(*victim);
 		unit->set_victim_team(GetTeamNum(DeadObjectHandle));
-		unit->set_victim_odf(get_odf(DeadObjectHandle));
+		unit->set_victim_odf(std::move(victim_odf));
+
+		exu2::PrintConsoleMessage("{}", unit->ShortDebugString());
 	}
 
 	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)

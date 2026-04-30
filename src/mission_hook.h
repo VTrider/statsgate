@@ -13,6 +13,7 @@ namespace statsgate
 		const MisnExport& get_mission() const;
 		const MisnExport2& get_mission2() const;
 		void apply_hooks();
+		void remove_hooks();
 		void update(); // this will be running on a separate thread from the game
 
 	private:

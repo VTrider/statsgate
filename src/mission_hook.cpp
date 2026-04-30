@@ -4,7 +4,6 @@
 
 #include <ExtraUtils.h>
 
-MisnImport misnImport{}; // definition for scriptutils
 
 namespace statsgate
 {
@@ -77,6 +76,14 @@ namespace statsgate
 		hooks_enabled = true;
 	}
 
+	void mission_hook::remove_hooks()
+	{
+		// The game automatically cleans up the current mission export so no need here
+		hooks_enabled = false;
+		current_export = nullptr;
+		old_mission = MisnExport();
+	}
+
 	void mission_hook::update()
 	{
 		// Check if you are in a mission based off of the status of the current
@@ -85,10 +92,7 @@ namespace statsgate
 		// break once in a blue moon, should probably be replaced with a hook the main thread hits
 		if (exu2::GetMissionExport() == nullptr && hooks_enabled) // you left a mission
 		{
-			// The game automatically cleans up the current mission export so no need here
-			hooks_enabled = false;
-			current_export = nullptr;
-			old_mission = MisnExport();
+			remove_hooks();
 		}
 		else if (exu2::GetMissionExport() && !hooks_enabled) // you entered a mission
 		{
