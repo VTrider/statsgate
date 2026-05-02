@@ -89,73 +89,6 @@ namespace statsgate
 			cb(curWorld, h, pContext, dmg);
 	}
 
-	void stat_client::register_commands()
-	{
-        exu2::PrintConsoleMessage("statsgate.dll version v{} by VTrider", version);
-        exu2::VarSys_RegisterHandler("stats", command::handler, 0);
-        exu2::VarSys_RegisterHandler("stats.client", command::handler, 0);
-        exu2::VarSys_RegisterHandler("stats.debug", command::handler, 0);
-
-		command cmd_debug_allocated("stats.debug.allocations", [this]()
-		{
-			exu2::PrintConsoleMessage("Current allocations: {:.3f} mb", static_cast<double>(stat_session.SpaceUsedLong()) / 1e6);
-		});
-
-		command cmd_recording_active("stats.client.recording", [this]()
-		{
-			exu2::PrintConsoleMessage("{}", recording);
-		});
-
-		command about("stats.about", []()
-		{
-			exu2::PrintConsoleMessage("statsgate.dll v{} by VTrider, special thanks to F9bomber, Sev, and the rest of the VSR community!", version);
-		});
-
-		command shutdown("stats.shutdown", [this]()
-		{
-			if (client_type != type::freestanding)
-				PrintConsoleMessage("Shutdown is not supported for hosted clients, please exit the mission");
-
-			if (recording)
-				last_tick();
-
-			PrintConsoleMessage("Shutting down");
-			running_freestanding->clear(std::memory_order::release);
-		});
-
-		// Todo: add chat rate limit bypass
-		//command flip("stats.flip", []()
-		//	{
-		//		static std::random_device rd;
-		//		static std::mt19937 gen(rd());
-		//		static std::uniform_int_distribution dist(0, 1);
-		//		for (int i = 0; i < 5; i++)
-		//		{
-		//			IFace_ConsoleCmd(std::format("network.chateditline \"{}\"", dist(gen) ? "Heads!" : "Tails!").c_str());
-		//			IFace_ConsoleCmd("network.chatline.entered");
-		//		}
-		//	});
-
-
-		const std::string client_type_str = [this]()
-		{
-			using enum type;
-			switch (client_type)
-			{
-			case freestanding:
-				return "freestanding";
-			case hosted_dll:
-				return "hosted_dll";
-			case hosted_lua:
-				return "hosted_lua";
-			default:
-				std::unreachable();
-			}
-		}();
-		IFace_CreateString("stats.client.type", client_type_str.c_str());
-		exu2::VarSys_SetVarFlag("stats.client.type", exu2::VarFlag::CONST, true);
-	}
-
 	stat_client::stat_client(type t, std::atomic_flag* running_freestanding)
 		: client_type(t), hooks(export_funcs, export2_funcs), running_freestanding(running_freestanding)
 	{
@@ -163,6 +96,7 @@ namespace statsgate
 		register_commands();
 		std::filesystem::create_directories(mod_folder);
 		std::filesystem::create_directories(mod_folder / "stats");
+		register_config();
 	}
 
 	stat_client::~stat_client()
@@ -173,11 +107,6 @@ namespace statsgate
 	stat_client* stat_client::client()
 	{
 		return current_instance;
-	}
-
-	void stat_client::register_instance(stat_client* self)
-	{
-		current_instance = self;
 	}
 
 	void stat_client::poll_mission_change()
@@ -418,7 +347,7 @@ namespace statsgate
 		// Not sure why this returns 0 in last tick so we'll just do it in update instead
 		// stat_session.mutable_header()->set_last_tick(GetLockstepTurn());
 
-		std::ofstream file = std::ofstream(mod_folder / "stats" / std::format("{}.binpb.gz", session_identifier), std::ios::binary);
+		std::ofstream file = std::ofstream(std::filesystem::path(client_config.output_directory) / std::format("{}.binpb.gz", session_identifier), std::ios::binary);
 		google::protobuf::io::OstreamOutputStream output_stream(&file);
 
 		google::protobuf::io::GzipOutputStream::Options options;
@@ -446,6 +375,100 @@ namespace statsgate
 	}
 
 	// Helper functions
+
+	void stat_client::register_instance(stat_client* self)
+	{
+		current_instance = self;
+	}
+
+	void stat_client::register_commands()
+	{
+        exu2::PrintConsoleMessage("statsgate.dll version v{} by VTrider", version);
+        exu2::VarSys_RegisterHandler("stats", command::handler, 0);
+        exu2::VarSys_RegisterHandler("stats.client", command::handler, 0);
+        exu2::VarSys_RegisterHandler("stats.debug", command::handler, 0);
+
+		command cmd_debug_allocated("stats.debug.allocations", [this]()
+		{
+			exu2::PrintConsoleMessage("Current allocations: {:.3f} mb", static_cast<double>(stat_session.SpaceUsedLong()) / 1e6);
+		});
+
+		command cmd_recording_active("stats.client.recording", [this]()
+		{
+			exu2::PrintConsoleMessage("{}", recording);
+		});
+
+		command about("stats.about", []()
+		{
+			exu2::PrintConsoleMessage("statsgate.dll v{} by VTrider, special thanks to F9bomber, Sev, and the rest of the VSR community!", version);
+		});
+
+		command shutdown("stats.shutdown", [this]()
+		{
+			if (client_type != type::freestanding)
+				PrintConsoleMessage("Shutdown is not supported for hosted clients, please exit the mission");
+
+			if (recording)
+				last_tick();
+
+			PrintConsoleMessage("Shutting down");
+			running_freestanding->clear(std::memory_order::release);
+		});
+
+		// Todo: add chat rate limit bypass
+		//command flip("stats.flip", []()
+		//	{
+		//		static std::random_device rd;
+		//		static std::mt19937 gen(rd());
+		//		static std::uniform_int_distribution dist(0, 1);
+		//		for (int i = 0; i < 5; i++)
+		//		{
+		//			IFace_ConsoleCmd(std::format("network.chateditline \"{}\"", dist(gen) ? "Heads!" : "Tails!").c_str());
+		//			IFace_ConsoleCmd("network.chatline.entered");
+		//		}
+		//	});
+
+
+		const std::string client_type_str = [this]()
+		{
+			using enum type;
+			switch (client_type)
+			{
+			case freestanding:
+				return "freestanding";
+			case hosted_dll:
+				return "hosted_dll";
+			case hosted_lua:
+				return "hosted_lua";
+			default:
+				std::unreachable();
+			}
+		}();
+		IFace_CreateString("stats.client.type", client_type_str.c_str());
+		exu2::VarSys_SetVarFlag("stats.client.type", exu2::VarFlag::CONST, true);
+	}
+
+	void stat_client::write_default_config()
+	{
+		std::string _;
+		if (auto error = glz::write_file_toml(default_config, config_path, _))
+		{
+			exu2::PrintConsoleMessage("statsgate: Failed to regenerate default config, {}", glz::format_error(error, _));
+		}
+	}
+
+	void stat_client::register_config()
+	{
+		std::string _;
+		if (!std::filesystem::exists(mod_folder / "statsgate.toml"))
+			write_default_config();
+
+		if (auto error = glz::read_file_toml(client_config, config_path, _))
+		{
+			exu2::PrintConsoleMessage("statsgate: Failed to parse config, please delete the file, falling back to default config: {}", glz::format_error(error, _));
+			client_config = default_config;
+		}
+	}
 
 	uint64_t stat_client::s64_from_h(Handle h)
 	{

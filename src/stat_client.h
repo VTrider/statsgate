@@ -4,6 +4,9 @@
 #include "statsgate.h"
 #include "statsgate.pb.h"
 
+#include <glaze/glaze.hpp>
+#include <glaze/toml.hpp>
+
 #include <cstring>
 #include <optional>
 #include <unordered_set>
@@ -45,7 +48,6 @@ namespace statsgate
 		stat_client(type t, std::atomic_flag* running_freestanding);
 		~stat_client();
 		static stat_client* client();
-		static void register_instance(stat_client* self);
 
 		// Freestanding client function
 		void poll_mission_change();
@@ -79,6 +81,30 @@ namespace statsgate
 		static void PreDamage(const int curWorld, Handle h, const char* pContext, DAMAGE& dmg);
 
 	private:
+		enum class output_format : uint8_t
+		{
+			proto,
+			json
+		};
+
+		struct config
+		{
+			bool enable_recorder;
+			std::string output_directory;
+			output_format output_format;
+		};
+
+		friend struct glz::meta<stat_client::config>;
+
+		static inline const config default_config {
+			.enable_recorder = true,
+			.output_directory = (mod_folder / "stats").string(),
+			.output_format = output_format::proto
+		};
+
+		static inline const std::string config_path = (mod_folder / "statsgate.toml").string();
+		
+		config client_config;
 		const type client_type;
 		std::atomic_flag* running_freestanding = nullptr; // for freestanding clients this will have a flag that controls the automatic hooks
 		bool recording = false;
@@ -94,9 +120,19 @@ namespace statsgate
 		std::unordered_set<std::string> ignored_odfs; // any event containing these odfs will be ignored
 
 		// Helper functions
+		static void register_instance(stat_client* self);
 		void register_commands();
+		void write_default_config();
+		void register_config();
 		uint64_t s64_from_h(Handle h);
 		std::string get_odf(Handle h);
 		std::optional<uint64_t> is_player(Handle h); // is this handle a player that's currently registered in the stat session?
 	};
 }
+
+template <>
+struct glz::meta<statsgate::stat_client::output_format>
+{
+	using enum statsgate::stat_client::output_format;
+	static constexpr auto value = enumerate("proto", proto, "json", json);
+};
