@@ -95,6 +95,8 @@
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <ExternalTemplatesDiagnostics>false</ExternalTemplatesDiagnostics>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <EnableVectorLength />
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -123,6 +125,8 @@
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <ExternalTemplatesDiagnostics>false</ExternalTemplatesDiagnostics>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <EnableVectorLength />
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
