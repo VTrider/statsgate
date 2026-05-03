@@ -17,6 +17,10 @@
 #include <filesystem>
 #include <fstream>
 
+#define TRACY_ENABLE
+#define TRACY_ON_DEMAND
+#include <tracy/tracy/Tracy.hpp>
+
 namespace statsgate
 {
 	MisnExport stat_client::export_funcs{
@@ -35,8 +39,14 @@ namespace statsgate
 
 	void stat_client::Update()
 	{
-		client()->record_update();
-		client()->hooks.get_mission().Update();
+		{
+			ZoneScopedN("stat_client::Update")
+			client()->record_update();
+		}
+		{
+			ZoneScopedN("Strategy02::Update")
+			client()->hooks.get_mission().Update();
+		}
 	}
 
 	void stat_client::PostRun()
@@ -207,8 +217,6 @@ namespace statsgate
 			unit->set_victim(*victim);
 		unit->set_victim_team(GetTeamNum(DeadObjectHandle));
 		unit->set_victim_odf(std::move(victim_odf));
-
-		exu2::PrintConsoleMessage("{}", unit->ShortDebugString());
 	}
 
 	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)

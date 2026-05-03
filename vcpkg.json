@@ -5,6 +5,7 @@
             "name": "protobuf",
             "features": [ "zlib" ]
         },
-        "glaze"
+        "glaze",
+        "tracy"
     ]
 }
