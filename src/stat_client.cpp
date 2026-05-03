@@ -113,6 +113,10 @@ namespace statsgate
 	{
 		if (client_type != type::freestanding) [[unlikely]]
 			throw stat_exception("Automatic mission hooking isn't supported on hosted clients");
+
+		if (client_config.enable_recorder == false)
+			return;
+
 		hooks.update();
 	}
 
@@ -121,6 +125,10 @@ namespace statsgate
 		if (client_type != type::hosted_dll &&
 			client_type != type::hosted_lua) [[unlikely]]
 			throw stat_exception("This function isn't supported on non-hosted clients"); // TODO: maybe don't throw exception across dll lol idk
+
+		if (client_config.enable_recorder == false)
+			return;
+
 		hooks.apply_hooks();
 	}
 
@@ -363,7 +371,7 @@ namespace statsgate
 		}
 		else
 		{
-			exu2::PrintConsoleMessage("Failed to finalize stat session {}");
+			exu2::PrintConsoleMessage("Failed to finalize stat session {}", session_identifier);
 		}
 
 		// Note need to call flush here NOT close, otherwise it won't write the data to disk idk why
