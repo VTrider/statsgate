@@ -270,7 +270,7 @@ namespace statsgate
 		snipe->set_shooter_odf(get_odf(shooterHandle));
 
 		if (auto p = is_player(victimHandle))
-			snipe->set_shooter(*p);
+			snipe->set_victim(*p);
 		snipe->set_victim_team(GetTeamNum(victimHandle));
 		snipe->set_victim_odf(get_odf(victimHandle));
 
