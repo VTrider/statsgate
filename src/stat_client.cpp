@@ -17,9 +17,9 @@
 #include <filesystem>
 #include <fstream>
 
-#define TRACY_ENABLE
-#define TRACY_ON_DEMAND
-#include <tracy/tracy/Tracy.hpp>
+//#define TRACY_ENABLE
+//#define TRACY_ON_DEMAND
+//#include <tracy/tracy/Tracy.hpp>
 
 namespace statsgate
 {
@@ -40,11 +40,11 @@ namespace statsgate
 	void stat_client::Update()
 	{
 		{
-			ZoneScopedN("stat_client::Update")
+			//ZoneScopedN("stat_client::Update")
 			client()->record_update();
 		}
 		{
-			ZoneScopedN("Strategy02::Update")
+			//ZoneScopedN("Strategy02::Update")
 			client()->hooks.get_mission().Update();
 		}
 	}
