@@ -273,8 +273,6 @@ namespace statsgate
 			snipe->set_victim(*p);
 		snipe->set_victim_team(GetTeamNum(victimHandle));
 		snipe->set_victim_odf(get_odf(victimHandle));
-
-		exu2::PrintConsoleMessage("stat_client::record_snipe: {}", snipe->ShortDebugString());
 	}
 
 	void stat_client::record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF)
