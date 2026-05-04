@@ -55,6 +55,7 @@ message BulletHit {
   uint64 victim = 4; // undefined if not a player
   string victim_odf = 5;
   string shooter_odf = 6;
+  float distance_to_target = 7;
 }
 
 // Note on damage messages: shooter/victim are the steam64 id of the player if applicable,

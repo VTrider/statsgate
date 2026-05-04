@@ -316,7 +316,8 @@ inline constexpr BulletHit::Impl_::Impl_(
             ::_pbi::ConstantInitialized()),
         shooter_{::uint64_t{0u}},
         victim_{::uint64_t{0u}},
-        tick_{0u} {}
+        tick_{0u},
+        distance_to_target_{0} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR BulletHit::BulletHit(::_pbi::ConstantInitialized)
@@ -581,19 +582,21 @@ const ::uint32_t
         0,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::BulletHit, _impl_._has_bits_),
-        9, // hasbit index offset
+        10, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::statsgate::BulletHit, _impl_.tick_),
         PROTOBUF_FIELD_OFFSET(::statsgate::BulletHit, _impl_.shooter_),
         PROTOBUF_FIELD_OFFSET(::statsgate::BulletHit, _impl_.ordnance_odf_),
         PROTOBUF_FIELD_OFFSET(::statsgate::BulletHit, _impl_.victim_),
         PROTOBUF_FIELD_OFFSET(::statsgate::BulletHit, _impl_.victim_odf_),
         PROTOBUF_FIELD_OFFSET(::statsgate::BulletHit, _impl_.shooter_odf_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::BulletHit, _impl_.distance_to_target_),
         5,
         3,
         0,
         4,
         1,
         2,
+        6,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_._has_bits_),
         8, // hasbit index offset
@@ -722,15 +725,15 @@ static const ::_pbi::MigrationSchema
         {30, sizeof(::statsgate::StatHeader)},
         {67, sizeof(::statsgate::BulletInit)},
         {76, sizeof(::statsgate::BulletHit)},
-        {91, sizeof(::statsgate::DamageDealt)},
-        {104, sizeof(::statsgate::DamageReceived)},
-        {117, sizeof(::statsgate::PlayerState)},
-        {134, sizeof(::statsgate::UpdateTick)},
-        {141, sizeof(::statsgate::UnitDestroyed)},
-        {158, sizeof(::statsgate::UnitSniped)},
-        {175, sizeof(::statsgate::PickupPowerup)},
-        {190, sizeof(::statsgate::StatEvent)},
-        {201, sizeof(::statsgate::ClientStatSession)},
+        {93, sizeof(::statsgate::DamageDealt)},
+        {106, sizeof(::statsgate::DamageReceived)},
+        {119, sizeof(::statsgate::PlayerState)},
+        {136, sizeof(::statsgate::UpdateTick)},
+        {143, sizeof(::statsgate::UnitDestroyed)},
+        {160, sizeof(::statsgate::UnitSniped)},
+        {177, sizeof(::statsgate::PickupPowerup)},
+        {192, sizeof(::statsgate::StatEvent)},
+        {203, sizeof(::statsgate::ClientStatSession)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::statsgate::_Vec3_default_instance_._instance,
@@ -773,44 +776,45 @@ const char descriptor_table_protodef_statsgate_2eproto[] ABSL_ATTRIBUTE_SECTION_
     "\001 \001(\005\022\r\n\005value\030\002 \001(\004:\0028\001\0323\n\021S64ToTeamnum"
     "Entry\022\013\n\003key\030\001 \001(\004\022\r\n\005value\030\002 \001(\005:\0028\001\"A\n"
     "\nBulletInit\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001"
-    "(\004\022\024\n\014ordnance_odf\030\003 \001(\t\"y\n\tBulletHit\022\014\n"
-    "\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014ordnance"
-    "_odf\030\003 \001(\t\022\016\n\006victim\030\004 \001(\004\022\022\n\nvictim_odf"
-    "\030\005 \001(\t\022\023\n\013shooter_odf\030\006 \001(\t\"`\n\013DamageDea"
-    "lt\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\014\n\004tea"
-    "m\030\003 \001(\005\022\024\n\014ordnance_odf\030\004 \001(\t\022\016\n\006amount\030"
-    "\005 \001(\002\"b\n\016DamageReceived\022\014\n\004tick\030\001 \001(\r\022\016\n"
-    "\006victim\030\002 \001(\004\022\014\n\004team\030\003 \001(\005\022\024\n\014ordnance_"
-    "odf\030\004 \001(\t\022\016\n\006amount\030\005 \001(\002\"\216\001\n\013PlayerStat"
-    "e\022\016\n\006player\030\001 \001(\004\022!\n\010position\030\002 \001(\0132\017.st"
-    "atsgate.Vec3\022\r\n\005speed\030\003 \001(\002\022\016\n\006health\030\004 "
-    "\001(\002\022\014\n\004ammo\030\005 \001(\002\022\013\n\003odf\030\006 \001(\t\022\022\n\nhas_ta"
-    "rget\030\007 \001(\010\"C\n\nUpdateTick\022\014\n\004tick\030\001 \001(\r\022\'"
-    "\n\007players\030\002 \003(\0132\026.statsgate.PlayerState\""
-    "\217\001\n\rUnitDestroyed\022\014\n\004tick\030\001 \001(\r\022\016\n\006kille"
-    "r\030\002 \001(\004\022\023\n\013killer_team\030\003 \001(\r\022\022\n\nkiller_o"
-    "df\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022\023\n\013victim_team\030"
-    "\006 \001(\r\022\022\n\nvictim_odf\030\007 \001(\t\"\217\001\n\nUnitSniped"
-    "\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014shoot"
-    "er_team\030\003 \001(\r\022\023\n\013shooter_odf\030\004 \001(\t\022\016\n\006vi"
-    "ctim\030\005 \001(\004\022\023\n\013victim_team\030\006 \001(\r\022\022\n\nvicti"
-    "m_odf\030\007 \001(\t\"\201\001\n\rPickupPowerup\022\014\n\004tick\030\001 "
-    "\001(\r\022\016\n\006picker\030\002 \001(\004\022\023\n\013picker_team\030\003 \001(\r"
-    "\022\022\n\npicker_odf\030\004 \001(\t\022\024\n\014powerup_team\030\005 \001"
-    "(\r\022\023\n\013powerup_odf\030\006 \001(\t\"\235\003\n\tStatEvent\022,\n"
-    "\013bullet_init\030\001 \001(\0132\025.statsgate.BulletIni"
-    "tH\000\022*\n\nbullet_hit\030\002 \001(\0132\024.statsgate.Bull"
-    "etHitH\000\022.\n\014damage_dealt\030\003 \001(\0132\026.statsgat"
-    "e.DamageDealtH\000\0224\n\017damage_received\030\004 \001(\013"
-    "2\031.statsgate.DamageReceivedH\000\022,\n\013update_"
-    "tick\030\005 \001(\0132\025.statsgate.UpdateTickH\000\0222\n\016u"
-    "nit_destroyed\030\006 \001(\0132\030.statsgate.UnitDest"
-    "royedH\000\022,\n\013unit_sniped\030\007 \001(\0132\025.statsgate"
-    ".UnitSnipedH\000\0222\n\016pickup_powerup\030\010 \001(\0132\030."
-    "statsgate.PickupPowerupH\000B\014\n\nevent_type\""
-    "f\n\021ClientStatSession\022%\n\006header\030\001 \001(\0132\025.s"
-    "tatsgate.StatHeader\022*\n\014event_stream\030\002 \003("
-    "\0132\024.statsgate.StatEventb\010editionsp\350\007"
+    "(\004\022\024\n\014ordnance_odf\030\003 \001(\t\"\225\001\n\tBulletHit\022\014"
+    "\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014ordnanc"
+    "e_odf\030\003 \001(\t\022\016\n\006victim\030\004 \001(\004\022\022\n\nvictim_od"
+    "f\030\005 \001(\t\022\023\n\013shooter_odf\030\006 \001(\t\022\032\n\022distance"
+    "_to_target\030\007 \001(\002\"`\n\013DamageDealt\022\014\n\004tick\030"
+    "\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\014\n\004team\030\003 \001(\005\022\024\n\014"
+    "ordnance_odf\030\004 \001(\t\022\016\n\006amount\030\005 \001(\002\"b\n\016Da"
+    "mageReceived\022\014\n\004tick\030\001 \001(\r\022\016\n\006victim\030\002 \001"
+    "(\004\022\014\n\004team\030\003 \001(\005\022\024\n\014ordnance_odf\030\004 \001(\t\022\016"
+    "\n\006amount\030\005 \001(\002\"\216\001\n\013PlayerState\022\016\n\006player"
+    "\030\001 \001(\004\022!\n\010position\030\002 \001(\0132\017.statsgate.Vec"
+    "3\022\r\n\005speed\030\003 \001(\002\022\016\n\006health\030\004 \001(\002\022\014\n\004ammo"
+    "\030\005 \001(\002\022\013\n\003odf\030\006 \001(\t\022\022\n\nhas_target\030\007 \001(\010\""
+    "C\n\nUpdateTick\022\014\n\004tick\030\001 \001(\r\022\'\n\007players\030\002"
+    " \003(\0132\026.statsgate.PlayerState\"\217\001\n\rUnitDes"
+    "troyed\022\014\n\004tick\030\001 \001(\r\022\016\n\006killer\030\002 \001(\004\022\023\n\013"
+    "killer_team\030\003 \001(\r\022\022\n\nkiller_odf\030\004 \001(\t\022\016\n"
+    "\006victim\030\005 \001(\004\022\023\n\013victim_team\030\006 \001(\r\022\022\n\nvi"
+    "ctim_odf\030\007 \001(\t\"\217\001\n\nUnitSniped\022\014\n\004tick\030\001 "
+    "\001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014shooter_team\030\003 \001"
+    "(\r\022\023\n\013shooter_odf\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022"
+    "\023\n\013victim_team\030\006 \001(\r\022\022\n\nvictim_odf\030\007 \001(\t"
+    "\"\201\001\n\rPickupPowerup\022\014\n\004tick\030\001 \001(\r\022\016\n\006pick"
+    "er\030\002 \001(\004\022\023\n\013picker_team\030\003 \001(\r\022\022\n\npicker_"
+    "odf\030\004 \001(\t\022\024\n\014powerup_team\030\005 \001(\r\022\023\n\013power"
+    "up_odf\030\006 \001(\t\"\235\003\n\tStatEvent\022,\n\013bullet_ini"
+    "t\030\001 \001(\0132\025.statsgate.BulletInitH\000\022*\n\nbull"
+    "et_hit\030\002 \001(\0132\024.statsgate.BulletHitH\000\022.\n\014"
+    "damage_dealt\030\003 \001(\0132\026.statsgate.DamageDea"
+    "ltH\000\0224\n\017damage_received\030\004 \001(\0132\031.statsgat"
+    "e.DamageReceivedH\000\022,\n\013update_tick\030\005 \001(\0132"
+    "\025.statsgate.UpdateTickH\000\0222\n\016unit_destroy"
+    "ed\030\006 \001(\0132\030.statsgate.UnitDestroyedH\000\022,\n\013"
+    "unit_sniped\030\007 \001(\0132\025.statsgate.UnitSniped"
+    "H\000\0222\n\016pickup_powerup\030\010 \001(\0132\030.statsgate.P"
+    "ickupPowerupH\000B\014\n\nevent_type\"f\n\021ClientSt"
+    "atSession\022%\n\006header\030\001 \001(\0132\025.statsgate.St"
+    "atHeader\022*\n\014event_stream\030\002 \003(\0132\024.statsga"
+    "te.StatEventb\010editionsp\350\007"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_statsgate_2eproto_deps[1] = {
@@ -820,7 +824,7 @@ static ::absl::once_flag descriptor_table_statsgate_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_statsgate_2eproto = {
     false,
     false,
-    2356,
+    2385,
     descriptor_table_protodef_statsgate_2eproto,
     "statsgate.proto",
     &descriptor_table_statsgate_2eproto_once,
@@ -2561,9 +2565,9 @@ BulletHit::BulletHit(
                offsetof(Impl_, shooter_),
            reinterpret_cast<const char*>(&from._impl_) +
                offsetof(Impl_, shooter_),
-           offsetof(Impl_, tick_) -
+           offsetof(Impl_, distance_to_target_) -
                offsetof(Impl_, shooter_) +
-               sizeof(Impl_::tick_));
+               sizeof(Impl_::distance_to_target_));
 
   // @@protoc_insertion_point(copy_constructor:statsgate.BulletHit)
 }
@@ -2580,9 +2584,9 @@ inline void BulletHit::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   ::memset(reinterpret_cast<char*>(&_impl_) +
                offsetof(Impl_, shooter_),
            0,
-           offsetof(Impl_, tick_) -
+           offsetof(Impl_, distance_to_target_) -
                offsetof(Impl_, shooter_) +
-               sizeof(Impl_::tick_));
+               sizeof(Impl_::distance_to_target_));
 }
 BulletHit::~BulletHit() {
   // @@protoc_insertion_point(destructor:statsgate.BulletHit)
@@ -2644,16 +2648,16 @@ BulletHit::GetClassData() const {
   return BulletHit_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 6, 0, 61, 2>
+const ::_pbi::TcParseTable<3, 7, 0, 61, 2>
 BulletHit::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(BulletHit, _impl_._has_bits_),
     0, // no _extensions_
-    6, 56,  // max_field_number, fast_idx_mask
+    7, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967232,  // skipmap
+    4294967168,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    6,  // num_field_entries
+    7,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     BulletHit_class_data_.base(),
@@ -2688,7 +2692,10 @@ BulletHit::_table_ = {
     {::_pbi::TcParser::FastUS1,
      {50, 2, 0,
       PROTOBUF_FIELD_OFFSET(BulletHit, _impl_.shooter_odf_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+    // float distance_to_target = 7;
+    {::_pbi::TcParser::FastF32S1,
+     {61, 6, 0,
+      PROTOBUF_FIELD_OFFSET(BulletHit, _impl_.distance_to_target_)}},
   }}, {{
     65535, 65535
   }}, {{
@@ -2704,6 +2711,8 @@ BulletHit::_table_ = {
     {PROTOBUF_FIELD_OFFSET(BulletHit, _impl_.victim_odf_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string shooter_odf = 6;
     {PROTOBUF_FIELD_OFFSET(BulletHit, _impl_.shooter_odf_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // float distance_to_target = 7;
+    {PROTOBUF_FIELD_OFFSET(BulletHit, _impl_.distance_to_target_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
   }},
   // no aux_entries
   {{
@@ -2733,10 +2742,10 @@ PROTOBUF_NOINLINE void BulletHit::Clear() {
       _impl_.shooter_odf_.ClearNonDefaultToEmpty();
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000038U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x00000078U)) {
     ::memset(&_impl_.shooter_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.tick_) -
-        reinterpret_cast<char*>(&_impl_.shooter_)) + sizeof(_impl_.tick_));
+        reinterpret_cast<char*>(&_impl_.distance_to_target_) -
+        reinterpret_cast<char*>(&_impl_.shooter_)) + sizeof(_impl_.distance_to_target_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -2806,6 +2815,13 @@ PROTOBUF_NOINLINE void BulletHit::Clear() {
     target = stream->WriteStringMaybeAliased(6, _s, target);
   }
 
+  // float distance_to_target = 7;
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(
+        7, this_._internal_distance_to_target(), target);
+  }
+
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -2831,6 +2847,7 @@ PROTOBUF_NOINLINE void BulletHit::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
+  total_size += static_cast<bool>(0x00000040U & cached_has_bits) * 5;
   if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
     // string ordnance_odf = 3;
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
@@ -2881,7 +2898,7 @@ void BulletHit::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       _this->_internal_set_ordnance_odf(from._internal_ordnance_odf());
     }
@@ -2899,6 +2916,9 @@ void BulletHit::MergeImpl(::google::protobuf::MessageLite& to_msg,
     }
     if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       _this->_impl_.tick_ = from._impl_.tick_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      _this->_impl_.distance_to_target_ = from._impl_.distance_to_target_;
     }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
@@ -2924,8 +2944,8 @@ void BulletHit::InternalSwap(BulletHit* PROTOBUF_RESTRICT PROTOBUF_NONNULL other
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.victim_odf_, &other->_impl_.victim_odf_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.shooter_odf_, &other->_impl_.shooter_odf_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(BulletHit, _impl_.tick_)
-      + sizeof(BulletHit::_impl_.tick_)
+      PROTOBUF_FIELD_OFFSET(BulletHit, _impl_.distance_to_target_)
+      + sizeof(BulletHit::_impl_.distance_to_target_)
       - PROTOBUF_FIELD_OFFSET(BulletHit, _impl_.shooter_)>(
           reinterpret_cast<char*>(&_impl_.shooter_),
           reinterpret_cast<char*>(&other->_impl_.shooter_));

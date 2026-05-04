@@ -241,6 +241,10 @@ namespace statsgate
 
 		hit->set_victim_odf(get_odf(victimHandle));
 		hit->set_shooter_odf(get_odf(shooterHandle));
+
+		Vector sp = GetPosition(shooterHandle);
+		Vector vp = GetPosition(victimHandle);
+		hit->set_distance_to_target(std::hypot(vp.x - sp.x, vp.y - sp.y, vp.z - sp.z));
 	}
 
 	void stat_client::record_pickup_powerup(const int curWorld, Handle me, Handle powerupHandle)

@@ -2159,6 +2159,7 @@ class BulletHit final : public ::google::protobuf::Message
     kShooterFieldNumber = 2,
     kVictimFieldNumber = 4,
     kTickFieldNumber = 1,
+    kDistanceToTargetFieldNumber = 7,
   };
   // string ordnance_odf = 3;
   bool has_ordnance_odf() const;
@@ -2241,11 +2242,22 @@ class BulletHit final : public ::google::protobuf::Message
   void _internal_set_tick(::uint32_t value);
 
   public:
+  // float distance_to_target = 7;
+  bool has_distance_to_target() const;
+  void clear_distance_to_target() ;
+  float distance_to_target() const;
+  void set_distance_to_target(float value);
+
+  private:
+  float _internal_distance_to_target() const;
+  void _internal_set_distance_to_target(float value);
+
+  public:
   // @@protoc_insertion_point(class_scope:statsgate.BulletHit)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 6,
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
                                    0, 61,
                                    2>
       _table_;
@@ -2273,6 +2285,7 @@ class BulletHit final : public ::google::protobuf::Message
     ::uint64_t shooter_;
     ::uint64_t victim_;
     ::uint32_t tick_;
+    float distance_to_target_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -5021,6 +5034,35 @@ inline void BulletHit::set_allocated_shooter_odf(::std::string* PROTOBUF_NULLABL
     _impl_.shooter_odf_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:statsgate.BulletHit.shooter_odf)
+}
+
+// float distance_to_target = 7;
+inline bool BulletHit::has_distance_to_target() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
+  return value;
+}
+inline void BulletHit::clear_distance_to_target() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.distance_to_target_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000040U);
+}
+inline float BulletHit::distance_to_target() const {
+  // @@protoc_insertion_point(field_get:statsgate.BulletHit.distance_to_target)
+  return _internal_distance_to_target();
+}
+inline void BulletHit::set_distance_to_target(float value) {
+  _internal_set_distance_to_target(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  // @@protoc_insertion_point(field_set:statsgate.BulletHit.distance_to_target)
+}
+inline float BulletHit::_internal_distance_to_target() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.distance_to_target_;
+}
+inline void BulletHit::_internal_set_distance_to_target(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.distance_to_target_ = value;
 }
 
 // -------------------------------------------------------------------
