@@ -2451,6 +2451,7 @@ class StatHeader final : public ::google::protobuf::Message
     kTerrainMaxYFieldNumber = 15,
     kTerrainMinZFieldNumber = 16,
     kTerrainMaxZFieldNumber = 17,
+    kShutdownRequestedFieldNumber = 18,
     kS64ToNickFieldNumber = 6,
     kTeamnumToS64FieldNumber = 7,
     kS64ToTeamnumFieldNumber = 9,
@@ -2628,6 +2629,17 @@ class StatHeader final : public ::google::protobuf::Message
   void _internal_set_terrain_max_z(float value);
 
   public:
+  // bool shutdown_requested = 18;
+  bool has_shutdown_requested() const;
+  void clear_shutdown_requested() ;
+  bool shutdown_requested() const;
+  void set_shutdown_requested(bool value);
+
+  private:
+  bool _internal_shutdown_requested() const;
+  void _internal_set_shutdown_requested(bool value);
+
+  public:
   // map<uint64, string> s64_to_nick = 6;
   int s64_to_nick_size() const;
   private:
@@ -2677,7 +2689,7 @@ class StatHeader final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<5, 17,
+  static const ::google::protobuf::internal::TcParseTable<5, 18,
                                    4, 91,
                                    2>
       _table_;
@@ -2713,6 +2725,7 @@ class StatHeader final : public ::google::protobuf::Message
     float terrain_max_y_;
     float terrain_min_z_;
     float terrain_max_z_;
+    bool shutdown_requested_;
     ::google::protobuf::internal::MapField<StatHeader_S64ToNickEntry_DoNotUse, ::uint64_t, ::std::string,
                       ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
                       ::google::protobuf::internal::WireFormatLite::TYPE_STRING>
@@ -4221,7 +4234,7 @@ inline void StatHeader::clear_s64_to_nick() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.s64_to_nick_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00004000U);
+                  0x00008000U);
 }
 inline const ::google::protobuf::Map<::uint64_t, ::std::string>& StatHeader::_internal_s64_to_nick() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -4237,7 +4250,7 @@ inline ::google::protobuf::Map<::uint64_t, ::std::string>* PROTOBUF_NONNULL Stat
 }
 inline ::google::protobuf::Map<::uint64_t, ::std::string>* PROTOBUF_NONNULL StatHeader::mutable_s64_to_nick()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00004000U);
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00008000U);
   // @@protoc_insertion_point(field_mutable_map:statsgate.StatHeader.s64_to_nick)
   return _internal_mutable_s64_to_nick();
 }
@@ -4253,7 +4266,7 @@ inline void StatHeader::clear_teamnum_to_s64() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.teamnum_to_s64_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00008000U);
+                  0x00010000U);
 }
 inline const ::google::protobuf::Map<::int32_t, ::uint64_t>& StatHeader::_internal_teamnum_to_s64() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -4269,7 +4282,7 @@ inline ::google::protobuf::Map<::int32_t, ::uint64_t>* PROTOBUF_NONNULL StatHead
 }
 inline ::google::protobuf::Map<::int32_t, ::uint64_t>* PROTOBUF_NONNULL StatHeader::mutable_teamnum_to_s64()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00008000U);
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00010000U);
   // @@protoc_insertion_point(field_mutable_map:statsgate.StatHeader.teamnum_to_s64)
   return _internal_mutable_teamnum_to_s64();
 }
@@ -4354,7 +4367,7 @@ inline void StatHeader::clear_s64_to_teamnum() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.s64_to_teamnum_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00010000U);
+                  0x00020000U);
 }
 inline const ::google::protobuf::Map<::uint64_t, ::int32_t>& StatHeader::_internal_s64_to_teamnum() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -4370,7 +4383,7 @@ inline ::google::protobuf::Map<::uint64_t, ::int32_t>* PROTOBUF_NONNULL StatHead
 }
 inline ::google::protobuf::Map<::uint64_t, ::int32_t>* PROTOBUF_NONNULL StatHeader::mutable_s64_to_teamnum()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00010000U);
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00020000U);
   // @@protoc_insertion_point(field_mutable_map:statsgate.StatHeader.s64_to_teamnum)
   return _internal_mutable_s64_to_teamnum();
 }
@@ -4605,6 +4618,35 @@ inline float StatHeader::_internal_terrain_max_z() const {
 inline void StatHeader::_internal_set_terrain_max_z(float value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.terrain_max_z_ = value;
+}
+
+// bool shutdown_requested = 18;
+inline bool StatHeader::has_shutdown_requested() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00004000U);
+  return value;
+}
+inline void StatHeader::clear_shutdown_requested() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.shutdown_requested_ = false;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00004000U);
+}
+inline bool StatHeader::shutdown_requested() const {
+  // @@protoc_insertion_point(field_get:statsgate.StatHeader.shutdown_requested)
+  return _internal_shutdown_requested();
+}
+inline void StatHeader::set_shutdown_requested(bool value) {
+  _internal_set_shutdown_requested(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00004000U);
+  // @@protoc_insertion_point(field_set:statsgate.StatHeader.shutdown_requested)
+}
+inline bool StatHeader::_internal_shutdown_requested() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.shutdown_requested_;
+}
+inline void StatHeader::_internal_set_shutdown_requested(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.shutdown_requested_ = value;
 }
 
 // -------------------------------------------------------------------

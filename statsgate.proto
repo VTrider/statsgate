@@ -36,6 +36,9 @@ message StatHeader {
   float terrain_max_y = 15;
   float terrain_min_z = 16;
   float terrain_max_z = 17;
+  // this is true if the stat session was cancelled via mission script
+  // or console command, otherwise false if the game ended normally
+  bool shutdown_requested = 18;
 }
 
 // As of now these events only track player shots

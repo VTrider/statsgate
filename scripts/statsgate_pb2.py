@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fstatsgate.proto\x12\tstatsgate\x1a\x1fgoogle/protobuf/timestamp.proto\"\'\n\x04Vec3\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\xb4\x05\n\nStatHeader\x12\x0b\n\x03map\x18\x01 \x01(\t\x12.\n\nstart_time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x17\n\x0f\x61uthor_nickname\x18\x03 \x01(\t\x12\x16\n\x0e\x61uthor_steam64\x18\x04 \x01(\x04\x12\x11\n\ttick_rate\x18\x05 \x01(\r\x12\x39\n\x0bs64_to_nick\x18\x06 \x03(\x0b\x32$.statsgate.StatHeader.S64ToNickEntry\x12?\n\x0eteamnum_to_s64\x18\x07 \x03(\x0b\x32\'.statsgate.StatHeader.TeamnumToS64Entry\x12\x19\n\x11\x61\x63tive_config_mod\x18\x08 \x01(\t\x12?\n\x0es64_to_teamnum\x18\t \x03(\x0b\x32\'.statsgate.StatHeader.S64ToTeamnumEntry\x12\x14\n\x0cplayer_count\x18\n \x01(\r\x12\x11\n\tlast_tick\x18\x0b \x01(\r\x12\x15\n\rterrain_min_x\x18\x0c \x01(\x02\x12\x15\n\rterrain_max_x\x18\r \x01(\x02\x12\x15\n\rterrain_min_y\x18\x0e \x01(\x02\x12\x15\n\rterrain_max_y\x18\x0f \x01(\x02\x12\x15\n\rterrain_min_z\x18\x10 \x01(\x02\x12\x15\n\rterrain_max_z\x18\x11 \x01(\x02\x1a\x30\n\x0eS64ToNickEntry\x12\x0b\n\x03key\x18\x01 \x01(\x04\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x33\n\x11TeamnumToS64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x04:\x02\x38\x01\x1a\x33\n\x11S64ToTeamnumEntry\x12\x0b\n\x03key\x18\x01 \x01(\x04\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"A\n\nBulletInit\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0f\n\x07shooter\x18\x02 \x01(\x04\x12\x14\n\x0cordnance_odf\x18\x03 \x01(\t\"\x95\x01\n\tBulletHit\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0f\n\x07shooter\x18\x02 \x01(\x04\x12\x14\n\x0cordnance_odf\x18\x03 \x01(\t\x12\x0e\n\x06victim\x18\x04 \x01(\x04\x12\x12\n\nvictim_odf\x18\x05 \x01(\t\x12\x13\n\x0bshooter_odf\x18\x06 \x01(\t\x12\x1a\n\x12\x64istance_to_target\x18\x07 \x01(\x02\"`\n\x0b\x44\x61mageDealt\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0f\n\x07shooter\x18\x02 \x01(\x04\x12\x0c\n\x04team\x18\x03 \x01(\x05\x12\x14\n\x0cordnance_odf\x18\x04 \x01(\t\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x02\"b\n\x0e\x44\x61mageReceived\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0e\n\x06victim\x18\x02 \x01(\x04\x12\x0c\n\x04team\x18\x03 \x01(\x05\x12\x14\n\x0cordnance_odf\x18\x04 \x01(\t\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x02\"\x8e\x01\n\x0bPlayerState\x12\x0e\n\x06player\x18\x01 \x01(\x04\x12!\n\x08position\x18\x02 \x01(\x0b\x32\x0f.statsgate.Vec3\x12\r\n\x05speed\x18\x03 \x01(\x02\x12\x0e\n\x06health\x18\x04 \x01(\x02\x12\x0c\n\x04\x61mmo\x18\x05 \x01(\x02\x12\x0b\n\x03odf\x18\x06 \x01(\t\x12\x12\n\nhas_target\x18\x07 \x01(\x08\"C\n\nUpdateTick\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\'\n\x07players\x18\x02 \x03(\x0b\x32\x16.statsgate.PlayerState\"\x8f\x01\n\rUnitDestroyed\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0e\n\x06killer\x18\x02 \x01(\x04\x12\x13\n\x0bkiller_team\x18\x03 \x01(\r\x12\x12\n\nkiller_odf\x18\x04 \x01(\t\x12\x0e\n\x06victim\x18\x05 \x01(\x04\x12\x13\n\x0bvictim_team\x18\x06 \x01(\r\x12\x12\n\nvictim_odf\x18\x07 \x01(\t\"\x8f\x01\n\nUnitSniped\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0f\n\x07shooter\x18\x02 \x01(\x04\x12\x14\n\x0cshooter_team\x18\x03 \x01(\r\x12\x13\n\x0bshooter_odf\x18\x04 \x01(\t\x12\x0e\n\x06victim\x18\x05 \x01(\x04\x12\x13\n\x0bvictim_team\x18\x06 \x01(\r\x12\x12\n\nvictim_odf\x18\x07 \x01(\t\"\x81\x01\n\rPickupPowerup\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0e\n\x06picker\x18\x02 \x01(\x04\x12\x13\n\x0bpicker_team\x18\x03 \x01(\r\x12\x12\n\npicker_odf\x18\x04 \x01(\t\x12\x14\n\x0cpowerup_team\x18\x05 \x01(\r\x12\x13\n\x0bpowerup_odf\x18\x06 \x01(\t\"\x9d\x03\n\tStatEvent\x12,\n\x0b\x62ullet_init\x18\x01 \x01(\x0b\x32\x15.statsgate.BulletInitH\x00\x12*\n\nbullet_hit\x18\x02 \x01(\x0b\x32\x14.statsgate.BulletHitH\x00\x12.\n\x0c\x64\x61mage_dealt\x18\x03 \x01(\x0b\x32\x16.statsgate.DamageDealtH\x00\x12\x34\n\x0f\x64\x61mage_received\x18\x04 \x01(\x0b\x32\x19.statsgate.DamageReceivedH\x00\x12,\n\x0bupdate_tick\x18\x05 \x01(\x0b\x32\x15.statsgate.UpdateTickH\x00\x12\x32\n\x0eunit_destroyed\x18\x06 \x01(\x0b\x32\x18.statsgate.UnitDestroyedH\x00\x12,\n\x0bunit_sniped\x18\x07 \x01(\x0b\x32\x15.statsgate.UnitSnipedH\x00\x12\x32\n\x0epickup_powerup\x18\x08 \x01(\x0b\x32\x18.statsgate.PickupPowerupH\x00\x42\x0c\n\nevent_type\"f\n\x11\x43lientStatSession\x12%\n\x06header\x18\x01 \x01(\x0b\x32\x15.statsgate.StatHeader\x12*\n\x0c\x65vent_stream\x18\x02 \x03(\x0b\x32\x14.statsgate.StatEventb\x08\x65\x64itionsp\xe8\x07')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fstatsgate.proto\x12\tstatsgate\x1a\x1fgoogle/protobuf/timestamp.proto\"\'\n\x04Vec3\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\"\xd0\x05\n\nStatHeader\x12\x0b\n\x03map\x18\x01 \x01(\t\x12.\n\nstart_time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x17\n\x0f\x61uthor_nickname\x18\x03 \x01(\t\x12\x16\n\x0e\x61uthor_steam64\x18\x04 \x01(\x04\x12\x11\n\ttick_rate\x18\x05 \x01(\r\x12\x39\n\x0bs64_to_nick\x18\x06 \x03(\x0b\x32$.statsgate.StatHeader.S64ToNickEntry\x12?\n\x0eteamnum_to_s64\x18\x07 \x03(\x0b\x32\'.statsgate.StatHeader.TeamnumToS64Entry\x12\x19\n\x11\x61\x63tive_config_mod\x18\x08 \x01(\t\x12?\n\x0es64_to_teamnum\x18\t \x03(\x0b\x32\'.statsgate.StatHeader.S64ToTeamnumEntry\x12\x14\n\x0cplayer_count\x18\n \x01(\r\x12\x11\n\tlast_tick\x18\x0b \x01(\r\x12\x15\n\rterrain_min_x\x18\x0c \x01(\x02\x12\x15\n\rterrain_max_x\x18\r \x01(\x02\x12\x15\n\rterrain_min_y\x18\x0e \x01(\x02\x12\x15\n\rterrain_max_y\x18\x0f \x01(\x02\x12\x15\n\rterrain_min_z\x18\x10 \x01(\x02\x12\x15\n\rterrain_max_z\x18\x11 \x01(\x02\x12\x1a\n\x12shutdown_requested\x18\x12 \x01(\x08\x1a\x30\n\x0eS64ToNickEntry\x12\x0b\n\x03key\x18\x01 \x01(\x04\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x33\n\x11TeamnumToS64Entry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\r\n\x05value\x18\x02 \x01(\x04:\x02\x38\x01\x1a\x33\n\x11S64ToTeamnumEntry\x12\x0b\n\x03key\x18\x01 \x01(\x04\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\"A\n\nBulletInit\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0f\n\x07shooter\x18\x02 \x01(\x04\x12\x14\n\x0cordnance_odf\x18\x03 \x01(\t\"\x95\x01\n\tBulletHit\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0f\n\x07shooter\x18\x02 \x01(\x04\x12\x14\n\x0cordnance_odf\x18\x03 \x01(\t\x12\x0e\n\x06victim\x18\x04 \x01(\x04\x12\x12\n\nvictim_odf\x18\x05 \x01(\t\x12\x13\n\x0bshooter_odf\x18\x06 \x01(\t\x12\x1a\n\x12\x64istance_to_target\x18\x07 \x01(\x02\"`\n\x0b\x44\x61mageDealt\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0f\n\x07shooter\x18\x02 \x01(\x04\x12\x0c\n\x04team\x18\x03 \x01(\x05\x12\x14\n\x0cordnance_odf\x18\x04 \x01(\t\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x02\"b\n\x0e\x44\x61mageReceived\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0e\n\x06victim\x18\x02 \x01(\x04\x12\x0c\n\x04team\x18\x03 \x01(\x05\x12\x14\n\x0cordnance_odf\x18\x04 \x01(\t\x12\x0e\n\x06\x61mount\x18\x05 \x01(\x02\"\x8e\x01\n\x0bPlayerState\x12\x0e\n\x06player\x18\x01 \x01(\x04\x12!\n\x08position\x18\x02 \x01(\x0b\x32\x0f.statsgate.Vec3\x12\r\n\x05speed\x18\x03 \x01(\x02\x12\x0e\n\x06health\x18\x04 \x01(\x02\x12\x0c\n\x04\x61mmo\x18\x05 \x01(\x02\x12\x0b\n\x03odf\x18\x06 \x01(\t\x12\x12\n\nhas_target\x18\x07 \x01(\x08\"C\n\nUpdateTick\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\'\n\x07players\x18\x02 \x03(\x0b\x32\x16.statsgate.PlayerState\"\x8f\x01\n\rUnitDestroyed\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0e\n\x06killer\x18\x02 \x01(\x04\x12\x13\n\x0bkiller_team\x18\x03 \x01(\r\x12\x12\n\nkiller_odf\x18\x04 \x01(\t\x12\x0e\n\x06victim\x18\x05 \x01(\x04\x12\x13\n\x0bvictim_team\x18\x06 \x01(\r\x12\x12\n\nvictim_odf\x18\x07 \x01(\t\"\x8f\x01\n\nUnitSniped\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0f\n\x07shooter\x18\x02 \x01(\x04\x12\x14\n\x0cshooter_team\x18\x03 \x01(\r\x12\x13\n\x0bshooter_odf\x18\x04 \x01(\t\x12\x0e\n\x06victim\x18\x05 \x01(\x04\x12\x13\n\x0bvictim_team\x18\x06 \x01(\r\x12\x12\n\nvictim_odf\x18\x07 \x01(\t\"\x81\x01\n\rPickupPowerup\x12\x0c\n\x04tick\x18\x01 \x01(\r\x12\x0e\n\x06picker\x18\x02 \x01(\x04\x12\x13\n\x0bpicker_team\x18\x03 \x01(\r\x12\x12\n\npicker_odf\x18\x04 \x01(\t\x12\x14\n\x0cpowerup_team\x18\x05 \x01(\r\x12\x13\n\x0bpowerup_odf\x18\x06 \x01(\t\"\x9d\x03\n\tStatEvent\x12,\n\x0b\x62ullet_init\x18\x01 \x01(\x0b\x32\x15.statsgate.BulletInitH\x00\x12*\n\nbullet_hit\x18\x02 \x01(\x0b\x32\x14.statsgate.BulletHitH\x00\x12.\n\x0c\x64\x61mage_dealt\x18\x03 \x01(\x0b\x32\x16.statsgate.DamageDealtH\x00\x12\x34\n\x0f\x64\x61mage_received\x18\x04 \x01(\x0b\x32\x19.statsgate.DamageReceivedH\x00\x12,\n\x0bupdate_tick\x18\x05 \x01(\x0b\x32\x15.statsgate.UpdateTickH\x00\x12\x32\n\x0eunit_destroyed\x18\x06 \x01(\x0b\x32\x18.statsgate.UnitDestroyedH\x00\x12,\n\x0bunit_sniped\x18\x07 \x01(\x0b\x32\x15.statsgate.UnitSnipedH\x00\x12\x32\n\x0epickup_powerup\x18\x08 \x01(\x0b\x32\x18.statsgate.PickupPowerupH\x00\x42\x0c\n\nevent_type\"f\n\x11\x43lientStatSession\x12%\n\x06header\x18\x01 \x01(\x0b\x32\x15.statsgate.StatHeader\x12*\n\x0c\x65vent_stream\x18\x02 \x03(\x0b\x32\x14.statsgate.StatEventb\x08\x65\x64itionsp\xe8\x07')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -41,33 +41,33 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_VEC3']._serialized_start=63
   _globals['_VEC3']._serialized_end=102
   _globals['_STATHEADER']._serialized_start=105
-  _globals['_STATHEADER']._serialized_end=797
-  _globals['_STATHEADER_S64TONICKENTRY']._serialized_start=643
-  _globals['_STATHEADER_S64TONICKENTRY']._serialized_end=691
-  _globals['_STATHEADER_TEAMNUMTOS64ENTRY']._serialized_start=693
-  _globals['_STATHEADER_TEAMNUMTOS64ENTRY']._serialized_end=744
-  _globals['_STATHEADER_S64TOTEAMNUMENTRY']._serialized_start=746
-  _globals['_STATHEADER_S64TOTEAMNUMENTRY']._serialized_end=797
-  _globals['_BULLETINIT']._serialized_start=799
-  _globals['_BULLETINIT']._serialized_end=864
-  _globals['_BULLETHIT']._serialized_start=867
-  _globals['_BULLETHIT']._serialized_end=1016
-  _globals['_DAMAGEDEALT']._serialized_start=1018
-  _globals['_DAMAGEDEALT']._serialized_end=1114
-  _globals['_DAMAGERECEIVED']._serialized_start=1116
-  _globals['_DAMAGERECEIVED']._serialized_end=1214
-  _globals['_PLAYERSTATE']._serialized_start=1217
-  _globals['_PLAYERSTATE']._serialized_end=1359
-  _globals['_UPDATETICK']._serialized_start=1361
-  _globals['_UPDATETICK']._serialized_end=1428
-  _globals['_UNITDESTROYED']._serialized_start=1431
-  _globals['_UNITDESTROYED']._serialized_end=1574
-  _globals['_UNITSNIPED']._serialized_start=1577
-  _globals['_UNITSNIPED']._serialized_end=1720
-  _globals['_PICKUPPOWERUP']._serialized_start=1723
-  _globals['_PICKUPPOWERUP']._serialized_end=1852
-  _globals['_STATEVENT']._serialized_start=1855
-  _globals['_STATEVENT']._serialized_end=2268
-  _globals['_CLIENTSTATSESSION']._serialized_start=2270
-  _globals['_CLIENTSTATSESSION']._serialized_end=2372
+  _globals['_STATHEADER']._serialized_end=825
+  _globals['_STATHEADER_S64TONICKENTRY']._serialized_start=671
+  _globals['_STATHEADER_S64TONICKENTRY']._serialized_end=719
+  _globals['_STATHEADER_TEAMNUMTOS64ENTRY']._serialized_start=721
+  _globals['_STATHEADER_TEAMNUMTOS64ENTRY']._serialized_end=772
+  _globals['_STATHEADER_S64TOTEAMNUMENTRY']._serialized_start=774
+  _globals['_STATHEADER_S64TOTEAMNUMENTRY']._serialized_end=825
+  _globals['_BULLETINIT']._serialized_start=827
+  _globals['_BULLETINIT']._serialized_end=892
+  _globals['_BULLETHIT']._serialized_start=895
+  _globals['_BULLETHIT']._serialized_end=1044
+  _globals['_DAMAGEDEALT']._serialized_start=1046
+  _globals['_DAMAGEDEALT']._serialized_end=1142
+  _globals['_DAMAGERECEIVED']._serialized_start=1144
+  _globals['_DAMAGERECEIVED']._serialized_end=1242
+  _globals['_PLAYERSTATE']._serialized_start=1245
+  _globals['_PLAYERSTATE']._serialized_end=1387
+  _globals['_UPDATETICK']._serialized_start=1389
+  _globals['_UPDATETICK']._serialized_end=1456
+  _globals['_UNITDESTROYED']._serialized_start=1459
+  _globals['_UNITDESTROYED']._serialized_end=1602
+  _globals['_UNITSNIPED']._serialized_start=1605
+  _globals['_UNITSNIPED']._serialized_end=1748
+  _globals['_PICKUPPOWERUP']._serialized_start=1751
+  _globals['_PICKUPPOWERUP']._serialized_end=1880
+  _globals['_STATEVENT']._serialized_start=1883
+  _globals['_STATEVENT']._serialized_end=2296
+  _globals['_CLIENTSTATSESSION']._serialized_start=2298
+  _globals['_CLIENTSTATSESSION']._serialized_end=2400
 # @@protoc_insertion_point(module_scope)
