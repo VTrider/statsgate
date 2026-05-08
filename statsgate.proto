@@ -10,6 +10,13 @@ message Vec3 {
   float z = 3;
 }
 
+enum Race {
+  RACE_UNSPECIFIED = 0;
+  RACE_ISDF = 1;
+  RACE_SCION = 2;
+  RACE_HADEAN = 3;
+}
+
 // Important notes:
 
 // Players are identified by their steam64 id.
@@ -39,6 +46,8 @@ message StatHeader {
   // this is true if the stat session was cancelled via mission script
   // or console command, otherwise false if the game ended normally
   bool shutdown_requested = 18;
+  Race team1_race = 19;
+  Race team2_race = 20;
 }
 
 // As of now these events only track player shots

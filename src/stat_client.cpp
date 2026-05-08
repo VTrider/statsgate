@@ -260,6 +260,8 @@ namespace statsgate
 
 		pickup->set_powerup_team(GetTeamNum(powerupHandle));
 		pickup->set_powerup_odf(get_odf(powerupHandle));
+
+		exu2::PrintConsoleMessage("{}", pickup->ShortDebugString());
 	}
 
 	void stat_client::record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
@@ -359,6 +361,50 @@ namespace statsgate
 		header.set_terrain_min_z(GetTerrainMinZ());
 		header.set_terrain_max_z(GetTerrainMaxZ());
 
+		header.set_shutdown_requested(false);
+
+		switch (GetRaceOfTeam(1))
+		{
+			case 'i':
+			{
+				header.set_team1_race(RACE_ISDF);
+				break;
+			}
+			case 'f':
+			{
+				header.set_team1_race(RACE_SCION);
+				break;
+			}
+			case 'e':
+			{
+				header.set_team1_race(RACE_HADEAN);
+				break;
+			}
+			default:
+				header.set_team1_race(RACE_UNSPECIFIED);
+		}
+
+		switch (GetRaceOfTeam(6))
+		{
+			case 'i':
+			{
+				header.set_team2_race(RACE_ISDF);
+				break;
+			}
+			case 'f':
+			{
+				header.set_team2_race(RACE_SCION);
+				break;
+			}
+			case 'e':
+			{
+				header.set_team2_race(RACE_HADEAN);
+				break;
+			}
+			default:
+				header.set_team2_race(RACE_UNSPECIFIED);
+		}
+
 		*stat_session.mutable_header() = header;
 	}
 
@@ -403,9 +449,13 @@ namespace statsgate
 
 	void stat_client::register_commands()
 	{
-        exu2::PrintConsoleMessage("statsgate.dll version v{} by VTrider", version);
+		const char* splash_message = "statsgate.dll v{} by VTrider, special thanks to F9bomber, Sev, and the rest of the VSR community! "
+								     "Be sure to visit sevsunday.github.io/vt-stats for the latest data!";
+
+        exu2::PrintConsoleMessage(splash_message, version);
         exu2::VarSys_RegisterHandler("stats", command::handler, 0);
         exu2::VarSys_RegisterHandler("stats.client", command::handler, 0);
+        exu2::VarSys_RegisterHandler("stats.config", command::handler, 0);
         exu2::VarSys_RegisterHandler("stats.debug", command::handler, 0);
 
 		command cmd_debug_allocated("stats.debug.allocations", [this]()
@@ -418,9 +468,9 @@ namespace statsgate
 			exu2::PrintConsoleMessage("{}", recording);
 		});
 
-		command about("stats.about", []()
+		command about("stats.about", [splash_message]()
 		{
-			exu2::PrintConsoleMessage("statsgate.dll v{} by VTrider, special thanks to F9bomber, Sev, and the rest of the VSR community!", version);
+			exu2::PrintConsoleMessage(splash_message, version);
 		});
 
 		command shutdown("stats.shutdown", [this]()
@@ -429,10 +479,18 @@ namespace statsgate
 				PrintConsoleMessage("Shutdown is not supported for hosted clients, please exit the mission");
 
 			if (recording)
+			{
+				stat_session.mutable_header()->set_shutdown_requested(true);
 				last_tick();
+			}
 
 			PrintConsoleMessage("Shutting down");
 			running_freestanding->clear(std::memory_order::release);
+		});
+
+		command enabled("stats.config.enabled", [this]()
+		{
+			exu2::PrintConsoleMessage("{}", client_config.enable_recorder);
 		});
 
 		// Todo: add chat rate limit bypass

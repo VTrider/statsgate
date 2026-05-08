@@ -32,6 +32,7 @@
 #include "google/protobuf/map_type_handler.h"  // IWYU pragma: export
 #include "google/protobuf/map_entry.h"
 #include "google/protobuf/map_field.h"
+#include "google/protobuf/generated_enum_reflection.h"
 #include "google/protobuf/unknown_field_set.h"
 #include "google/protobuf/timestamp.pb.h"
 // @@protoc_insertion_point(includes)
@@ -58,6 +59,8 @@ extern "C" {
 extern const ::google::protobuf::internal::DescriptorTable descriptor_table_statsgate_2eproto;
 }  // extern "C"
 namespace statsgate {
+enum Race : int;
+extern const uint32_t Race_internal_data_[];
 class BulletHit;
 struct BulletHitDefaultTypeInternal;
 extern BulletHitDefaultTypeInternal _BulletHit_default_instance_;
@@ -125,10 +128,51 @@ extern const ::google::protobuf::internal::ClassDataFull Vec3_class_data_;
 }  // namespace statsgate
 namespace google {
 namespace protobuf {
+template <>
+internal::EnumTraitsT<::statsgate::Race_internal_data_>
+    internal::EnumTraitsImpl::value<::statsgate::Race>;
 }  // namespace protobuf
 }  // namespace google
 
 namespace statsgate {
+enum Race : int {
+  RACE_UNSPECIFIED = 0,
+  RACE_ISDF = 1,
+  RACE_SCION = 2,
+  RACE_HADEAN = 3,
+  Race_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::min(),
+  Race_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::max(),
+};
+
+extern const uint32_t Race_internal_data_[];
+inline constexpr Race Race_MIN =
+    static_cast<Race>(0);
+inline constexpr Race Race_MAX =
+    static_cast<Race>(3);
+inline bool Race_IsValid(int value) {
+  return 0 <= value && value <= 3;
+}
+inline constexpr int Race_ARRAYSIZE = 3 + 1;
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL Race_descriptor();
+template <typename T>
+const ::std::string& Race_Name(T value) {
+  static_assert(::std::is_same<T, Race>::value ||
+                    ::std::is_integral<T>::value,
+                "Incorrect type passed to Race_Name().");
+  return Race_Name(static_cast<Race>(value));
+}
+template <>
+inline const ::std::string& Race_Name(Race value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<Race_descriptor, 0, 3>(
+      static_cast<int>(value));
+}
+inline bool Race_Parse(
+    ::absl::string_view name, Race* PROTOBUF_NONNULL value) {
+  return ::google::protobuf::internal::ParseNamedEnum<Race>(Race_descriptor(), name,
+                                           value);
+}
 
 // ===================================================================
 
@@ -2452,6 +2496,8 @@ class StatHeader final : public ::google::protobuf::Message
     kTerrainMinZFieldNumber = 16,
     kTerrainMaxZFieldNumber = 17,
     kShutdownRequestedFieldNumber = 18,
+    kTeam1RaceFieldNumber = 19,
+    kTeam2RaceFieldNumber = 20,
     kS64ToNickFieldNumber = 6,
     kTeamnumToS64FieldNumber = 7,
     kS64ToTeamnumFieldNumber = 9,
@@ -2640,6 +2686,28 @@ class StatHeader final : public ::google::protobuf::Message
   void _internal_set_shutdown_requested(bool value);
 
   public:
+  // .statsgate.Race team1_race = 19;
+  bool has_team1_race() const;
+  void clear_team1_race() ;
+  ::statsgate::Race team1_race() const;
+  void set_team1_race(::statsgate::Race value);
+
+  private:
+  ::statsgate::Race _internal_team1_race() const;
+  void _internal_set_team1_race(::statsgate::Race value);
+
+  public:
+  // .statsgate.Race team2_race = 20;
+  bool has_team2_race() const;
+  void clear_team2_race() ;
+  ::statsgate::Race team2_race() const;
+  void set_team2_race(::statsgate::Race value);
+
+  private:
+  ::statsgate::Race _internal_team2_race() const;
+  void _internal_set_team2_race(::statsgate::Race value);
+
+  public:
   // map<uint64, string> s64_to_nick = 6;
   int s64_to_nick_size() const;
   private:
@@ -2689,7 +2757,7 @@ class StatHeader final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<5, 18,
+  static const ::google::protobuf::internal::TcParseTable<5, 20,
                                    4, 91,
                                    2>
       _table_;
@@ -2726,6 +2794,8 @@ class StatHeader final : public ::google::protobuf::Message
     float terrain_min_z_;
     float terrain_max_z_;
     bool shutdown_requested_;
+    int team1_race_;
+    int team2_race_;
     ::google::protobuf::internal::MapField<StatHeader_S64ToNickEntry_DoNotUse, ::uint64_t, ::std::string,
                       ::google::protobuf::internal::WireFormatLite::TYPE_UINT64,
                       ::google::protobuf::internal::WireFormatLite::TYPE_STRING>
@@ -4234,7 +4304,7 @@ inline void StatHeader::clear_s64_to_nick() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.s64_to_nick_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00008000U);
+                  0x00020000U);
 }
 inline const ::google::protobuf::Map<::uint64_t, ::std::string>& StatHeader::_internal_s64_to_nick() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -4250,7 +4320,7 @@ inline ::google::protobuf::Map<::uint64_t, ::std::string>* PROTOBUF_NONNULL Stat
 }
 inline ::google::protobuf::Map<::uint64_t, ::std::string>* PROTOBUF_NONNULL StatHeader::mutable_s64_to_nick()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00008000U);
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00020000U);
   // @@protoc_insertion_point(field_mutable_map:statsgate.StatHeader.s64_to_nick)
   return _internal_mutable_s64_to_nick();
 }
@@ -4266,7 +4336,7 @@ inline void StatHeader::clear_teamnum_to_s64() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.teamnum_to_s64_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00010000U);
+                  0x00040000U);
 }
 inline const ::google::protobuf::Map<::int32_t, ::uint64_t>& StatHeader::_internal_teamnum_to_s64() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -4282,7 +4352,7 @@ inline ::google::protobuf::Map<::int32_t, ::uint64_t>* PROTOBUF_NONNULL StatHead
 }
 inline ::google::protobuf::Map<::int32_t, ::uint64_t>* PROTOBUF_NONNULL StatHeader::mutable_teamnum_to_s64()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00010000U);
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00040000U);
   // @@protoc_insertion_point(field_mutable_map:statsgate.StatHeader.teamnum_to_s64)
   return _internal_mutable_teamnum_to_s64();
 }
@@ -4367,7 +4437,7 @@ inline void StatHeader::clear_s64_to_teamnum() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.s64_to_teamnum_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00020000U);
+                  0x00080000U);
 }
 inline const ::google::protobuf::Map<::uint64_t, ::int32_t>& StatHeader::_internal_s64_to_teamnum() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -4383,7 +4453,7 @@ inline ::google::protobuf::Map<::uint64_t, ::int32_t>* PROTOBUF_NONNULL StatHead
 }
 inline ::google::protobuf::Map<::uint64_t, ::int32_t>* PROTOBUF_NONNULL StatHeader::mutable_s64_to_teamnum()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00020000U);
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00080000U);
   // @@protoc_insertion_point(field_mutable_map:statsgate.StatHeader.s64_to_teamnum)
   return _internal_mutable_s64_to_teamnum();
 }
@@ -4647,6 +4717,64 @@ inline bool StatHeader::_internal_shutdown_requested() const {
 inline void StatHeader::_internal_set_shutdown_requested(bool value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.shutdown_requested_ = value;
+}
+
+// .statsgate.Race team1_race = 19;
+inline bool StatHeader::has_team1_race() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00008000U);
+  return value;
+}
+inline void StatHeader::clear_team1_race() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.team1_race_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00008000U);
+}
+inline ::statsgate::Race StatHeader::team1_race() const {
+  // @@protoc_insertion_point(field_get:statsgate.StatHeader.team1_race)
+  return _internal_team1_race();
+}
+inline void StatHeader::set_team1_race(::statsgate::Race value) {
+  _internal_set_team1_race(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00008000U);
+  // @@protoc_insertion_point(field_set:statsgate.StatHeader.team1_race)
+}
+inline ::statsgate::Race StatHeader::_internal_team1_race() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::statsgate::Race>(_impl_.team1_race_);
+}
+inline void StatHeader::_internal_set_team1_race(::statsgate::Race value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.team1_race_ = value;
+}
+
+// .statsgate.Race team2_race = 20;
+inline bool StatHeader::has_team2_race() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00010000U);
+  return value;
+}
+inline void StatHeader::clear_team2_race() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.team2_race_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00010000U);
+}
+inline ::statsgate::Race StatHeader::team2_race() const {
+  // @@protoc_insertion_point(field_get:statsgate.StatHeader.team2_race)
+  return _internal_team2_race();
+}
+inline void StatHeader::set_team2_race(::statsgate::Race value) {
+  _internal_set_team2_race(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00010000U);
+  // @@protoc_insertion_point(field_set:statsgate.StatHeader.team2_race)
+}
+inline ::statsgate::Race StatHeader::_internal_team2_race() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::statsgate::Race>(_impl_.team2_race_);
+}
+inline void StatHeader::_internal_set_team2_race(::statsgate::Race value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.team2_race_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -7558,6 +7686,19 @@ ClientStatSession::_internal_mutable_event_stream() {
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace statsgate
 
+
+namespace google {
+namespace protobuf {
+
+template <>
+struct is_proto_enum<::statsgate::Race> : std::true_type {};
+template <>
+inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::statsgate::Race>() {
+  return ::statsgate::Race_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 
