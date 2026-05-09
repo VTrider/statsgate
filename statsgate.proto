@@ -78,9 +78,6 @@ message BulletHit {
 // otherwise the field is undefined. Team is the team slot that the message is associated with
 // (may not be a player, could be an ai or structure). If a player owns AI or structures
 // they will have the same team slot as the player.
-//
-// Given a damage event in-game, a damage dealt and received event will be recorded that represent
-// two sides of the same event
 
 message DamageDealt {
   uint32 tick = 1;
