@@ -310,20 +310,18 @@ namespace statsgate
 		if (auto shooter = is_player(dmg.owner))
 			damage->set_shooter(*shooter);
 
-		damage->set_team(GetTeamNum(dmg.owner));
+		damage->set_shooter_team(GetTeamNum(dmg.owner));
+		damage->set_shooter_odf(get_odf(dmg.owner));
+
+		if (auto victim = is_player(h))
+			damage->set_victim(*victim);
+
+		damage->set_victim_team(GetTeamNum(h));
+		damage->set_victim_odf(get_odf(h));
+
 		if (pContext) // pContext can be null if the damage is water and some other weird stuff
 			damage->set_ordnance_odf(pContext);
 		damage->set_amount(dmg.value);
-
-		auto* d2 = stat_session.add_event_stream()->mutable_damage_received();
-		d2->set_tick(current_tick);
-		if (auto victim = is_player(h))
-			d2->set_victim(*victim);
-
-		d2->set_team(GetTeamNum(h));
-		if (pContext)
-			d2->set_ordnance_odf(pContext);
-		d2->set_amount(dmg.value);
 	}
 
 	void stat_client::first_tick()

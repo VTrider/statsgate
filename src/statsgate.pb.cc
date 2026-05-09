@@ -211,46 +211,23 @@ struct PickupPowerupDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PickupPowerupDefaultTypeInternal _PickupPowerup_default_instance_;
 
-inline constexpr DamageReceived::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        ordnance_odf_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        victim_{::uint64_t{0u}},
-        tick_{0u},
-        team_{0},
-        amount_{0} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR DamageReceived::DamageReceived(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(DamageReceived_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct DamageReceivedDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR DamageReceivedDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~DamageReceivedDefaultTypeInternal() {}
-  union {
-    DamageReceived _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DamageReceivedDefaultTypeInternal _DamageReceived_default_instance_;
-
 inline constexpr DamageDealt::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
+        shooter_odf_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        victim_odf_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
         ordnance_odf_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         shooter_{::uint64_t{0u}},
         tick_{0u},
-        team_{0},
+        shooter_team_{0},
+        victim_{::uint64_t{0u}},
+        victim_team_{0},
         amount_{0} {}
 
 template <typename>
@@ -608,30 +585,25 @@ const ::uint32_t
         6,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_._has_bits_),
-        8, // hasbit index offset
+        12, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.tick_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.shooter_),
-        PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.team_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.shooter_team_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.shooter_odf_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.victim_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.victim_team_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.victim_odf_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.ordnance_odf_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.amount_),
-        2,
-        1,
-        3,
-        0,
         4,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::statsgate::DamageReceived, _impl_._has_bits_),
-        8, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::statsgate::DamageReceived, _impl_.tick_),
-        PROTOBUF_FIELD_OFFSET(::statsgate::DamageReceived, _impl_.victim_),
-        PROTOBUF_FIELD_OFFSET(::statsgate::DamageReceived, _impl_.team_),
-        PROTOBUF_FIELD_OFFSET(::statsgate::DamageReceived, _impl_.ordnance_odf_),
-        PROTOBUF_FIELD_OFFSET(::statsgate::DamageReceived, _impl_.amount_),
-        2,
-        1,
         3,
+        5,
         0,
-        4,
+        6,
+        7,
+        1,
+        2,
+        8,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::PlayerState, _impl_._has_bits_),
         10, // hasbit index offset
@@ -715,7 +687,6 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
-        PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::ClientStatSession, _impl_._has_bits_),
         5, // hasbit index offset
@@ -735,14 +706,13 @@ static const ::_pbi::MigrationSchema
         {73, sizeof(::statsgate::BulletInit)},
         {82, sizeof(::statsgate::BulletHit)},
         {99, sizeof(::statsgate::DamageDealt)},
-        {112, sizeof(::statsgate::DamageReceived)},
-        {125, sizeof(::statsgate::PlayerState)},
-        {142, sizeof(::statsgate::UpdateTick)},
-        {149, sizeof(::statsgate::UnitDestroyed)},
-        {166, sizeof(::statsgate::UnitSniped)},
-        {183, sizeof(::statsgate::PickupPowerup)},
-        {198, sizeof(::statsgate::StatEvent)},
-        {209, sizeof(::statsgate::ClientStatSession)},
+        {120, sizeof(::statsgate::PlayerState)},
+        {137, sizeof(::statsgate::UpdateTick)},
+        {144, sizeof(::statsgate::UnitDestroyed)},
+        {161, sizeof(::statsgate::UnitSniped)},
+        {178, sizeof(::statsgate::PickupPowerup)},
+        {193, sizeof(::statsgate::StatEvent)},
+        {203, sizeof(::statsgate::ClientStatSession)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::statsgate::_Vec3_default_instance_._instance,
@@ -753,7 +723,6 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::statsgate::_BulletInit_default_instance_._instance,
     &::statsgate::_BulletHit_default_instance_._instance,
     &::statsgate::_DamageDealt_default_instance_._instance,
-    &::statsgate::_DamageReceived_default_instance_._instance,
     &::statsgate::_PlayerState_default_instance_._instance,
     &::statsgate::_UpdateTick_default_instance_._instance,
     &::statsgate::_UnitDestroyed_default_instance_._instance,
@@ -791,44 +760,42 @@ const char descriptor_table_protodef_statsgate_2eproto[] ABSL_ATTRIBUTE_SECTION_
     "\030\003 \001(\t\"\225\001\n\tBulletHit\022\014\n\004tick\030\001 \001(\r\022\017\n\007sh"
     "ooter\030\002 \001(\004\022\024\n\014ordnance_odf\030\003 \001(\t\022\016\n\006vic"
     "tim\030\004 \001(\004\022\022\n\nvictim_odf\030\005 \001(\t\022\023\n\013shooter"
-    "_odf\030\006 \001(\t\022\032\n\022distance_to_target\030\007 \001(\002\"`"
-    "\n\013DamageDealt\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002"
-    " \001(\004\022\014\n\004team\030\003 \001(\005\022\024\n\014ordnance_odf\030\004 \001(\t"
-    "\022\016\n\006amount\030\005 \001(\002\"b\n\016DamageReceived\022\014\n\004ti"
-    "ck\030\001 \001(\r\022\016\n\006victim\030\002 \001(\004\022\014\n\004team\030\003 \001(\005\022\024"
-    "\n\014ordnance_odf\030\004 \001(\t\022\016\n\006amount\030\005 \001(\002\"\216\001\n"
-    "\013PlayerState\022\016\n\006player\030\001 \001(\004\022!\n\010position"
-    "\030\002 \001(\0132\017.statsgate.Vec3\022\r\n\005speed\030\003 \001(\002\022\016"
-    "\n\006health\030\004 \001(\002\022\014\n\004ammo\030\005 \001(\002\022\013\n\003odf\030\006 \001("
-    "\t\022\022\n\nhas_target\030\007 \001(\010\"C\n\nUpdateTick\022\014\n\004t"
-    "ick\030\001 \001(\r\022\'\n\007players\030\002 \003(\0132\026.statsgate.P"
-    "layerState\"\217\001\n\rUnitDestroyed\022\014\n\004tick\030\001 \001"
-    "(\r\022\016\n\006killer\030\002 \001(\004\022\023\n\013killer_team\030\003 \001(\r\022"
-    "\022\n\nkiller_odf\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022\023\n\013v"
-    "ictim_team\030\006 \001(\r\022\022\n\nvictim_odf\030\007 \001(\t\"\217\001\n"
-    "\nUnitSniped\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001"
-    "(\004\022\024\n\014shooter_team\030\003 \001(\r\022\023\n\013shooter_odf\030"
-    "\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022\023\n\013victim_team\030\006 \001"
-    "(\r\022\022\n\nvictim_odf\030\007 \001(\t\"\201\001\n\rPickupPowerup"
-    "\022\014\n\004tick\030\001 \001(\r\022\016\n\006picker\030\002 \001(\004\022\023\n\013picker"
-    "_team\030\003 \001(\r\022\022\n\npicker_odf\030\004 \001(\t\022\024\n\014power"
-    "up_team\030\005 \001(\r\022\023\n\013powerup_odf\030\006 \001(\t\"\235\003\n\tS"
-    "tatEvent\022,\n\013bullet_init\030\001 \001(\0132\025.statsgat"
-    "e.BulletInitH\000\022*\n\nbullet_hit\030\002 \001(\0132\024.sta"
-    "tsgate.BulletHitH\000\022.\n\014damage_dealt\030\003 \001(\013"
-    "2\026.statsgate.DamageDealtH\000\0224\n\017damage_rec"
-    "eived\030\004 \001(\0132\031.statsgate.DamageReceivedH\000"
-    "\022,\n\013update_tick\030\005 \001(\0132\025.statsgate.Update"
-    "TickH\000\0222\n\016unit_destroyed\030\006 \001(\0132\030.statsga"
-    "te.UnitDestroyedH\000\022,\n\013unit_sniped\030\007 \001(\0132"
-    "\025.statsgate.UnitSnipedH\000\0222\n\016pickup_power"
-    "up\030\010 \001(\0132\030.statsgate.PickupPowerupH\000B\014\n\n"
-    "event_type\"f\n\021ClientStatSession\022%\n\006heade"
-    "r\030\001 \001(\0132\025.statsgate.StatHeader\022*\n\014event_"
-    "stream\030\002 \003(\0132\024.statsgate.StatEvent*L\n\004Ra"
-    "ce\022\024\n\020RACE_UNSPECIFIED\020\000\022\r\n\tRACE_ISDF\020\001\022"
-    "\016\n\nRACE_SCION\020\002\022\017\n\013RACE_HADEAN\020\003b\010editio"
-    "nsp\350\007"
+    "_odf\030\006 \001(\t\022\032\n\022distance_to_target\030\007 \001(\002\"\266"
+    "\001\n\013DamageDealt\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030"
+    "\002 \001(\004\022\024\n\014shooter_team\030\003 \001(\005\022\023\n\013shooter_o"
+    "df\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022\023\n\013victim_team\030"
+    "\006 \001(\005\022\022\n\nvictim_odf\030\007 \001(\t\022\024\n\014ordnance_od"
+    "f\030\010 \001(\t\022\016\n\006amount\030\t \001(\002\"\216\001\n\013PlayerState\022"
+    "\016\n\006player\030\001 \001(\004\022!\n\010position\030\002 \001(\0132\017.stat"
+    "sgate.Vec3\022\r\n\005speed\030\003 \001(\002\022\016\n\006health\030\004 \001("
+    "\002\022\014\n\004ammo\030\005 \001(\002\022\013\n\003odf\030\006 \001(\t\022\022\n\nhas_targ"
+    "et\030\007 \001(\010\"C\n\nUpdateTick\022\014\n\004tick\030\001 \001(\r\022\'\n\007"
+    "players\030\002 \003(\0132\026.statsgate.PlayerState\"\217\001"
+    "\n\rUnitDestroyed\022\014\n\004tick\030\001 \001(\r\022\016\n\006killer\030"
+    "\002 \001(\004\022\023\n\013killer_team\030\003 \001(\r\022\022\n\nkiller_odf"
+    "\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022\023\n\013victim_team\030\006 "
+    "\001(\r\022\022\n\nvictim_odf\030\007 \001(\t\"\217\001\n\nUnitSniped\022\014"
+    "\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014shooter"
+    "_team\030\003 \001(\r\022\023\n\013shooter_odf\030\004 \001(\t\022\016\n\006vict"
+    "im\030\005 \001(\004\022\023\n\013victim_team\030\006 \001(\r\022\022\n\nvictim_"
+    "odf\030\007 \001(\t\"\201\001\n\rPickupPowerup\022\014\n\004tick\030\001 \001("
+    "\r\022\016\n\006picker\030\002 \001(\004\022\023\n\013picker_team\030\003 \001(\r\022\022"
+    "\n\npicker_odf\030\004 \001(\t\022\024\n\014powerup_team\030\005 \001(\r"
+    "\022\023\n\013powerup_odf\030\006 \001(\t\"\355\002\n\tStatEvent\022,\n\013b"
+    "ullet_init\030\001 \001(\0132\025.statsgate.BulletInitH"
+    "\000\022*\n\nbullet_hit\030\002 \001(\0132\024.statsgate.Bullet"
+    "HitH\000\022.\n\014damage_dealt\030\003 \001(\0132\026.statsgate."
+    "DamageDealtH\000\022,\n\013update_tick\030\005 \001(\0132\025.sta"
+    "tsgate.UpdateTickH\000\0222\n\016unit_destroyed\030\006 "
+    "\001(\0132\030.statsgate.UnitDestroyedH\000\022,\n\013unit_"
+    "sniped\030\007 \001(\0132\025.statsgate.UnitSnipedH\000\0222\n"
+    "\016pickup_powerup\030\010 \001(\0132\030.statsgate.Pickup"
+    "PowerupH\000B\014\n\nevent_typeJ\004\010\004\020\005\"f\n\021ClientS"
+    "tatSession\022%\n\006header\030\001 \001(\0132\025.statsgate.S"
+    "tatHeader\022*\n\014event_stream\030\002 \003(\0132\024.statsg"
+    "ate.StatEvent*L\n\004Race\022\024\n\020RACE_UNSPECIFIE"
+    "D\020\000\022\r\n\tRACE_ISDF\020\001\022\016\n\nRACE_SCION\020\002\022\017\n\013RA"
+    "CE_HADEAN\020\003b\010editionsp\350\007"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_statsgate_2eproto_deps[1] = {
@@ -838,13 +805,13 @@ static ::absl::once_flag descriptor_table_statsgate_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_statsgate_2eproto = {
     false,
     false,
-    2565,
+    2504,
     descriptor_table_protodef_statsgate_2eproto,
     "statsgate.proto",
     &descriptor_table_statsgate_2eproto_once,
     descriptor_table_statsgate_2eproto_deps,
     1,
-    16,
+    15,
     schemas,
     file_default_instances,
     TableStruct_statsgate_2eproto::offsets,
@@ -3060,6 +3027,8 @@ PROTOBUF_NDEBUG_INLINE DamageDealt::Impl_::Impl_(
     [[maybe_unused]] const ::statsgate::DamageDealt& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
+        shooter_odf_(arena, from.shooter_odf_),
+        victim_odf_(arena, from.victim_odf_),
         ordnance_odf_(arena, from.ordnance_odf_) {}
 
 DamageDealt::DamageDealt(
@@ -3089,6 +3058,8 @@ PROTOBUF_NDEBUG_INLINE DamageDealt::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
+        shooter_odf_(arena),
+        victim_odf_(arena),
         ordnance_odf_(arena) {}
 
 inline void DamageDealt::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
@@ -3111,6 +3082,8 @@ inline void DamageDealt::SharedDtor(MessageLite& self) {
   }
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.shooter_odf_.Destroy();
+  this_._impl_.victim_odf_.Destroy();
   this_._impl_.ordnance_odf_.Destroy();
   this_._impl_.~Impl_();
 }
@@ -3158,16 +3131,16 @@ DamageDealt::GetClassData() const {
   return DamageDealt_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 5, 0, 42, 2>
+const ::_pbi::TcParseTable<4, 9, 0, 71, 2>
 DamageDealt::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_._has_bits_),
     0, // no _extensions_
-    5, 56,  // max_field_number, fast_idx_mask
+    9, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967264,  // skipmap
+    4294966784,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    5,  // num_field_entries
+    9,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     DamageDealt_class_data_.base(),
@@ -3179,45 +3152,75 @@ DamageDealt::_table_ = {
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
     // uint32 tick = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DamageDealt, _impl_.tick_), 2>(),
-     {8, 2, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DamageDealt, _impl_.tick_), 4>(),
+     {8, 4, 0,
       PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.tick_)}},
     // uint64 shooter = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(DamageDealt, _impl_.shooter_), 1>(),
-     {16, 1, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(DamageDealt, _impl_.shooter_), 3>(),
+     {16, 3, 0,
       PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.shooter_)}},
-    // int32 team = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DamageDealt, _impl_.team_), 3>(),
-     {24, 3, 0,
-      PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.team_)}},
-    // string ordnance_odf = 4;
+    // int32 shooter_team = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DamageDealt, _impl_.shooter_team_), 5>(),
+     {24, 5, 0,
+      PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.shooter_team_)}},
+    // string shooter_odf = 4;
     {::_pbi::TcParser::FastUS1,
      {34, 0, 0,
+      PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.shooter_odf_)}},
+    // uint64 victim = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(DamageDealt, _impl_.victim_), 6>(),
+     {40, 6, 0,
+      PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.victim_)}},
+    // int32 victim_team = 6;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DamageDealt, _impl_.victim_team_), 7>(),
+     {48, 7, 0,
+      PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.victim_team_)}},
+    // string victim_odf = 7;
+    {::_pbi::TcParser::FastUS1,
+     {58, 1, 0,
+      PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.victim_odf_)}},
+    // string ordnance_odf = 8;
+    {::_pbi::TcParser::FastUS1,
+     {66, 2, 0,
       PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.ordnance_odf_)}},
-    // float amount = 5;
+    // float amount = 9;
     {::_pbi::TcParser::FastF32S1,
-     {45, 4, 0,
+     {77, 8, 0,
       PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.amount_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
     // uint32 tick = 1;
-    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.tick_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.tick_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // uint64 shooter = 2;
-    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.shooter_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // int32 team = 3;
-    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.team_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
-    // string ordnance_odf = 4;
-    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.ordnance_odf_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // float amount = 5;
-    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.amount_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.shooter_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // int32 shooter_team = 3;
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.shooter_team_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    // string shooter_odf = 4;
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.shooter_odf_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // uint64 victim = 5;
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.victim_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // int32 victim_team = 6;
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.victim_team_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    // string victim_odf = 7;
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.victim_odf_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string ordnance_odf = 8;
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.ordnance_odf_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // float amount = 9;
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.amount_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
   }},
   // no aux_entries
   {{
-    "\25\0\0\0\14\0\0\0"
+    "\25\0\0\0\13\0\0\12\14\0\0\0\0\0\0\0"
     "statsgate.DamageDealt"
+    "shooter_odf"
+    "victim_odf"
     "ordnance_odf"
   }},
 };
@@ -3229,14 +3232,23 @@ PROTOBUF_NOINLINE void DamageDealt::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    _impl_.ordnance_odf_.ClearNonDefaultToEmpty();
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _impl_.shooter_odf_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _impl_.victim_odf_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _impl_.ordnance_odf_.ClearNonDefaultToEmpty();
+    }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000001eU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x000000f8U)) {
     ::memset(&_impl_.shooter_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.amount_) -
-        reinterpret_cast<char*>(&_impl_.shooter_)) + sizeof(_impl_.amount_));
+        reinterpret_cast<char*>(&_impl_.victim_team_) -
+        reinterpret_cast<char*>(&_impl_.shooter_)) + sizeof(_impl_.victim_team_));
   }
+  _impl_.amount_ = 0;
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -3261,39 +3273,69 @@ PROTOBUF_NOINLINE void DamageDealt::Clear() {
 
   cached_has_bits = this_._impl_._has_bits_[0];
   // uint32 tick = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
         1, this_._internal_tick(), target);
   }
 
   // uint64 shooter = 2;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
         2, this_._internal_shooter(), target);
   }
 
-  // int32 team = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+  // int32 shooter_team = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
     target =
         ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<3>(
-            stream, this_._internal_team(), target);
+            stream, this_._internal_shooter_team(), target);
   }
 
-  // string ordnance_odf = 4;
+  // string shooter_odf = 4;
   if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    const ::std::string& _s = this_._internal_ordnance_odf();
+    const ::std::string& _s = this_._internal_shooter_odf();
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "statsgate.DamageDealt.ordnance_odf");
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "statsgate.DamageDealt.shooter_odf");
     target = stream->WriteStringMaybeAliased(4, _s, target);
   }
 
-  // float amount = 5;
-  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+  // uint64 victim = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+        5, this_._internal_victim(), target);
+  }
+
+  // int32 victim_team = 6;
+  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+    target =
+        ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<6>(
+            stream, this_._internal_victim_team(), target);
+  }
+
+  // string victim_odf = 7;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    const ::std::string& _s = this_._internal_victim_odf();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "statsgate.DamageDealt.victim_odf");
+    target = stream->WriteStringMaybeAliased(7, _s, target);
+  }
+
+  // string ordnance_odf = 8;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    const ::std::string& _s = this_._internal_ordnance_odf();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "statsgate.DamageDealt.ordnance_odf");
+    target = stream->WriteStringMaybeAliased(8, _s, target);
+  }
+
+  // float amount = 9;
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteFloatToArray(
-        5, this_._internal_amount(), target);
+        9, this_._internal_amount(), target);
   }
 
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
@@ -3321,27 +3363,47 @@ PROTOBUF_NOINLINE void DamageDealt::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  total_size += static_cast<bool>(0x00000010U & cached_has_bits) * 5;
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
-    // string ordnance_odf = 4;
+  total_size += static_cast<bool>(0x00000100U & cached_has_bits) * 5;
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
+    // string shooter_odf = 4;
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                      this_._internal_shooter_odf());
+    }
+    // string victim_odf = 7;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                      this_._internal_victim_odf());
+    }
+    // string ordnance_odf = 8;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                       this_._internal_ordnance_odf());
     }
     // uint64 shooter = 2;
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
           this_._internal_shooter());
     }
     // uint32 tick = 1;
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
       total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
           this_._internal_tick());
     }
-    // int32 team = 3;
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    // int32 shooter_team = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
-          this_._internal_team());
+          this_._internal_shooter_team());
+    }
+    // uint64 victim = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+          this_._internal_victim());
+    }
+    // int32 victim_team = 6;
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+          this_._internal_victim_team());
     }
   }
   return this_.MaybeComputeUnknownFieldsSize(total_size,
@@ -3362,22 +3424,34 @@ void DamageDealt::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      _this->_internal_set_ordnance_odf(from._internal_ordnance_odf());
+      _this->_internal_set_shooter_odf(from._internal_shooter_odf());
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      _this->_impl_.shooter_ = from._impl_.shooter_;
+      _this->_internal_set_victim_odf(from._internal_victim_odf());
     }
     if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      _this->_impl_.tick_ = from._impl_.tick_;
+      _this->_internal_set_ordnance_odf(from._internal_ordnance_odf());
     }
     if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      _this->_impl_.team_ = from._impl_.team_;
+      _this->_impl_.shooter_ = from._impl_.shooter_;
     }
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      _this->_impl_.amount_ = from._impl_.amount_;
+      _this->_impl_.tick_ = from._impl_.tick_;
     }
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      _this->_impl_.shooter_team_ = from._impl_.shooter_team_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      _this->_impl_.victim_ = from._impl_.victim_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      _this->_impl_.victim_team_ = from._impl_.victim_team_;
+    }
+  }
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    _this->_impl_.amount_ = from._impl_.amount_;
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
@@ -3398,6 +3472,8 @@ void DamageDealt::InternalSwap(DamageDealt* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
   ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.shooter_odf_, &other->_impl_.shooter_odf_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.victim_odf_, &other->_impl_.victim_odf_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ordnance_odf_, &other->_impl_.ordnance_odf_, arena);
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.amount_)
@@ -3408,381 +3484,6 @@ void DamageDealt::InternalSwap(DamageDealt* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
 }
 
 ::google::protobuf::Metadata DamageDealt::GetMetadata() const {
-  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
-}
-// ===================================================================
-
-class DamageReceived::_Internal {
- public:
-  using HasBits =
-      decltype(::std::declval<DamageReceived>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_._has_bits_);
-};
-
-DamageReceived::DamageReceived(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, DamageReceived_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:statsgate.DamageReceived)
-}
-PROTOBUF_NDEBUG_INLINE DamageReceived::Impl_::Impl_(
-    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
-    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    [[maybe_unused]] const ::statsgate::DamageReceived& from_msg)
-      : _has_bits_{from._has_bits_},
-        _cached_size_{0},
-        ordnance_odf_(arena, from.ordnance_odf_) {}
-
-DamageReceived::DamageReceived(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const DamageReceived& from)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, DamageReceived_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  DamageReceived* const _this = this;
-  (void)_this;
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
-  ::memcpy(reinterpret_cast<char*>(&_impl_) +
-               offsetof(Impl_, victim_),
-           reinterpret_cast<const char*>(&from._impl_) +
-               offsetof(Impl_, victim_),
-           offsetof(Impl_, amount_) -
-               offsetof(Impl_, victim_) +
-               sizeof(Impl_::amount_));
-
-  // @@protoc_insertion_point(copy_constructor:statsgate.DamageReceived)
-}
-PROTOBUF_NDEBUG_INLINE DamageReceived::Impl_::Impl_(
-    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
-    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0},
-        ordnance_odf_(arena) {}
-
-inline void DamageReceived::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
-  new (&_impl_) Impl_(internal_visibility(), arena);
-  ::memset(reinterpret_cast<char*>(&_impl_) +
-               offsetof(Impl_, victim_),
-           0,
-           offsetof(Impl_, amount_) -
-               offsetof(Impl_, victim_) +
-               sizeof(Impl_::amount_));
-}
-DamageReceived::~DamageReceived() {
-  // @@protoc_insertion_point(destructor:statsgate.DamageReceived)
-  SharedDtor(*this);
-}
-inline void DamageReceived::SharedDtor(MessageLite& self) {
-  DamageReceived& this_ = static_cast<DamageReceived&>(self);
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    this_.CheckHasBitConsistency();
-  }
-  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.ordnance_odf_.Destroy();
-  this_._impl_.~Impl_();
-}
-
-inline void* PROTOBUF_NONNULL DamageReceived::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) DamageReceived(arena);
-}
-constexpr auto DamageReceived::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(DamageReceived),
-                                            alignof(DamageReceived));
-}
-constexpr auto DamageReceived::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_DamageReceived_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &DamageReceived::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<DamageReceived>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &DamageReceived::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<DamageReceived>(), &DamageReceived::ByteSizeLong,
-              &DamageReceived::_InternalSerialize,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_._cached_size_),
-          false,
-      },
-      &DamageReceived::kDescriptorMethods,
-      &descriptor_table_statsgate_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull DamageReceived_class_data_ =
-        DamageReceived::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-DamageReceived::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&DamageReceived_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(DamageReceived_class_data_.tc_table);
-  return DamageReceived_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 5, 0, 45, 2>
-DamageReceived::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_._has_bits_),
-    0, // no _extensions_
-    5, 56,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967264,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    5,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    DamageReceived_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::GenericFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::statsgate::DamageReceived>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    {::_pbi::TcParser::MiniParse, {}},
-    // uint32 tick = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DamageReceived, _impl_.tick_), 2>(),
-     {8, 2, 0,
-      PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.tick_)}},
-    // uint64 victim = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(DamageReceived, _impl_.victim_), 1>(),
-     {16, 1, 0,
-      PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.victim_)}},
-    // int32 team = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DamageReceived, _impl_.team_), 3>(),
-     {24, 3, 0,
-      PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.team_)}},
-    // string ordnance_odf = 4;
-    {::_pbi::TcParser::FastUS1,
-     {34, 0, 0,
-      PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.ordnance_odf_)}},
-    // float amount = 5;
-    {::_pbi::TcParser::FastF32S1,
-     {45, 4, 0,
-      PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.amount_)}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // uint32 tick = 1;
-    {PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.tick_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
-    // uint64 victim = 2;
-    {PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.victim_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // int32 team = 3;
-    {PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.team_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
-    // string ordnance_odf = 4;
-    {PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.ordnance_odf_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // float amount = 5;
-    {PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.amount_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
-  }},
-  // no aux_entries
-  {{
-    "\30\0\0\0\14\0\0\0"
-    "statsgate.DamageReceived"
-    "ordnance_odf"
-  }},
-};
-PROTOBUF_NOINLINE void DamageReceived::Clear() {
-// @@protoc_insertion_point(message_clear_start:statsgate.DamageReceived)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  cached_has_bits = _impl_._has_bits_[0];
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    _impl_.ordnance_odf_.ClearNonDefaultToEmpty();
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000001eU)) {
-    ::memset(&_impl_.victim_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.amount_) -
-        reinterpret_cast<char*>(&_impl_.victim_)) + sizeof(_impl_.amount_));
-  }
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL DamageReceived::_InternalSerialize(
-    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const DamageReceived& this_ = static_cast<const DamageReceived&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL DamageReceived::_InternalSerialize(
-    ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const DamageReceived& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    this_.CheckHasBitConsistency();
-  }
-  // @@protoc_insertion_point(serialize_to_array_start:statsgate.DamageReceived)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = this_._impl_._has_bits_[0];
-  // uint32 tick = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
-        1, this_._internal_tick(), target);
-  }
-
-  // uint64 victim = 2;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-        2, this_._internal_victim(), target);
-  }
-
-  // int32 team = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-    target =
-        ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<3>(
-            stream, this_._internal_team(), target);
-  }
-
-  // string ordnance_odf = 4;
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    const ::std::string& _s = this_._internal_ordnance_odf();
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "statsgate.DamageReceived.ordnance_odf");
-    target = stream->WriteStringMaybeAliased(4, _s, target);
-  }
-
-  // float amount = 5;
-  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(
-        5, this_._internal_amount(), target);
-  }
-
-  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:statsgate.DamageReceived)
-  return target;
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t DamageReceived::ByteSizeLong(const MessageLite& base) {
-  const DamageReceived& this_ = static_cast<const DamageReceived&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::size_t DamageReceived::ByteSizeLong() const {
-  const DamageReceived& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:statsgate.DamageReceived)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void)cached_has_bits;
-
-  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
-  cached_has_bits = this_._impl_._has_bits_[0];
-  total_size += static_cast<bool>(0x00000010U & cached_has_bits) * 5;
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
-    // string ordnance_odf = 4;
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                      this_._internal_ordnance_odf());
-    }
-    // uint64 victim = 2;
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
-          this_._internal_victim());
-    }
-    // uint32 tick = 1;
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
-          this_._internal_tick());
-    }
-    // int32 team = 3;
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
-          this_._internal_team());
-    }
-  }
-  return this_.MaybeComputeUnknownFieldsSize(total_size,
-                                             &this_._impl_._cached_size_);
-}
-
-void DamageReceived::MergeImpl(::google::protobuf::MessageLite& to_msg,
-                            const ::google::protobuf::MessageLite& from_msg) {
-   auto* const _this =
-      static_cast<DamageReceived*>(&to_msg);
-  auto& from = static_cast<const DamageReceived&>(from_msg);
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    from.CheckHasBitConsistency();
-  }
-  // @@protoc_insertion_point(class_specific_merge_from_start:statsgate.DamageReceived)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      _this->_internal_set_ordnance_odf(from._internal_ordnance_odf());
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      _this->_impl_.victim_ = from._impl_.victim_;
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      _this->_impl_.tick_ = from._impl_.tick_;
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      _this->_impl_.team_ = from._impl_.team_;
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      _this->_impl_.amount_ = from._impl_.amount_;
-    }
-  }
-  _this->_impl_._has_bits_[0] |= cached_has_bits;
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-}
-
-void DamageReceived::CopyFrom(const DamageReceived& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:statsgate.DamageReceived)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-
-void DamageReceived::InternalSwap(DamageReceived* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
-  using ::std::swap;
-  auto* arena = GetArena();
-  ABSL_DCHECK_EQ(arena, other->GetArena());
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ordnance_odf_, &other->_impl_.ordnance_odf_, arena);
-  ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.amount_)
-      + sizeof(DamageReceived::_impl_.amount_)
-      - PROTOBUF_FIELD_OFFSET(DamageReceived, _impl_.victim_)>(
-          reinterpret_cast<char*>(&_impl_.victim_),
-          reinterpret_cast<char*>(&other->_impl_.victim_));
-}
-
-::google::protobuf::Metadata DamageReceived::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
@@ -5833,19 +5534,6 @@ void StatEvent::set_allocated_damage_dealt(::statsgate::DamageDealt* PROTOBUF_NU
   }
   // @@protoc_insertion_point(field_set_allocated:statsgate.StatEvent.damage_dealt)
 }
-void StatEvent::set_allocated_damage_received(::statsgate::DamageReceived* PROTOBUF_NULLABLE damage_received) {
-  ::google::protobuf::Arena* message_arena = GetArena();
-  clear_event_type();
-  if (damage_received) {
-    ::google::protobuf::Arena* submessage_arena = damage_received->GetArena();
-    if (message_arena != submessage_arena) {
-      damage_received = ::google::protobuf::internal::GetOwnedMessage(message_arena, damage_received, submessage_arena);
-    }
-    set_has_damage_received();
-    _impl_.event_type_.damage_received_ = damage_received;
-  }
-  // @@protoc_insertion_point(field_set_allocated:statsgate.StatEvent.damage_received)
-}
 void StatEvent::set_allocated_update_tick(::statsgate::UpdateTick* PROTOBUF_NULLABLE update_tick) {
   ::google::protobuf::Arena* message_arena = GetArena();
   clear_event_type();
@@ -5940,9 +5628,6 @@ StatEvent::StatEvent(
       case kDamageDealt:
         _impl_.event_type_.damage_dealt_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.damage_dealt_);
         break;
-      case kDamageReceived:
-        _impl_.event_type_.damage_received_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.damage_received_);
-        break;
       case kUpdateTick:
         _impl_.event_type_.update_tick_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.update_tick_);
         break;
@@ -6011,14 +5696,6 @@ void StatEvent::clear_event_type() {
         delete _impl_.event_type_.damage_dealt_;
       } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
         ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.event_type_.damage_dealt_);
-      }
-      break;
-    }
-    case kDamageReceived: {
-      if (GetArena() == nullptr) {
-        delete _impl_.event_type_.damage_received_;
-      } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
-        ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.event_type_.damage_received_);
       }
       break;
     }
@@ -6105,17 +5782,17 @@ StatEvent::GetClassData() const {
   return StatEvent_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 8, 8, 0, 2>
+const ::_pbi::TcParseTable<0, 7, 7, 0, 2>
 StatEvent::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
     8, 0,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967040,  // skipmap
+    4294967048,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    8,  // num_field_entries
-    8,  // num_aux_entries
+    7,  // num_field_entries
+    7,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     StatEvent_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -6134,22 +5811,19 @@ StatEvent::_table_ = {
     {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.bullet_hit_), _Internal::kOneofCaseOffset + 0, 1, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .statsgate.DamageDealt damage_dealt = 3;
     {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.damage_dealt_), _Internal::kOneofCaseOffset + 0, 2, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .statsgate.DamageReceived damage_received = 4;
-    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.damage_received_), _Internal::kOneofCaseOffset + 0, 3, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .statsgate.UpdateTick update_tick = 5;
-    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.update_tick_), _Internal::kOneofCaseOffset + 0, 4, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.update_tick_), _Internal::kOneofCaseOffset + 0, 3, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .statsgate.UnitDestroyed unit_destroyed = 6;
-    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.unit_destroyed_), _Internal::kOneofCaseOffset + 0, 5, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.unit_destroyed_), _Internal::kOneofCaseOffset + 0, 4, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .statsgate.UnitSniped unit_sniped = 7;
-    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.unit_sniped_), _Internal::kOneofCaseOffset + 0, 6, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.unit_sniped_), _Internal::kOneofCaseOffset + 0, 5, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .statsgate.PickupPowerup pickup_powerup = 8;
-    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.pickup_powerup_), _Internal::kOneofCaseOffset + 0, 7, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.pickup_powerup_), _Internal::kOneofCaseOffset + 0, 6, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::statsgate::BulletInit>()},
       {::_pbi::TcParser::GetTable<::statsgate::BulletHit>()},
       {::_pbi::TcParser::GetTable<::statsgate::DamageDealt>()},
-      {::_pbi::TcParser::GetTable<::statsgate::DamageReceived>()},
       {::_pbi::TcParser::GetTable<::statsgate::UpdateTick>()},
       {::_pbi::TcParser::GetTable<::statsgate::UnitDestroyed>()},
       {::_pbi::TcParser::GetTable<::statsgate::UnitSniped>()},
@@ -6203,12 +5877,6 @@ PROTOBUF_NOINLINE void StatEvent::Clear() {
     case kDamageDealt: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
           3, *this_._impl_.event_type_.damage_dealt_, this_._impl_.event_type_.damage_dealt_->GetCachedSize(), target,
-          stream);
-      break;
-    }
-    case kDamageReceived: {
-      target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          4, *this_._impl_.event_type_.damage_received_, this_._impl_.event_type_.damage_received_->GetCachedSize(), target,
           stream);
       break;
     }
@@ -6279,12 +5947,6 @@ PROTOBUF_NOINLINE void StatEvent::Clear() {
     case kDamageDealt: {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.event_type_.damage_dealt_);
-      break;
-    }
-    // .statsgate.DamageReceived damage_received = 4;
-    case kDamageReceived: {
-      total_size += 1 +
-                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.event_type_.damage_received_);
       break;
     }
     // .statsgate.UpdateTick update_tick = 5;
@@ -6366,14 +6028,6 @@ void StatEvent::MergeImpl(::google::protobuf::MessageLite& to_msg,
           _this->_impl_.event_type_.damage_dealt_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.damage_dealt_);
         } else {
           _this->_impl_.event_type_.damage_dealt_->MergeFrom(*from._impl_.event_type_.damage_dealt_);
-        }
-        break;
-      }
-      case kDamageReceived: {
-        if (oneof_needs_init) {
-          _this->_impl_.event_type_.damage_received_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.damage_received_);
-        } else {
-          _this->_impl_.event_type_.damage_received_->MergeFrom(*from._impl_.event_type_.damage_received_);
         }
         break;
       }
