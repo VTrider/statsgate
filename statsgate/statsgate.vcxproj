@@ -103,7 +103,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);battlezone2.lib;ExtraUtilities2.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);battlezone2.lib;ExtraUtilities2.lib;Comctl32.lib</AdditionalDependencies>
       <LargeAddressAware>true</LargeAddressAware>
       <DelayLoadDLLs>ExtraUtilities2.dll</DelayLoadDLLs>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
@@ -135,7 +135,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);battlezone2.lib;ExtraUtilities2.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);battlezone2.lib;ExtraUtilities2.lib;Comctl32.lib</AdditionalDependencies>
       <LargeAddressAware>true</LargeAddressAware>
       <DelayLoadDLLs>ExtraUtilities2.dll</DelayLoadDLLs>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>

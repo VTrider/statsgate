@@ -8,6 +8,12 @@
 #include <google/protobuf/io/gzip_stream.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 
+#include <Windows.h>
+
+#define CONST const // FK OFF MICROSOFT
+#include <commctrl.h>
+#undef CONST
+
 #ifdef GetCurrentTime
 #undef GetCurrentTime // this interferes with protobuf
 #endif
@@ -410,6 +416,47 @@ namespace statsgate
 	{
 		// Not sure why this returns 0 in last tick so we'll just do it in update instead
 		// stat_session.mutable_header()->set_last_tick(GetLockstepTurn());
+		HWND hwnd = FindWindowW(L"BZCC Main Window", nullptr);
+
+		TASKDIALOG_BUTTON buttons[4];
+		// The IDs are set to arbitrary numbers to avoid conflicting with windows api macros
+		enum class outcome_id : int
+		{
+			unspecified = 0,
+			team1_win = 1000,
+			team2_win = 1001,
+			draw = 1002,
+			game_cancelled = 1003
+		};
+		buttons[0] = { .nButtonID = std::to_underlying(outcome_id::team1_win), .pszButtonText = L"Team 1 Win" };
+		buttons[1] = { .nButtonID = std::to_underlying(outcome_id::team2_win), .pszButtonText = L"Team 2 Win" };
+		buttons[2] = { .nButtonID = std::to_underlying(outcome_id::draw), .pszButtonText = L"Draw"};
+		buttons[3] = { .nButtonID = std::to_underlying(outcome_id::game_cancelled), .pszButtonText = L"Game Cancelled"};
+
+		std::wstring team_overview = std::format(
+			L"Team 1:            Team 2:\n"
+			 "{} (C)             {} (C)\n"
+			 "{}                 {}\n"
+			 "{}                 {}\n"
+			 "{}                 {}\n"
+			 "{}                 {}\n",
+			L"VTrider", L"Sev", L"SEige", L"{bac} blue leader", L"Maverick" ,L"the DRANK there is" , L"Friendly elf" ,L"blueberry fool", L"SxxyRexy", L"Bisonkuts"
+		);
+
+		TASKDIALOGCONFIG cfg{};
+		cfg.cbSize = sizeof(TASKDIALOGCONFIG);
+		cfg.hwndParent = hwnd;
+		cfg.pszWindowTitle = L"statsgate";
+		cfg.cButtons = 4;
+		cfg.pButtons = buttons;
+		cfg.pszMainInstruction = L"Please select the outcome of the game";
+		cfg.pszContent = team_overview.c_str();
+		cfg.nDefaultButton = 0;
+
+		outcome_id outcome = outcome_id::unspecified;
+		TaskDialogIndirect(&cfg, reinterpret_cast<int*>(&outcome), nullptr, nullptr);
+
+		exu2::PrintConsoleMessage("Pressed {}", std::to_underlying(outcome));
 
 		std::ofstream file = std::ofstream(std::filesystem::path(client_config.output_directory) / std::format("{}.binpb.gz", session_identifier), std::ios::binary);
 		google::protobuf::io::OstreamOutputStream output_stream(&file);

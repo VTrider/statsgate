@@ -17,6 +17,14 @@ enum Race {
   RACE_HADEAN = 3;
 }
 
+enum Outcome {
+  OUTCOME_UNSPECIFIED = 0;
+  OUTCOME_TEAM1_WIN = 1;
+  OUTCOME_TEAM2_WIN = 2;
+  OUTCOME_DRAW = 3;
+  OUTCOME_GAME_CANCELLED = 4;
+}
+
 // Important notes:
 
 // Players are identified by their steam64 id.
@@ -52,6 +60,8 @@ message StatHeader {
 
   Race team1_race = 19;
   Race team2_race = 20;
+
+  Outcome game_outcome = 21;
 }
 
 // As of now these events only track player shots
