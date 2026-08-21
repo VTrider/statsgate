@@ -119,6 +119,8 @@ namespace statsgate
 
 		std::unordered_set<std::string> ignored_odfs; // any event containing these odfs will be ignored
 
+		std::unordered_map<uint64_t, PlayerInfo> player_list; // list of players that appeared in the session
+
 		// Helper functions
 		static void register_instance(stat_client* self);
 		void register_commands();
@@ -126,7 +128,7 @@ namespace statsgate
 		void register_config();
 		uint64_t s64_from_h(Handle h);
 		std::string get_odf(Handle h);
-		std::optional<uint64_t> is_player(Handle h); // is this handle a player that's currently registered in the stat session?
+		std::optional<uint64_t> is_player(Handle h);
 	};
 }
 

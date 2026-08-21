@@ -17,18 +17,26 @@ enum Race {
   RACE_HADEAN = 3;
 }
 
+// Arbitary IDs are intentional to avoid conflicting with the win32 api, this shouldn't
+// affect data processing
 enum Outcome {
-  OUTCOME_UNSPECIFIED = 0;
-  OUTCOME_TEAM1_WIN = 1;
-  OUTCOME_TEAM2_WIN = 2;
-  OUTCOME_DRAW = 3;
-  OUTCOME_GAME_CANCELLED = 4;
+  OUTCOME_UNSPECIFIED = 0; // This shouldn't appear, it indicates corruption of some kind or invalid data
+  OUTCOME_TEAM1_WIN = 1000;
+  OUTCOME_TEAM2_WIN = 1001;
+  OUTCOME_DRAW = 1002;
+  OUTCOME_GAME_CANCELLED = 1003; // Game ended abnormally due to early RE, game crashing, restart, etc.
+}
+
+// Steam64 ID should be used for identifying unique players in processing. Nickname
+// is cosmetic and may change during the game. Some players might have frequently changing nicknames.
+message PlayerInfo {
+  uint64 steam64 = 1;
+  uint32 teamnum = 2;
+  string nickname = 3; // the nickname they had when first recorded
 }
 
 // Important notes:
 
-// Players are identified by their steam64 id.
-//
 // Anything with a `team` refers to the team slot
 // from 1-10, NOT the teamplay team.
 // Team 1 is teams 1-5, Team 2 is teams 6-10
@@ -39,11 +47,11 @@ message StatHeader {
   string author_nickname = 3;
   uint64 author_steam64 = 4;
   uint32 tick_rate = 5;
-  map<uint64, string> s64_to_nick = 6;
-  map<int32, uint64> teamnum_to_s64 = 7;
+  reserved 6;
+  reserved 7;
   string active_config_mod = 8;
-  map<uint64, int32> s64_to_teamnum = 9;
-  uint32 player_count = 10;
+  reserved 9;
+  reserved 10;
 
   uint32 last_tick = 11;
 
@@ -62,6 +70,8 @@ message StatHeader {
   Race team2_race = 20;
 
   Outcome game_outcome = 21;
+
+  repeated PlayerInfo players = 22;
 }
 
 // As of now these events only track player shots

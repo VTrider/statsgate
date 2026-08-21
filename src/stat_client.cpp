@@ -172,8 +172,23 @@ namespace statsgate
 		auto* tick = stat_session.add_event_stream()->mutable_update_tick();
 		long cur_turn = GetLockstepTurn();
 		tick->set_tick(cur_turn);
-		for (auto& [teamnum, nick] : stat_session.header().teamnum_to_s64())
+
+		// It's easier to just scan every team slot to see if a player is innit
+		for (int teamnum = 1; teamnum <= 10; teamnum++)
 		{
+			uint64_t steamid = exu2::GetSteam64(teamnum);
+			if (!steamid)
+				continue;
+
+			if (!player_list.contains(steamid))
+			{
+				PlayerInfo info;
+				info.set_steam64(steamid);
+				info.set_teamnum(teamnum);
+				info.set_nickname(GetPlayerName(GetPlayerHandle(teamnum)));
+				player_list.emplace(steamid, info);
+			}
+
 			auto* player = tick->add_players();
 			player->set_player(exu2::GetSteam64(teamnum));
 			Handle h = GetPlayerHandle(teamnum); // teamnum should be guaranteed to be a player at this point
@@ -266,8 +281,6 @@ namespace statsgate
 
 		pickup->set_powerup_team(GetTeamNum(powerupHandle));
 		pickup->set_powerup_odf(get_odf(powerupHandle));
-
-		exu2::PrintConsoleMessage("{}", pickup->ShortDebugString());
 	}
 
 	void stat_client::record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
@@ -289,7 +302,7 @@ namespace statsgate
 
 	void stat_client::record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF)
 	{
-		if (!stat_session.header().s64_to_nick().contains(s64_from_h(shooterHandle)))
+		if (!is_player(shooterHandle))
 			return;
 
 		auto* init = stat_session.add_event_stream()->mutable_bullet_init();
@@ -339,22 +352,7 @@ namespace statsgate
 		StatHeader header;
 		header.set_map(GetMissionFilename());
 		*header.mutable_start_time() = google::protobuf::util::TimeUtil::GetCurrentTime();
-		header.set_author_nickname(GetPlayerName(GetPlayerHandle()));
-		header.set_author_steam64(exu2::GetSteam64());
 		header.set_tick_rate(exu2::GetTPS());
-
-		// TODO: Rescan teamnums when players leave and join
-		for (int teamnum = 1; teamnum <= 10; teamnum++)
-		{
-			if (Handle h = GetPlayerHandle(teamnum))
-			{
-				uint64_t s64 = exu2::GetSteam64(teamnum);
-				header.mutable_s64_to_nick()->emplace(s64, GetPlayerName(h));
-				header.mutable_teamnum_to_s64()->emplace(teamnum, s64);
-				header.mutable_s64_to_teamnum()->emplace(s64, teamnum);
-				header.set_player_count(header.player_count() + 1);
-			}
-		}
 
 		header.set_active_config_mod(exu2::GetActiveConfigMod());
 
@@ -414,34 +412,23 @@ namespace statsgate
 
 	void stat_client::last_tick()
 	{
-		// Not sure why this returns 0 in last tick so we'll just do it in update instead
-		// stat_session.mutable_header()->set_last_tick(GetLockstepTurn());
 		HWND hwnd = FindWindowW(L"BZCC Main Window", nullptr);
 
 		TASKDIALOG_BUTTON buttons[4];
-		// The IDs are set to arbitrary numbers to avoid conflicting with windows api macros
-		enum class outcome_id : int
-		{
-			unspecified = 0,
-			team1_win = 1000,
-			team2_win = 1001,
-			draw = 1002,
-			game_cancelled = 1003
-		};
-		buttons[0] = { .nButtonID = std::to_underlying(outcome_id::team1_win), .pszButtonText = L"Team 1 Win" };
-		buttons[1] = { .nButtonID = std::to_underlying(outcome_id::team2_win), .pszButtonText = L"Team 2 Win" };
-		buttons[2] = { .nButtonID = std::to_underlying(outcome_id::draw), .pszButtonText = L"Draw"};
-		buttons[3] = { .nButtonID = std::to_underlying(outcome_id::game_cancelled), .pszButtonText = L"Game Cancelled"};
+		buttons[0] = { .nButtonID = OUTCOME_TEAM1_WIN, .pszButtonText = L"Team 1 Win" };
+		buttons[1] = { .nButtonID = OUTCOME_TEAM2_WIN, .pszButtonText = L"Team 2 Win" };
+		buttons[2] = { .nButtonID = OUTCOME_DRAW, .pszButtonText = L"Draw"};
+		buttons[3] = { .nButtonID = OUTCOME_GAME_CANCELLED, .pszButtonText = L"Game Cancelled"};
 
-		std::wstring team_overview = std::format(
-			L"Team 1:            Team 2:\n"
-			 "{} (C)             {} (C)\n"
-			 "{}                 {}\n"
-			 "{}                 {}\n"
-			 "{}                 {}\n"
-			 "{}                 {}\n",
-			L"VTrider", L"Sev", L"SEige", L"{bac} blue leader", L"Maverick" ,L"the DRANK there is" , L"Friendly elf" ,L"blueberry fool", L"SxxyRexy", L"Bisonkuts"
-		);
+		//std::wstring team_overview = std::format(
+		//	L"Team 1:            Team 2:\n"
+		//	 "{} (C)             {} (C)\n"
+		//	 "{}                 {}\n"
+		//	 "{}                 {}\n"
+		//	 "{}                 {}\n"
+		//	 "{}                 {}\n",
+		//	L"VTrider", L"Sev", L"SEige", L"{bac} blue leader", L"Maverick" ,L"the DRANK there is" , L"Friendly elf" ,L"blueberry fool", L"SxxyRexy", L"Bisonkuts"
+		//);
 
 		TASKDIALOGCONFIG cfg{};
 		cfg.cbSize = sizeof(TASKDIALOGCONFIG);
@@ -450,13 +437,27 @@ namespace statsgate
 		cfg.cButtons = 4;
 		cfg.pButtons = buttons;
 		cfg.pszMainInstruction = L"Please select the outcome of the game";
-		cfg.pszContent = team_overview.c_str();
+		// cfg.pszContent = team_overview.c_str();
 		cfg.nDefaultButton = 0;
 
-		outcome_id outcome = outcome_id::unspecified;
+		Outcome outcome = OUTCOME_UNSPECIFIED;
 		TaskDialogIndirect(&cfg, reinterpret_cast<int*>(&outcome), nullptr, nullptr);
 
 		exu2::PrintConsoleMessage("Pressed {}", std::to_underlying(outcome));
+
+		auto* header = stat_session.mutable_header();
+
+		header->set_game_outcome(outcome);
+
+		// These need to be in the last tick because it can sometimes be undefined if the host is recording stats in the first tick
+		header->set_author_nickname(GetPlayerName(GetPlayerHandle()));
+		header->set_author_steam64(exu2::GetSteam64());
+
+		for (const auto& [_, player] : player_list)
+		{
+			auto* recorded_player = header->add_players();
+			*recorded_player = player;
+		}
 
 		std::ofstream file = std::ofstream(std::filesystem::path(client_config.output_directory) / std::format("{}.binpb.gz", session_identifier), std::ios::binary);
 		google::protobuf::io::OstreamOutputStream output_stream(&file);
@@ -611,7 +612,7 @@ namespace statsgate
 	std::optional<uint64_t> stat_client::is_player(Handle h)
 	{
 		uint64_t maybe_s64 = s64_from_h(h);
-		if (!stat_session.header().s64_to_nick().contains(maybe_s64))
+		if (!maybe_s64)
 			return std::nullopt;
 
 		return maybe_s64;
