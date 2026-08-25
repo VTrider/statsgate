@@ -420,15 +420,21 @@ namespace statsgate
 		buttons[2] = { .nButtonID = OUTCOME_DRAW, .pszButtonText = L"Draw"};
 		buttons[3] = { .nButtonID = OUTCOME_GAME_CANCELLED, .pszButtonText = L"Game Cancelled"};
 
-		//std::wstring team_overview = std::format(
-		//	L"Team 1:            Team 2:\n"
-		//	 "{} (C)             {} (C)\n"
-		//	 "{}                 {}\n"
-		//	 "{}                 {}\n"
-		//	 "{}                 {}\n"
-		//	 "{}                 {}\n",
-		//	L"VTrider", L"Sev", L"SEige", L"{bac} blue leader", L"Maverick" ,L"the DRANK there is" , L"Friendly elf" ,L"blueberry fool", L"SxxyRexy", L"Bisonkuts"
-		//);
+		// This doesn't account for multiple commanders in one game and I don't really care about that edge case
+		std::string cmdr_t1, cmdr_t2;
+		for (const auto& [_, player] : player_list)
+		{
+			if (player.teamnum() == 1)
+				cmdr_t1 = player.nickname();
+
+			if (player.teamnum() == 6)
+				cmdr_t2 = player.nickname();
+		}
+
+		std::wstring team_overview = std::format(L"Team 1 Cmdr: {} - Team 2 Cmdr: {}",
+			std::wstring(cmdr_t1.begin(), cmdr_t1.end()),
+			std::wstring(cmdr_t2.begin(), cmdr_t2.end())
+		);
 
 		TASKDIALOGCONFIG cfg{};
 		cfg.cbSize = sizeof(TASKDIALOGCONFIG);
@@ -437,11 +443,14 @@ namespace statsgate
 		cfg.cButtons = 4;
 		cfg.pButtons = buttons;
 		cfg.pszMainInstruction = L"Please select the outcome of the game";
-		// cfg.pszContent = team_overview.c_str();
+		cfg.pszContent = team_overview.c_str();
 		cfg.nDefaultButton = 0;
 
 		Outcome outcome = OUTCOME_UNSPECIFIED;
 		TaskDialogIndirect(&cfg, reinterpret_cast<int*>(&outcome), nullptr, nullptr);
+		// Todo: directx fullscreen stuff these functions dont work to fix black screen after prompt
+		// InvalidateRect(hwnd, nullptr, true);
+		// UpdateWindow(hwnd);
 
 		exu2::PrintConsoleMessage("Pressed {}", std::to_underlying(outcome));
 
