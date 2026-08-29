@@ -136,8 +136,8 @@ message ResourceState {
   uint32 current_scrap = 1;
   uint32 max_scrap = 2;
   ScrapStatus scrap_status = 3;
-  uint32 pool_count = 4;
-  uint32 upgrade_count = 5;
+  uint32 pool_count = 4; // total pool count including upgrades
+  uint32 upgrade_count = 5; // only upgrades
 }
 
 message UpdateTick {
