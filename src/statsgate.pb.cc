@@ -123,6 +123,35 @@ struct UnitDestroyedDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 UnitDestroyedDefaultTypeInternal _UnitDestroyed_default_instance_;
 
+inline constexpr ResourceState::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        current_scrap_{0u},
+        max_scrap_{0u},
+        scrap_status_{static_cast< ::statsgate::ScrapStatus >(0)},
+        pool_count_{0u},
+        upgrade_count_{0u} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR ResourceState::ResourceState(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(ResourceState_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct ResourceStateDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ResourceStateDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ResourceStateDefaultTypeInternal() {}
+  union {
+    ResourceState _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ResourceStateDefaultTypeInternal _ResourceState_default_instance_;
+
 inline constexpr PlayerInfo::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -291,6 +320,37 @@ struct BulletHitDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BulletHitDefaultTypeInternal _BulletHit_default_instance_;
 
+inline constexpr BuildEvent::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        build_odf_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        tick_{0u},
+        type_{static_cast< ::statsgate::BuildEventType >(0)},
+        producer_{static_cast< ::statsgate::ProducerType >(0)},
+        teamnum_{0u} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR BuildEvent::BuildEvent(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(BuildEvent_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct BuildEventDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR BuildEventDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~BuildEventDefaultTypeInternal() {}
+  union {
+    BuildEvent _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BuildEventDefaultTypeInternal _BuildEvent_default_instance_;
+
 inline constexpr StatHeader::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -376,6 +436,8 @@ inline constexpr UpdateTick::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
         players_{},
+        team1_resources_{nullptr},
+        team2_resources_{nullptr},
         tick_{0u} {}
 
 template <typename>
@@ -451,7 +513,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ClientStatSessionDefaultTypeInternal _ClientStatSession_default_instance_;
 }  // namespace statsgate
 static const ::_pb::EnumDescriptor* PROTOBUF_NONNULL
-    file_level_enum_descriptors_statsgate_2eproto[2];
+    file_level_enum_descriptors_statsgate_2eproto[5];
 static constexpr const ::_pb::ServiceDescriptor* PROTOBUF_NONNULL* PROTOBUF_NULLABLE
     file_level_service_descriptors_statsgate_2eproto = nullptr;
 const ::uint32_t
@@ -579,12 +641,29 @@ const ::uint32_t
         0,
         6,
         0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::statsgate::ResourceState, _impl_._has_bits_),
+        8, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::statsgate::ResourceState, _impl_.current_scrap_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::ResourceState, _impl_.max_scrap_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::ResourceState, _impl_.scrap_status_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::ResourceState, _impl_.pool_count_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::ResourceState, _impl_.upgrade_count_),
+        0,
+        1,
+        2,
+        3,
+        4,
+        0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::UpdateTick, _impl_._has_bits_),
-        5, // hasbit index offset
+        7, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::statsgate::UpdateTick, _impl_.tick_),
         PROTOBUF_FIELD_OFFSET(::statsgate::UpdateTick, _impl_.players_),
-        1,
+        PROTOBUF_FIELD_OFFSET(::statsgate::UpdateTick, _impl_.team1_resources_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::UpdateTick, _impl_.team2_resources_),
+        3,
         0,
+        1,
+        2,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_._has_bits_),
         10, // hasbit index offset
@@ -634,8 +713,22 @@ const ::uint32_t
         0,
         5,
         1,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_._has_bits_),
+        8, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.tick_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.type_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.producer_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.teamnum_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.build_odf_),
+        1,
+        2,
+        3,
+        4,
+        0,
         0x004, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_._oneof_case_[0]),
+        PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
         PROTOBUF_FIELD_OFFSET(::statsgate::StatEvent, _impl_.event_type_),
@@ -662,12 +755,14 @@ static const ::_pbi::MigrationSchema
         {66, sizeof(::statsgate::BulletHit)},
         {83, sizeof(::statsgate::DamageDealt)},
         {104, sizeof(::statsgate::PlayerState)},
-        {121, sizeof(::statsgate::UpdateTick)},
-        {128, sizeof(::statsgate::UnitDestroyed)},
-        {145, sizeof(::statsgate::UnitSniped)},
-        {162, sizeof(::statsgate::PickupPowerup)},
-        {177, sizeof(::statsgate::StatEvent)},
-        {187, sizeof(::statsgate::ClientStatSession)},
+        {121, sizeof(::statsgate::ResourceState)},
+        {134, sizeof(::statsgate::UpdateTick)},
+        {145, sizeof(::statsgate::UnitDestroyed)},
+        {162, sizeof(::statsgate::UnitSniped)},
+        {179, sizeof(::statsgate::PickupPowerup)},
+        {194, sizeof(::statsgate::BuildEvent)},
+        {207, sizeof(::statsgate::StatEvent)},
+        {218, sizeof(::statsgate::ClientStatSession)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::statsgate::_Vec3_default_instance_._instance,
@@ -677,10 +772,12 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::statsgate::_BulletHit_default_instance_._instance,
     &::statsgate::_DamageDealt_default_instance_._instance,
     &::statsgate::_PlayerState_default_instance_._instance,
+    &::statsgate::_ResourceState_default_instance_._instance,
     &::statsgate::_UpdateTick_default_instance_._instance,
     &::statsgate::_UnitDestroyed_default_instance_._instance,
     &::statsgate::_UnitSniped_default_instance_._instance,
     &::statsgate::_PickupPowerup_default_instance_._instance,
+    &::statsgate::_BuildEvent_default_instance_._instance,
     &::statsgate::_StatEvent_default_instance_._instance,
     &::statsgate::_ClientStatSession_default_instance_._instance,
 };
@@ -717,37 +814,58 @@ const char descriptor_table_protodef_statsgate_2eproto[] ABSL_ATTRIBUTE_SECTION_
     "tate\022\016\n\006player\030\001 \001(\004\022!\n\010position\030\002 \001(\0132\017"
     ".statsgate.Vec3\022\r\n\005speed\030\003 \001(\002\022\016\n\006health"
     "\030\004 \001(\002\022\014\n\004ammo\030\005 \001(\002\022\013\n\003odf\030\006 \001(\t\022\022\n\nhas"
-    "_target\030\007 \001(\010\"C\n\nUpdateTick\022\014\n\004tick\030\001 \001("
-    "\r\022\'\n\007players\030\002 \003(\0132\026.statsgate.PlayerSta"
-    "te\"\217\001\n\rUnitDestroyed\022\014\n\004tick\030\001 \001(\r\022\016\n\006ki"
-    "ller\030\002 \001(\004\022\023\n\013killer_team\030\003 \001(\r\022\022\n\nkille"
-    "r_odf\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022\023\n\013victim_te"
-    "am\030\006 \001(\r\022\022\n\nvictim_odf\030\007 \001(\t\"\217\001\n\nUnitSni"
-    "ped\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014sh"
-    "ooter_team\030\003 \001(\r\022\023\n\013shooter_odf\030\004 \001(\t\022\016\n"
-    "\006victim\030\005 \001(\004\022\023\n\013victim_team\030\006 \001(\r\022\022\n\nvi"
-    "ctim_odf\030\007 \001(\t\"\201\001\n\rPickupPowerup\022\014\n\004tick"
-    "\030\001 \001(\r\022\016\n\006picker\030\002 \001(\004\022\023\n\013picker_team\030\003 "
-    "\001(\r\022\022\n\npicker_odf\030\004 \001(\t\022\024\n\014powerup_team\030"
-    "\005 \001(\r\022\023\n\013powerup_odf\030\006 \001(\t\"\355\002\n\tStatEvent"
-    "\022,\n\013bullet_init\030\001 \001(\0132\025.statsgate.Bullet"
-    "InitH\000\022*\n\nbullet_hit\030\002 \001(\0132\024.statsgate.B"
-    "ulletHitH\000\022.\n\014damage_dealt\030\003 \001(\0132\026.stats"
-    "gate.DamageDealtH\000\022,\n\013update_tick\030\005 \001(\0132"
-    "\025.statsgate.UpdateTickH\000\0222\n\016unit_destroy"
-    "ed\030\006 \001(\0132\030.statsgate.UnitDestroyedH\000\022,\n\013"
-    "unit_sniped\030\007 \001(\0132\025.statsgate.UnitSniped"
-    "H\000\0222\n\016pickup_powerup\030\010 \001(\0132\030.statsgate.P"
-    "ickupPowerupH\000B\014\n\nevent_typeJ\004\010\004\020\005\"f\n\021Cl"
-    "ientStatSession\022%\n\006header\030\001 \001(\0132\025.statsg"
-    "ate.StatHeader\022*\n\014event_stream\030\002 \003(\0132\024.s"
-    "tatsgate.StatEvent*L\n\004Race\022\024\n\020RACE_UNSPE"
-    "CIFIED\020\000\022\r\n\tRACE_ISDF\020\001\022\016\n\nRACE_SCION\020\002\022"
-    "\017\n\013RACE_HADEAN\020\003*\202\001\n\007Outcome\022\027\n\023OUTCOME_"
-    "UNSPECIFIED\020\000\022\026\n\021OUTCOME_TEAM1_WIN\020\350\007\022\026\n"
-    "\021OUTCOME_TEAM2_WIN\020\351\007\022\021\n\014OUTCOME_DRAW\020\352\007"
-    "\022\033\n\026OUTCOME_GAME_CANCELLED\020\353\007b\010editionsp"
-    "\350\007"
+    "_target\030\007 \001(\010\"\222\001\n\rResourceState\022\025\n\rcurre"
+    "nt_scrap\030\001 \001(\r\022\021\n\tmax_scrap\030\002 \001(\r\022,\n\014scr"
+    "ap_status\030\003 \001(\0162\026.statsgate.ScrapStatus\022"
+    "\022\n\npool_count\030\004 \001(\r\022\025\n\rupgrade_count\030\005 \001"
+    "(\r\"\251\001\n\nUpdateTick\022\014\n\004tick\030\001 \001(\r\022\'\n\007playe"
+    "rs\030\002 \003(\0132\026.statsgate.PlayerState\0221\n\017team"
+    "1_resources\030\003 \001(\0132\030.statsgate.ResourceSt"
+    "ate\0221\n\017team2_resources\030\004 \001(\0132\030.statsgate"
+    ".ResourceState\"\217\001\n\rUnitDestroyed\022\014\n\004tick"
+    "\030\001 \001(\r\022\016\n\006killer\030\002 \001(\004\022\023\n\013killer_team\030\003 "
+    "\001(\r\022\022\n\nkiller_odf\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022"
+    "\023\n\013victim_team\030\006 \001(\r\022\022\n\nvictim_odf\030\007 \001(\t"
+    "\"\217\001\n\nUnitSniped\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter"
+    "\030\002 \001(\004\022\024\n\014shooter_team\030\003 \001(\r\022\023\n\013shooter_"
+    "odf\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022\023\n\013victim_team"
+    "\030\006 \001(\r\022\022\n\nvictim_odf\030\007 \001(\t\"\201\001\n\rPickupPow"
+    "erup\022\014\n\004tick\030\001 \001(\r\022\016\n\006picker\030\002 \001(\004\022\023\n\013pi"
+    "cker_team\030\003 \001(\r\022\022\n\npicker_odf\030\004 \001(\t\022\024\n\014p"
+    "owerup_team\030\005 \001(\r\022\023\n\013powerup_odf\030\006 \001(\t\"\222"
+    "\001\n\nBuildEvent\022\014\n\004tick\030\001 \001(\r\022\'\n\004type\030\002 \001("
+    "\0162\031.statsgate.BuildEventType\022)\n\010producer"
+    "\030\003 \001(\0162\027.statsgate.ProducerType\022\017\n\007teamn"
+    "um\030\004 \001(\r\022\021\n\tbuild_odf\030\005 \001(\t\"\233\003\n\tStatEven"
+    "t\022,\n\013bullet_init\030\001 \001(\0132\025.statsgate.Bulle"
+    "tInitH\000\022*\n\nbullet_hit\030\002 \001(\0132\024.statsgate."
+    "BulletHitH\000\022.\n\014damage_dealt\030\003 \001(\0132\026.stat"
+    "sgate.DamageDealtH\000\022,\n\013update_tick\030\005 \001(\013"
+    "2\025.statsgate.UpdateTickH\000\0222\n\016unit_destro"
+    "yed\030\006 \001(\0132\030.statsgate.UnitDestroyedH\000\022,\n"
+    "\013unit_sniped\030\007 \001(\0132\025.statsgate.UnitSnipe"
+    "dH\000\0222\n\016pickup_powerup\030\010 \001(\0132\030.statsgate."
+    "PickupPowerupH\000\022,\n\013build_event\030\t \001(\0132\025.s"
+    "tatsgate.BuildEventH\000B\014\n\nevent_typeJ\004\010\004\020"
+    "\005\"f\n\021ClientStatSession\022%\n\006header\030\001 \001(\0132\025"
+    ".statsgate.StatHeader\022*\n\014event_stream\030\002 "
+    "\003(\0132\024.statsgate.StatEvent*L\n\004Race\022\024\n\020RAC"
+    "E_UNSPECIFIED\020\000\022\r\n\tRACE_ISDF\020\001\022\016\n\nRACE_S"
+    "CION\020\002\022\017\n\013RACE_HADEAN\020\003*\202\001\n\007Outcome\022\027\n\023O"
+    "UTCOME_UNSPECIFIED\020\000\022\026\n\021OUTCOME_TEAM1_WI"
+    "N\020\350\007\022\026\n\021OUTCOME_TEAM2_WIN\020\351\007\022\021\n\014OUTCOME_"
+    "DRAW\020\352\007\022\033\n\026OUTCOME_GAME_CANCELLED\020\353\007*\215\001\n"
+    "\013ScrapStatus\022\034\n\030SCRAP_STATUS_UNSPECIFIED"
+    "\020\000\022\026\n\022SCRAP_STATUS_GREEN\020\001\022\027\n\023SCRAP_STAT"
+    "US_YELLOW\020\002\022\024\n\020SCRAP_STATUS_RED\020\003\022\031\n\025SCR"
+    "AP_STATUS_PARALLEL\020\004*\207\001\n\016BuildEventType\022"
+    " \n\034BUILD_EVENT_TYPE_UNSPECIFIED\020\000\022\032\n\026BUI"
+    "LD_EVENT_TYPE_QUEUE\020\001\022\033\n\027BUILD_EVENT_TYP"
+    "E_CANCEL\020\002\022\032\n\026BUILD_EVENT_TYPE_BUILD\020\003*\201"
+    "\001\n\014ProducerType\022\035\n\031PRODUCER_TYPE_UNSPECI"
+    "FIED\020\000\022\031\n\025PRODUCER_TYPE_FACTORY\020\001\022\035\n\031PRO"
+    "DUCER_TYPE_CONSTRUCTOR\020\002\022\030\n\024PRODUCER_TYP"
+    "E_ARMORY\020\003b\010editionsp\350\007"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_statsgate_2eproto_deps[1] = {
@@ -757,13 +875,13 @@ static ::absl::once_flag descriptor_table_statsgate_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_statsgate_2eproto = {
     false,
     false,
-    2442,
+    3303,
     descriptor_table_protodef_statsgate_2eproto,
     "statsgate.proto",
     &descriptor_table_statsgate_2eproto_once,
     descriptor_table_statsgate_2eproto_deps,
     1,
-    13,
+    15,
     schemas,
     file_default_instances,
     TableStruct_statsgate_2eproto::offsets,
@@ -783,6 +901,24 @@ const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL Outcome_descriptor() 
 }
 PROTOBUF_CONSTINIT const uint32_t Outcome_internal_data_[] = {
     65536u, 262144u, 1002u, 1001u, 1003u, 1000u, };
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL ScrapStatus_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_statsgate_2eproto);
+  return file_level_enum_descriptors_statsgate_2eproto[2];
+}
+PROTOBUF_CONSTINIT const uint32_t ScrapStatus_internal_data_[] = {
+    327680u, 0u, };
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL BuildEventType_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_statsgate_2eproto);
+  return file_level_enum_descriptors_statsgate_2eproto[3];
+}
+PROTOBUF_CONSTINIT const uint32_t BuildEventType_internal_data_[] = {
+    262144u, 0u, };
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL ProducerType_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_statsgate_2eproto);
+  return file_level_enum_descriptors_statsgate_2eproto[4];
+}
+PROTOBUF_CONSTINIT const uint32_t ProducerType_internal_data_[] = {
+    262144u, 0u, };
 // ===================================================================
 
 class Vec3::_Internal {
@@ -3802,6 +3938,353 @@ void PlayerState::InternalSwap(PlayerState* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
 }
 // ===================================================================
 
+class ResourceState::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<ResourceState>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(ResourceState, _impl_._has_bits_);
+};
+
+ResourceState::ResourceState(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ResourceState_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:statsgate.ResourceState)
+}
+ResourceState::ResourceState(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceState& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ResourceState_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+PROTOBUF_NDEBUG_INLINE ResourceState::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0} {}
+
+inline void ResourceState::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, current_scrap_),
+           0,
+           offsetof(Impl_, upgrade_count_) -
+               offsetof(Impl_, current_scrap_) +
+               sizeof(Impl_::upgrade_count_));
+}
+ResourceState::~ResourceState() {
+  // @@protoc_insertion_point(destructor:statsgate.ResourceState)
+  SharedDtor(*this);
+}
+inline void ResourceState::SharedDtor(MessageLite& self) {
+  ResourceState& this_ = static_cast<ResourceState&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL ResourceState::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) ResourceState(arena);
+}
+constexpr auto ResourceState::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(ResourceState),
+                                            alignof(ResourceState));
+}
+constexpr auto ResourceState::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_ResourceState_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &ResourceState::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<ResourceState>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &ResourceState::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<ResourceState>(), &ResourceState::ByteSizeLong,
+              &ResourceState::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(ResourceState, _impl_._cached_size_),
+          false,
+      },
+      &ResourceState::kDescriptorMethods,
+      &descriptor_table_statsgate_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull ResourceState_class_data_ =
+        ResourceState::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+ResourceState::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&ResourceState_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(ResourceState_class_data_.tc_table);
+  return ResourceState_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 5, 0, 0, 2>
+ResourceState::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(ResourceState, _impl_._has_bits_),
+    0, // no _extensions_
+    5, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967264,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    5,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    ResourceState_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::statsgate::ResourceState>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // uint32 current_scrap = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ResourceState, _impl_.current_scrap_), 0>(),
+     {8, 0, 0,
+      PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.current_scrap_)}},
+    // uint32 max_scrap = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ResourceState, _impl_.max_scrap_), 1>(),
+     {16, 1, 0,
+      PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.max_scrap_)}},
+    // .statsgate.ScrapStatus scrap_status = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ResourceState, _impl_.scrap_status_), 2>(),
+     {24, 2, 0,
+      PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.scrap_status_)}},
+    // uint32 pool_count = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ResourceState, _impl_.pool_count_), 3>(),
+     {32, 3, 0,
+      PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.pool_count_)}},
+    // uint32 upgrade_count = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ResourceState, _impl_.upgrade_count_), 4>(),
+     {40, 4, 0,
+      PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.upgrade_count_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // uint32 current_scrap = 1;
+    {PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.current_scrap_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint32 max_scrap = 2;
+    {PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.max_scrap_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // .statsgate.ScrapStatus scrap_status = 3;
+    {PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.scrap_status_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // uint32 pool_count = 4;
+    {PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.pool_count_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint32 upgrade_count = 5;
+    {PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.upgrade_count_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+PROTOBUF_NOINLINE void ResourceState::Clear() {
+// @@protoc_insertion_point(message_clear_start:statsgate.ResourceState)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
+    ::memset(&_impl_.current_scrap_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.upgrade_count_) -
+        reinterpret_cast<char*>(&_impl_.current_scrap_)) + sizeof(_impl_.upgrade_count_));
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL ResourceState::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const ResourceState& this_ = static_cast<const ResourceState&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL ResourceState::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const ResourceState& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:statsgate.ResourceState)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // uint32 current_scrap = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        1, this_._internal_current_scrap(), target);
+  }
+
+  // uint32 max_scrap = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        2, this_._internal_max_scrap(), target);
+  }
+
+  // .statsgate.ScrapStatus scrap_status = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+        3, this_._internal_scrap_status(), target);
+  }
+
+  // uint32 pool_count = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        4, this_._internal_pool_count(), target);
+  }
+
+  // uint32 upgrade_count = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        5, this_._internal_upgrade_count(), target);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:statsgate.ResourceState)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t ResourceState::ByteSizeLong(const MessageLite& base) {
+  const ResourceState& this_ = static_cast<const ResourceState&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t ResourceState::ByteSizeLong() const {
+  const ResourceState& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:statsgate.ResourceState)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
+    // uint32 current_scrap = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_current_scrap());
+    }
+    // uint32 max_scrap = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_max_scrap());
+    }
+    // .statsgate.ScrapStatus scrap_status = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      total_size += 1 +
+                    ::_pbi::WireFormatLite::EnumSize(this_._internal_scrap_status());
+    }
+    // uint32 pool_count = 4;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_pool_count());
+    }
+    // uint32 upgrade_count = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_upgrade_count());
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void ResourceState::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<ResourceState*>(&to_msg);
+  auto& from = static_cast<const ResourceState&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:statsgate.ResourceState)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _this->_impl_.current_scrap_ = from._impl_.current_scrap_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _this->_impl_.max_scrap_ = from._impl_.max_scrap_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _this->_impl_.scrap_status_ = from._impl_.scrap_status_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      _this->_impl_.pool_count_ = from._impl_.pool_count_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      _this->_impl_.upgrade_count_ = from._impl_.upgrade_count_;
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void ResourceState::CopyFrom(const ResourceState& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:statsgate.ResourceState)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void ResourceState::InternalSwap(ResourceState* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.upgrade_count_)
+      + sizeof(ResourceState::_impl_.upgrade_count_)
+      - PROTOBUF_FIELD_OFFSET(ResourceState, _impl_.current_scrap_)>(
+          reinterpret_cast<char*>(&_impl_.current_scrap_),
+          reinterpret_cast<char*>(&other->_impl_.current_scrap_));
+}
+
+::google::protobuf::Metadata ResourceState::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
 class UpdateTick::_Internal {
  public:
   using HasBits =
@@ -3840,6 +4323,13 @@ UpdateTick::UpdateTick(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.team1_resources_ = (CheckHasBit(cached_has_bits, 0x00000002U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.team1_resources_)
+                : nullptr;
+  _impl_.team2_resources_ = (CheckHasBit(cached_has_bits, 0x00000004U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.team2_resources_)
+                : nullptr;
   _impl_.tick_ = from._impl_.tick_;
 
   // @@protoc_insertion_point(copy_constructor:statsgate.UpdateTick)
@@ -3852,7 +4342,12 @@ PROTOBUF_NDEBUG_INLINE UpdateTick::Impl_::Impl_(
 
 inline void UpdateTick::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
-  _impl_.tick_ = {};
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, team1_resources_),
+           0,
+           offsetof(Impl_, tick_) -
+               offsetof(Impl_, team1_resources_) +
+               sizeof(Impl_::tick_));
 }
 UpdateTick::~UpdateTick() {
   // @@protoc_insertion_point(destructor:statsgate.UpdateTick)
@@ -3865,6 +4360,8 @@ inline void UpdateTick::SharedDtor(MessageLite& self) {
   }
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
+  delete this_._impl_.team1_resources_;
+  delete this_._impl_.team2_resources_;
   this_._impl_.~Impl_();
 }
 
@@ -3923,17 +4420,17 @@ UpdateTick::GetClassData() const {
   return UpdateTick_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 1, 0, 2>
+const ::_pbi::TcParseTable<2, 4, 3, 0, 2>
 UpdateTick::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_._has_bits_),
     0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
+    4, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
+    4294967280,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
-    1,  // num_aux_entries
+    4,  // num_field_entries
+    3,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     UpdateTick_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -3942,24 +4439,38 @@ UpdateTick::_table_ = {
     ::_pbi::TcParser::GetTable<::statsgate::UpdateTick>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
+    // .statsgate.ResourceState team2_resources = 4;
+    {::_pbi::TcParser::FastMtS1,
+     {34, 2, 2,
+      PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.team2_resources_)}},
+    // uint32 tick = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(UpdateTick, _impl_.tick_), 3>(),
+     {8, 3, 0,
+      PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.tick_)}},
     // repeated .statsgate.PlayerState players = 2;
     {::_pbi::TcParser::FastMtR1,
      {18, 0, 0,
       PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.players_)}},
-    // uint32 tick = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(UpdateTick, _impl_.tick_), 1>(),
-     {8, 1, 0,
-      PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.tick_)}},
+    // .statsgate.ResourceState team1_resources = 3;
+    {::_pbi::TcParser::FastMtS1,
+     {26, 1, 1,
+      PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.team1_resources_)}},
   }}, {{
     65535, 65535
   }}, {{
     // uint32 tick = 1;
-    {PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.tick_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    {PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.tick_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // repeated .statsgate.PlayerState players = 2;
     {PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.players_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .statsgate.ResourceState team1_resources = 3;
+    {PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.team1_resources_), _Internal::kHasBitsOffset + 1, 1, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .statsgate.ResourceState team2_resources = 4;
+    {PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.team2_resources_), _Internal::kHasBitsOffset + 2, 2, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::statsgate::PlayerState>()},
+      {::_pbi::TcParser::GetTable<::statsgate::ResourceState>()},
+      {::_pbi::TcParser::GetTable<::statsgate::ResourceState>()},
   }},
   {{
   }},
@@ -3972,8 +4483,18 @@ PROTOBUF_NOINLINE void UpdateTick::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
-    _impl_.players_.Clear();
+  if (BatchCheckHasBit(cached_has_bits, 0x00000007U)) {
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
+      _impl_.players_.Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      ABSL_DCHECK(_impl_.team1_resources_ != nullptr);
+      _impl_.team1_resources_->Clear();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      ABSL_DCHECK(_impl_.team2_resources_ != nullptr);
+      _impl_.team2_resources_->Clear();
+    }
   }
   _impl_.tick_ = 0u;
   _impl_._has_bits_.Clear();
@@ -4000,7 +4521,7 @@ PROTOBUF_NOINLINE void UpdateTick::Clear() {
 
   cached_has_bits = this_._impl_._has_bits_[0];
   // uint32 tick = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
         1, this_._internal_tick(), target);
@@ -4017,6 +4538,20 @@ PROTOBUF_NOINLINE void UpdateTick::Clear() {
               2, repfield, repfield.GetCachedSize(),
               target, stream);
     }
+  }
+
+  // .statsgate.ResourceState team1_resources = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        3, *this_._impl_.team1_resources_, this_._impl_.team1_resources_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .statsgate.ResourceState team2_resources = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        4, *this_._impl_.team2_resources_, this_._impl_.team2_resources_->GetCachedSize(), target,
+        stream);
   }
 
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
@@ -4044,7 +4579,7 @@ PROTOBUF_NOINLINE void UpdateTick::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
     // repeated .statsgate.PlayerState players = 2;
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
       total_size += 1UL * this_._internal_players_size();
@@ -4052,8 +4587,18 @@ PROTOBUF_NOINLINE void UpdateTick::Clear() {
         total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
       }
     }
-    // uint32 tick = 1;
+    // .statsgate.ResourceState team1_resources = 3;
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.team1_resources_);
+    }
+    // .statsgate.ResourceState team2_resources = 4;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.team2_resources_);
+    }
+    // uint32 tick = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
           this_._internal_tick());
     }
@@ -4077,13 +4622,29 @@ void UpdateTick::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
       _this->_internal_mutable_players()->InternalMergeFromWithArena(
           ::google::protobuf::MessageLite::internal_visibility(), arena,
           from._internal_players());
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      ABSL_DCHECK(from._impl_.team1_resources_ != nullptr);
+      if (_this->_impl_.team1_resources_ == nullptr) {
+        _this->_impl_.team1_resources_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.team1_resources_);
+      } else {
+        _this->_impl_.team1_resources_->MergeFrom(*from._impl_.team1_resources_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      ABSL_DCHECK(from._impl_.team2_resources_ != nullptr);
+      if (_this->_impl_.team2_resources_ == nullptr) {
+        _this->_impl_.team2_resources_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.team2_resources_);
+      } else {
+        _this->_impl_.team2_resources_->MergeFrom(*from._impl_.team2_resources_);
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
       _this->_impl_.tick_ = from._impl_.tick_;
     }
   }
@@ -4105,7 +4666,12 @@ void UpdateTick::InternalSwap(UpdateTick* PROTOBUF_RESTRICT PROTOBUF_NONNULL oth
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   _impl_.players_.InternalSwap(&other->_impl_.players_);
-  swap(_impl_.tick_, other->_impl_.tick_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.tick_)
+      + sizeof(UpdateTick::_impl_.tick_)
+      - PROTOBUF_FIELD_OFFSET(UpdateTick, _impl_.team1_resources_)>(
+          reinterpret_cast<char*>(&_impl_.team1_resources_),
+          reinterpret_cast<char*>(&other->_impl_.team1_resources_));
 }
 
 ::google::protobuf::Metadata UpdateTick::GetMetadata() const {
@@ -5383,6 +5949,385 @@ void PickupPowerup::InternalSwap(PickupPowerup* PROTOBUF_RESTRICT PROTOBUF_NONNU
 }
 // ===================================================================
 
+class BuildEvent::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<BuildEvent>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_._has_bits_);
+};
+
+BuildEvent::BuildEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, BuildEvent_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:statsgate.BuildEvent)
+}
+PROTOBUF_NDEBUG_INLINE BuildEvent::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::statsgate::BuildEvent& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        build_odf_(arena, from.build_odf_) {}
+
+BuildEvent::BuildEvent(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const BuildEvent& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, BuildEvent_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  BuildEvent* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::memcpy(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, tick_),
+           reinterpret_cast<const char*>(&from._impl_) +
+               offsetof(Impl_, tick_),
+           offsetof(Impl_, teamnum_) -
+               offsetof(Impl_, tick_) +
+               sizeof(Impl_::teamnum_));
+
+  // @@protoc_insertion_point(copy_constructor:statsgate.BuildEvent)
+}
+PROTOBUF_NDEBUG_INLINE BuildEvent::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        build_odf_(arena) {}
+
+inline void BuildEvent::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, tick_),
+           0,
+           offsetof(Impl_, teamnum_) -
+               offsetof(Impl_, tick_) +
+               sizeof(Impl_::teamnum_));
+}
+BuildEvent::~BuildEvent() {
+  // @@protoc_insertion_point(destructor:statsgate.BuildEvent)
+  SharedDtor(*this);
+}
+inline void BuildEvent::SharedDtor(MessageLite& self) {
+  BuildEvent& this_ = static_cast<BuildEvent&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.build_odf_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL BuildEvent::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) BuildEvent(arena);
+}
+constexpr auto BuildEvent::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(BuildEvent),
+                                            alignof(BuildEvent));
+}
+constexpr auto BuildEvent::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_BuildEvent_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &BuildEvent::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<BuildEvent>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &BuildEvent::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<BuildEvent>(), &BuildEvent::ByteSizeLong,
+              &BuildEvent::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_._cached_size_),
+          false,
+      },
+      &BuildEvent::kDescriptorMethods,
+      &descriptor_table_statsgate_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull BuildEvent_class_data_ =
+        BuildEvent::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+BuildEvent::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&BuildEvent_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(BuildEvent_class_data_.tc_table);
+  return BuildEvent_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 5, 0, 38, 2>
+BuildEvent::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_._has_bits_),
+    0, // no _extensions_
+    5, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967264,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    5,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    BuildEvent_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::statsgate::BuildEvent>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // uint32 tick = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BuildEvent, _impl_.tick_), 1>(),
+     {8, 1, 0,
+      PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.tick_)}},
+    // .statsgate.BuildEventType type = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BuildEvent, _impl_.type_), 2>(),
+     {16, 2, 0,
+      PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.type_)}},
+    // .statsgate.ProducerType producer = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BuildEvent, _impl_.producer_), 3>(),
+     {24, 3, 0,
+      PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.producer_)}},
+    // uint32 teamnum = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BuildEvent, _impl_.teamnum_), 4>(),
+     {32, 4, 0,
+      PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.teamnum_)}},
+    // string build_odf = 5;
+    {::_pbi::TcParser::FastUS1,
+     {42, 0, 0,
+      PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.build_odf_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // uint32 tick = 1;
+    {PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.tick_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // .statsgate.BuildEventType type = 2;
+    {PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.type_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // .statsgate.ProducerType producer = 3;
+    {PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.producer_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // uint32 teamnum = 4;
+    {PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.teamnum_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // string build_odf = 5;
+    {PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.build_odf_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\24\0\0\0\0\11\0\0"
+    "statsgate.BuildEvent"
+    "build_odf"
+  }},
+};
+PROTOBUF_NOINLINE void BuildEvent::Clear() {
+// @@protoc_insertion_point(message_clear_start:statsgate.BuildEvent)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    _impl_.build_odf_.ClearNonDefaultToEmpty();
+  }
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001eU)) {
+    ::memset(&_impl_.tick_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.teamnum_) -
+        reinterpret_cast<char*>(&_impl_.tick_)) + sizeof(_impl_.teamnum_));
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL BuildEvent::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const BuildEvent& this_ = static_cast<const BuildEvent&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL BuildEvent::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const BuildEvent& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:statsgate.BuildEvent)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // uint32 tick = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        1, this_._internal_tick(), target);
+  }
+
+  // .statsgate.BuildEventType type = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+        2, this_._internal_type(), target);
+  }
+
+  // .statsgate.ProducerType producer = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+        3, this_._internal_producer(), target);
+  }
+
+  // uint32 teamnum = 4;
+  if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        4, this_._internal_teamnum(), target);
+  }
+
+  // string build_odf = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    const ::std::string& _s = this_._internal_build_odf();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "statsgate.BuildEvent.build_odf");
+    target = stream->WriteStringMaybeAliased(5, _s, target);
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:statsgate.BuildEvent)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t BuildEvent::ByteSizeLong(const MessageLite& base) {
+  const BuildEvent& this_ = static_cast<const BuildEvent&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t BuildEvent::ByteSizeLong() const {
+  const BuildEvent& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:statsgate.BuildEvent)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
+    // string build_odf = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                      this_._internal_build_odf());
+    }
+    // uint32 tick = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_tick());
+    }
+    // .statsgate.BuildEventType type = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      total_size += 1 +
+                    ::_pbi::WireFormatLite::EnumSize(this_._internal_type());
+    }
+    // .statsgate.ProducerType producer = 3;
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      total_size += 1 +
+                    ::_pbi::WireFormatLite::EnumSize(this_._internal_producer());
+    }
+    // uint32 teamnum = 4;
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_teamnum());
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void BuildEvent::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<BuildEvent*>(&to_msg);
+  auto& from = static_cast<const BuildEvent&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:statsgate.BuildEvent)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x0000001fU)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _this->_internal_set_build_odf(from._internal_build_odf());
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _this->_impl_.tick_ = from._impl_.tick_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _this->_impl_.type_ = from._impl_.type_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+      _this->_impl_.producer_ = from._impl_.producer_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000010U)) {
+      _this->_impl_.teamnum_ = from._impl_.teamnum_;
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void BuildEvent::CopyFrom(const BuildEvent& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:statsgate.BuildEvent)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void BuildEvent::InternalSwap(BuildEvent* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.build_odf_, &other->_impl_.build_odf_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.teamnum_)
+      + sizeof(BuildEvent::_impl_.teamnum_)
+      - PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.tick_)>(
+          reinterpret_cast<char*>(&_impl_.tick_),
+          reinterpret_cast<char*>(&other->_impl_.tick_));
+}
+
+::google::protobuf::Metadata BuildEvent::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
 class StatEvent::_Internal {
  public:
   static constexpr ::int32_t kOneofCaseOffset =
@@ -5480,6 +6425,19 @@ void StatEvent::set_allocated_pickup_powerup(::statsgate::PickupPowerup* PROTOBU
   }
   // @@protoc_insertion_point(field_set_allocated:statsgate.StatEvent.pickup_powerup)
 }
+void StatEvent::set_allocated_build_event(::statsgate::BuildEvent* PROTOBUF_NULLABLE build_event) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  clear_event_type();
+  if (build_event) {
+    ::google::protobuf::Arena* submessage_arena = build_event->GetArena();
+    if (message_arena != submessage_arena) {
+      build_event = ::google::protobuf::internal::GetOwnedMessage(message_arena, build_event, submessage_arena);
+    }
+    set_has_build_event();
+    _impl_.event_type_.build_event_ = build_event;
+  }
+  // @@protoc_insertion_point(field_set_allocated:statsgate.StatEvent.build_event)
+}
 StatEvent::StatEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, StatEvent_class_data_.base()) {
@@ -5533,6 +6491,9 @@ StatEvent::StatEvent(
         break;
       case kPickupPowerup:
         _impl_.event_type_.pickup_powerup_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.pickup_powerup_);
+        break;
+      case kBuildEvent:
+        _impl_.event_type_.build_event_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.build_event_);
         break;
   }
 
@@ -5625,6 +6586,14 @@ void StatEvent::clear_event_type() {
       }
       break;
     }
+    case kBuildEvent: {
+      if (GetArena() == nullptr) {
+        delete _impl_.event_type_.build_event_;
+      } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+        ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.event_type_.build_event_);
+      }
+      break;
+    }
     case EVENT_TYPE_NOT_SET: {
       break;
     }
@@ -5676,17 +6645,17 @@ StatEvent::GetClassData() const {
   return StatEvent_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 7, 7, 0, 2>
+const ::_pbi::TcParseTable<0, 8, 8, 0, 2>
 StatEvent::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    8, 0,  // max_field_number, fast_idx_mask
+    9, 0,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967048,  // skipmap
+    4294966792,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    7,  // num_field_entries
-    7,  // num_aux_entries
+    8,  // num_field_entries
+    8,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     StatEvent_class_data_.base(),
     nullptr,  // post_loop_handler
@@ -5713,6 +6682,8 @@ StatEvent::_table_ = {
     {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.unit_sniped_), _Internal::kOneofCaseOffset + 0, 5, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .statsgate.PickupPowerup pickup_powerup = 8;
     {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.pickup_powerup_), _Internal::kOneofCaseOffset + 0, 6, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .statsgate.BuildEvent build_event = 9;
+    {PROTOBUF_FIELD_OFFSET(StatEvent, _impl_.event_type_.build_event_), _Internal::kOneofCaseOffset + 0, 7, (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::statsgate::BulletInit>()},
@@ -5722,6 +6693,7 @@ StatEvent::_table_ = {
       {::_pbi::TcParser::GetTable<::statsgate::UnitDestroyed>()},
       {::_pbi::TcParser::GetTable<::statsgate::UnitSniped>()},
       {::_pbi::TcParser::GetTable<::statsgate::PickupPowerup>()},
+      {::_pbi::TcParser::GetTable<::statsgate::BuildEvent>()},
   }},
   {{
   }},
@@ -5798,6 +6770,12 @@ PROTOBUF_NOINLINE void StatEvent::Clear() {
           stream);
       break;
     }
+    case kBuildEvent: {
+      target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+          9, *this_._impl_.event_type_.build_event_, this_._impl_.event_type_.build_event_->GetCachedSize(), target,
+          stream);
+      break;
+    }
     default:
       break;
   }
@@ -5865,6 +6843,12 @@ PROTOBUF_NOINLINE void StatEvent::Clear() {
     case kPickupPowerup: {
       total_size += 1 +
                     ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.event_type_.pickup_powerup_);
+      break;
+    }
+    // .statsgate.BuildEvent build_event = 9;
+    case kBuildEvent: {
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.event_type_.build_event_);
       break;
     }
     case EVENT_TYPE_NOT_SET: {
@@ -5954,6 +6938,14 @@ void StatEvent::MergeImpl(::google::protobuf::MessageLite& to_msg,
           _this->_impl_.event_type_.pickup_powerup_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.pickup_powerup_);
         } else {
           _this->_impl_.event_type_.pickup_powerup_->MergeFrom(*from._impl_.event_type_.pickup_powerup_);
+        }
+        break;
+      }
+      case kBuildEvent: {
+        if (oneof_needs_init) {
+          _this->_impl_.event_type_.build_event_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.event_type_.build_event_);
+        } else {
+          _this->_impl_.event_type_.build_event_->MergeFrom(*from._impl_.event_type_.build_event_);
         }
         break;
       }

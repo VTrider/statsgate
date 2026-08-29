@@ -55,10 +55,20 @@ extern "C" {
 extern const ::google::protobuf::internal::DescriptorTable descriptor_table_statsgate_2eproto;
 }  // extern "C"
 namespace statsgate {
+enum BuildEventType : int;
+extern const uint32_t BuildEventType_internal_data_[];
 enum Outcome : int;
 extern const uint32_t Outcome_internal_data_[];
+enum ProducerType : int;
+extern const uint32_t ProducerType_internal_data_[];
 enum Race : int;
 extern const uint32_t Race_internal_data_[];
+enum ScrapStatus : int;
+extern const uint32_t ScrapStatus_internal_data_[];
+class BuildEvent;
+struct BuildEventDefaultTypeInternal;
+extern BuildEventDefaultTypeInternal _BuildEvent_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull BuildEvent_class_data_;
 class BulletHit;
 struct BulletHitDefaultTypeInternal;
 extern BulletHitDefaultTypeInternal _BulletHit_default_instance_;
@@ -87,6 +97,10 @@ class PlayerState;
 struct PlayerStateDefaultTypeInternal;
 extern PlayerStateDefaultTypeInternal _PlayerState_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull PlayerState_class_data_;
+class ResourceState;
+struct ResourceStateDefaultTypeInternal;
+extern ResourceStateDefaultTypeInternal _ResourceState_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ResourceState_class_data_;
 class StatEvent;
 struct StatEventDefaultTypeInternal;
 extern StatEventDefaultTypeInternal _StatEvent_default_instance_;
@@ -115,11 +129,20 @@ extern const ::google::protobuf::internal::ClassDataFull Vec3_class_data_;
 namespace google {
 namespace protobuf {
 template <>
+internal::EnumTraitsT<::statsgate::BuildEventType_internal_data_>
+    internal::EnumTraitsImpl::value<::statsgate::BuildEventType>;
+template <>
 internal::EnumTraitsT<::statsgate::Outcome_internal_data_>
     internal::EnumTraitsImpl::value<::statsgate::Outcome>;
 template <>
+internal::EnumTraitsT<::statsgate::ProducerType_internal_data_>
+    internal::EnumTraitsImpl::value<::statsgate::ProducerType>;
+template <>
 internal::EnumTraitsT<::statsgate::Race_internal_data_>
     internal::EnumTraitsImpl::value<::statsgate::Race>;
+template <>
+internal::EnumTraitsT<::statsgate::ScrapStatus_internal_data_>
+    internal::EnumTraitsImpl::value<::statsgate::ScrapStatus>;
 }  // namespace protobuf
 }  // namespace google
 
@@ -194,6 +217,121 @@ const ::std::string& Outcome_Name(T value) {
 inline bool Outcome_Parse(
     ::absl::string_view name, Outcome* PROTOBUF_NONNULL value) {
   return ::google::protobuf::internal::ParseNamedEnum<Outcome>(Outcome_descriptor(), name,
+                                           value);
+}
+enum ScrapStatus : int {
+  SCRAP_STATUS_UNSPECIFIED = 0,
+  SCRAP_STATUS_GREEN = 1,
+  SCRAP_STATUS_YELLOW = 2,
+  SCRAP_STATUS_RED = 3,
+  SCRAP_STATUS_PARALLEL = 4,
+  ScrapStatus_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::min(),
+  ScrapStatus_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::max(),
+};
+
+extern const uint32_t ScrapStatus_internal_data_[];
+inline constexpr ScrapStatus ScrapStatus_MIN =
+    static_cast<ScrapStatus>(0);
+inline constexpr ScrapStatus ScrapStatus_MAX =
+    static_cast<ScrapStatus>(4);
+inline bool ScrapStatus_IsValid(int value) {
+  return 0 <= value && value <= 4;
+}
+inline constexpr int ScrapStatus_ARRAYSIZE = 4 + 1;
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL ScrapStatus_descriptor();
+template <typename T>
+const ::std::string& ScrapStatus_Name(T value) {
+  static_assert(::std::is_same<T, ScrapStatus>::value ||
+                    ::std::is_integral<T>::value,
+                "Incorrect type passed to ScrapStatus_Name().");
+  return ScrapStatus_Name(static_cast<ScrapStatus>(value));
+}
+template <>
+inline const ::std::string& ScrapStatus_Name(ScrapStatus value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<ScrapStatus_descriptor, 0, 4>(
+      static_cast<int>(value));
+}
+inline bool ScrapStatus_Parse(
+    ::absl::string_view name, ScrapStatus* PROTOBUF_NONNULL value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ScrapStatus>(ScrapStatus_descriptor(), name,
+                                           value);
+}
+enum BuildEventType : int {
+  BUILD_EVENT_TYPE_UNSPECIFIED = 0,
+  BUILD_EVENT_TYPE_QUEUE = 1,
+  BUILD_EVENT_TYPE_CANCEL = 2,
+  BUILD_EVENT_TYPE_BUILD = 3,
+  BuildEventType_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::min(),
+  BuildEventType_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::max(),
+};
+
+extern const uint32_t BuildEventType_internal_data_[];
+inline constexpr BuildEventType BuildEventType_MIN =
+    static_cast<BuildEventType>(0);
+inline constexpr BuildEventType BuildEventType_MAX =
+    static_cast<BuildEventType>(3);
+inline bool BuildEventType_IsValid(int value) {
+  return 0 <= value && value <= 3;
+}
+inline constexpr int BuildEventType_ARRAYSIZE = 3 + 1;
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL BuildEventType_descriptor();
+template <typename T>
+const ::std::string& BuildEventType_Name(T value) {
+  static_assert(::std::is_same<T, BuildEventType>::value ||
+                    ::std::is_integral<T>::value,
+                "Incorrect type passed to BuildEventType_Name().");
+  return BuildEventType_Name(static_cast<BuildEventType>(value));
+}
+template <>
+inline const ::std::string& BuildEventType_Name(BuildEventType value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<BuildEventType_descriptor, 0, 3>(
+      static_cast<int>(value));
+}
+inline bool BuildEventType_Parse(
+    ::absl::string_view name, BuildEventType* PROTOBUF_NONNULL value) {
+  return ::google::protobuf::internal::ParseNamedEnum<BuildEventType>(BuildEventType_descriptor(), name,
+                                           value);
+}
+enum ProducerType : int {
+  PRODUCER_TYPE_UNSPECIFIED = 0,
+  PRODUCER_TYPE_FACTORY = 1,
+  PRODUCER_TYPE_CONSTRUCTOR = 2,
+  PRODUCER_TYPE_ARMORY = 3,
+  ProducerType_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::min(),
+  ProducerType_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::max(),
+};
+
+extern const uint32_t ProducerType_internal_data_[];
+inline constexpr ProducerType ProducerType_MIN =
+    static_cast<ProducerType>(0);
+inline constexpr ProducerType ProducerType_MAX =
+    static_cast<ProducerType>(3);
+inline bool ProducerType_IsValid(int value) {
+  return 0 <= value && value <= 3;
+}
+inline constexpr int ProducerType_ARRAYSIZE = 3 + 1;
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL ProducerType_descriptor();
+template <typename T>
+const ::std::string& ProducerType_Name(T value) {
+  static_assert(::std::is_same<T, ProducerType>::value ||
+                    ::std::is_integral<T>::value,
+                "Incorrect type passed to ProducerType_Name().");
+  return ProducerType_Name(static_cast<ProducerType>(value));
+}
+template <>
+inline const ::std::string& ProducerType_Name(ProducerType value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<ProducerType_descriptor, 0, 3>(
+      static_cast<int>(value));
+}
+inline bool ProducerType_Parse(
+    ::absl::string_view name, ProducerType* PROTOBUF_NONNULL value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ProducerType>(ProducerType_descriptor(), name,
                                            value);
 }
 
@@ -474,7 +612,7 @@ class UnitSniped final : public ::google::protobuf::Message
     return *reinterpret_cast<const UnitSniped*>(
         &_UnitSniped_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 9;
+  static constexpr int kIndexInFileMessages = 10;
   friend void swap(UnitSniped& a, UnitSniped& b) { a.Swap(&b); }
   inline void Swap(UnitSniped* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -753,7 +891,7 @@ class UnitDestroyed final : public ::google::protobuf::Message
     return *reinterpret_cast<const UnitDestroyed*>(
         &_UnitDestroyed_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 8;
+  static constexpr int kIndexInFileMessages = 9;
   friend void swap(UnitDestroyed& a, UnitDestroyed& b) { a.Swap(&b); }
   inline void Swap(UnitDestroyed* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -975,6 +1113,249 @@ class UnitDestroyed final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull UnitDestroyed_class_data_;
+// -------------------------------------------------------------------
+
+class ResourceState final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:statsgate.ResourceState) */ {
+ public:
+  inline ResourceState() : ResourceState(nullptr) {}
+  ~ResourceState() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(ResourceState* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ResourceState));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR ResourceState(::google::protobuf::internal::ConstantInitialized);
+
+  inline ResourceState(const ResourceState& from) : ResourceState(nullptr, from) {}
+  inline ResourceState(ResourceState&& from) noexcept
+      : ResourceState(nullptr, ::std::move(from)) {}
+  inline ResourceState& operator=(const ResourceState& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ResourceState& operator=(ResourceState&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ResourceState& default_instance() {
+    return *reinterpret_cast<const ResourceState*>(
+        &_ResourceState_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 7;
+  friend void swap(ResourceState& a, ResourceState& b) { a.Swap(&b); }
+  inline void Swap(ResourceState* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ResourceState* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ResourceState* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ResourceState>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const ResourceState& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const ResourceState& from) { ResourceState::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(ResourceState* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "statsgate.ResourceState"; }
+
+  explicit ResourceState(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  ResourceState(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ResourceState& from);
+  ResourceState(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ResourceState&& from) noexcept
+      : ResourceState(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kCurrentScrapFieldNumber = 1,
+    kMaxScrapFieldNumber = 2,
+    kScrapStatusFieldNumber = 3,
+    kPoolCountFieldNumber = 4,
+    kUpgradeCountFieldNumber = 5,
+  };
+  // uint32 current_scrap = 1;
+  bool has_current_scrap() const;
+  void clear_current_scrap() ;
+  ::uint32_t current_scrap() const;
+  void set_current_scrap(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_current_scrap() const;
+  void _internal_set_current_scrap(::uint32_t value);
+
+  public:
+  // uint32 max_scrap = 2;
+  bool has_max_scrap() const;
+  void clear_max_scrap() ;
+  ::uint32_t max_scrap() const;
+  void set_max_scrap(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_max_scrap() const;
+  void _internal_set_max_scrap(::uint32_t value);
+
+  public:
+  // .statsgate.ScrapStatus scrap_status = 3;
+  bool has_scrap_status() const;
+  void clear_scrap_status() ;
+  ::statsgate::ScrapStatus scrap_status() const;
+  void set_scrap_status(::statsgate::ScrapStatus value);
+
+  private:
+  ::statsgate::ScrapStatus _internal_scrap_status() const;
+  void _internal_set_scrap_status(::statsgate::ScrapStatus value);
+
+  public:
+  // uint32 pool_count = 4;
+  bool has_pool_count() const;
+  void clear_pool_count() ;
+  ::uint32_t pool_count() const;
+  void set_pool_count(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_pool_count() const;
+  void _internal_set_pool_count(::uint32_t value);
+
+  public:
+  // uint32 upgrade_count = 5;
+  bool has_upgrade_count() const;
+  void clear_upgrade_count() ;
+  ::uint32_t upgrade_count() const;
+  void set_upgrade_count(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_upgrade_count() const;
+  void _internal_set_upgrade_count(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:statsgate.ResourceState)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<3, 5,
+                                   0, 0,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const ResourceState& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::uint32_t current_scrap_;
+    ::uint32_t max_scrap_;
+    int scrap_status_;
+    ::uint32_t pool_count_;
+    ::uint32_t upgrade_count_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_statsgate_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull ResourceState_class_data_;
 // -------------------------------------------------------------------
 
 class PlayerInfo final : public ::google::protobuf::Message
@@ -1254,7 +1635,7 @@ class PickupPowerup final : public ::google::protobuf::Message
     return *reinterpret_cast<const PickupPowerup*>(
         &_PickupPowerup_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 10;
+  static constexpr int kIndexInFileMessages = 11;
   friend void swap(PickupPowerup& a, PickupPowerup& b) { a.Swap(&b); }
   inline void Swap(PickupPowerup* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2281,6 +2662,254 @@ class BulletHit final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull BulletHit_class_data_;
 // -------------------------------------------------------------------
 
+class BuildEvent final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:statsgate.BuildEvent) */ {
+ public:
+  inline BuildEvent() : BuildEvent(nullptr) {}
+  ~BuildEvent() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(BuildEvent* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(BuildEvent));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR BuildEvent(::google::protobuf::internal::ConstantInitialized);
+
+  inline BuildEvent(const BuildEvent& from) : BuildEvent(nullptr, from) {}
+  inline BuildEvent(BuildEvent&& from) noexcept
+      : BuildEvent(nullptr, ::std::move(from)) {}
+  inline BuildEvent& operator=(const BuildEvent& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline BuildEvent& operator=(BuildEvent&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const BuildEvent& default_instance() {
+    return *reinterpret_cast<const BuildEvent*>(
+        &_BuildEvent_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 12;
+  friend void swap(BuildEvent& a, BuildEvent& b) { a.Swap(&b); }
+  inline void Swap(BuildEvent* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(BuildEvent* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  BuildEvent* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<BuildEvent>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const BuildEvent& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const BuildEvent& from) { BuildEvent::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(BuildEvent* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "statsgate.BuildEvent"; }
+
+  explicit BuildEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  BuildEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const BuildEvent& from);
+  BuildEvent(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, BuildEvent&& from) noexcept
+      : BuildEvent(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kBuildOdfFieldNumber = 5,
+    kTickFieldNumber = 1,
+    kTypeFieldNumber = 2,
+    kProducerFieldNumber = 3,
+    kTeamnumFieldNumber = 4,
+  };
+  // string build_odf = 5;
+  bool has_build_odf() const;
+  void clear_build_odf() ;
+  const ::std::string& build_odf() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_build_odf(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_build_odf();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_build_odf();
+  void set_allocated_build_odf(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_build_odf() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_build_odf(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_build_odf();
+
+  public:
+  // uint32 tick = 1;
+  bool has_tick() const;
+  void clear_tick() ;
+  ::uint32_t tick() const;
+  void set_tick(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_tick() const;
+  void _internal_set_tick(::uint32_t value);
+
+  public:
+  // .statsgate.BuildEventType type = 2;
+  bool has_type() const;
+  void clear_type() ;
+  ::statsgate::BuildEventType type() const;
+  void set_type(::statsgate::BuildEventType value);
+
+  private:
+  ::statsgate::BuildEventType _internal_type() const;
+  void _internal_set_type(::statsgate::BuildEventType value);
+
+  public:
+  // .statsgate.ProducerType producer = 3;
+  bool has_producer() const;
+  void clear_producer() ;
+  ::statsgate::ProducerType producer() const;
+  void set_producer(::statsgate::ProducerType value);
+
+  private:
+  ::statsgate::ProducerType _internal_producer() const;
+  void _internal_set_producer(::statsgate::ProducerType value);
+
+  public:
+  // uint32 teamnum = 4;
+  bool has_teamnum() const;
+  void clear_teamnum() ;
+  ::uint32_t teamnum() const;
+  void set_teamnum(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_teamnum() const;
+  void _internal_set_teamnum(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:statsgate.BuildEvent)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<3, 5,
+                                   0, 38,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const BuildEvent& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr build_odf_;
+    ::uint32_t tick_;
+    int type_;
+    int producer_;
+    ::uint32_t teamnum_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_statsgate_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull BuildEvent_class_data_;
+// -------------------------------------------------------------------
+
 class StatHeader final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:statsgate.StatHeader) */ {
  public:
@@ -3051,7 +3680,7 @@ class UpdateTick final : public ::google::protobuf::Message
     return *reinterpret_cast<const UpdateTick*>(
         &_UpdateTick_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 7;
+  static constexpr int kIndexInFileMessages = 8;
   friend void swap(UpdateTick& a, UpdateTick& b) { a.Swap(&b); }
   inline void Swap(UpdateTick* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -3139,6 +3768,8 @@ class UpdateTick final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kPlayersFieldNumber = 2,
+    kTeam1ResourcesFieldNumber = 3,
+    kTeam2ResourcesFieldNumber = 4,
     kTickFieldNumber = 1,
   };
   // repeated .statsgate.PlayerState players = 2;
@@ -3158,6 +3789,36 @@ class UpdateTick final : public ::google::protobuf::Message
   const ::statsgate::PlayerState& players(int index) const;
   ::statsgate::PlayerState* PROTOBUF_NONNULL add_players();
   const ::google::protobuf::RepeatedPtrField<::statsgate::PlayerState>& players() const;
+  // .statsgate.ResourceState team1_resources = 3;
+  bool has_team1_resources() const;
+  void clear_team1_resources() ;
+  const ::statsgate::ResourceState& team1_resources() const;
+  [[nodiscard]] ::statsgate::ResourceState* PROTOBUF_NULLABLE release_team1_resources();
+  ::statsgate::ResourceState* PROTOBUF_NONNULL mutable_team1_resources();
+  void set_allocated_team1_resources(::statsgate::ResourceState* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_team1_resources(::statsgate::ResourceState* PROTOBUF_NULLABLE value);
+  ::statsgate::ResourceState* PROTOBUF_NULLABLE unsafe_arena_release_team1_resources();
+
+  private:
+  const ::statsgate::ResourceState& _internal_team1_resources() const;
+  ::statsgate::ResourceState* PROTOBUF_NONNULL _internal_mutable_team1_resources();
+
+  public:
+  // .statsgate.ResourceState team2_resources = 4;
+  bool has_team2_resources() const;
+  void clear_team2_resources() ;
+  const ::statsgate::ResourceState& team2_resources() const;
+  [[nodiscard]] ::statsgate::ResourceState* PROTOBUF_NULLABLE release_team2_resources();
+  ::statsgate::ResourceState* PROTOBUF_NONNULL mutable_team2_resources();
+  void set_allocated_team2_resources(::statsgate::ResourceState* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_team2_resources(::statsgate::ResourceState* PROTOBUF_NULLABLE value);
+  ::statsgate::ResourceState* PROTOBUF_NULLABLE unsafe_arena_release_team2_resources();
+
+  private:
+  const ::statsgate::ResourceState& _internal_team2_resources() const;
+  ::statsgate::ResourceState* PROTOBUF_NONNULL _internal_mutable_team2_resources();
+
+  public:
   // uint32 tick = 1;
   bool has_tick() const;
   void clear_tick() ;
@@ -3173,8 +3834,8 @@ class UpdateTick final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2,
-                                   1, 0,
+  static const ::google::protobuf::internal::TcParseTable<2, 4,
+                                   3, 0,
                                    2>
       _table_;
 
@@ -3196,6 +3857,8 @@ class UpdateTick final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::RepeatedPtrField< ::statsgate::PlayerState > players_;
+    ::statsgate::ResourceState* PROTOBUF_NULLABLE team1_resources_;
+    ::statsgate::ResourceState* PROTOBUF_NULLABLE team2_resources_;
     ::uint32_t tick_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -3269,9 +3932,10 @@ class StatEvent final : public ::google::protobuf::Message
     kUnitDestroyed = 6,
     kUnitSniped = 7,
     kPickupPowerup = 8,
+    kBuildEvent = 9,
     EVENT_TYPE_NOT_SET = 0,
   };
-  static constexpr int kIndexInFileMessages = 11;
+  static constexpr int kIndexInFileMessages = 13;
   friend void swap(StatEvent& a, StatEvent& b) { a.Swap(&b); }
   inline void Swap(StatEvent* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -3365,6 +4029,7 @@ class StatEvent final : public ::google::protobuf::Message
     kUnitDestroyedFieldNumber = 6,
     kUnitSnipedFieldNumber = 7,
     kPickupPowerupFieldNumber = 8,
+    kBuildEventFieldNumber = 9,
   };
   // .statsgate.BulletInit bullet_init = 1;
   bool has_bullet_init() const;
@@ -3499,6 +4164,25 @@ class StatEvent final : public ::google::protobuf::Message
   ::statsgate::PickupPowerup* PROTOBUF_NONNULL _internal_mutable_pickup_powerup();
 
   public:
+  // .statsgate.BuildEvent build_event = 9;
+  bool has_build_event() const;
+  private:
+  bool _internal_has_build_event() const;
+
+  public:
+  void clear_build_event() ;
+  const ::statsgate::BuildEvent& build_event() const;
+  [[nodiscard]] ::statsgate::BuildEvent* PROTOBUF_NULLABLE release_build_event();
+  ::statsgate::BuildEvent* PROTOBUF_NONNULL mutable_build_event();
+  void set_allocated_build_event(::statsgate::BuildEvent* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_build_event(::statsgate::BuildEvent* PROTOBUF_NULLABLE value);
+  ::statsgate::BuildEvent* PROTOBUF_NULLABLE unsafe_arena_release_build_event();
+
+  private:
+  const ::statsgate::BuildEvent& _internal_build_event() const;
+  ::statsgate::BuildEvent* PROTOBUF_NONNULL _internal_mutable_build_event();
+
+  public:
   void clear_event_type();
   EventTypeCase event_type_case() const;
   // @@protoc_insertion_point(class_scope:statsgate.StatEvent)
@@ -3511,11 +4195,12 @@ class StatEvent final : public ::google::protobuf::Message
   void set_has_unit_destroyed();
   void set_has_unit_sniped();
   void set_has_pickup_powerup();
+  void set_has_build_event();
   inline bool has_event_type() const;
   inline void clear_has_event_type();
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 7,
-                                   7, 0,
+  static const ::google::protobuf::internal::TcParseTable<0, 8,
+                                   8, 0,
                                    2>
       _table_;
 
@@ -3544,6 +4229,7 @@ class StatEvent final : public ::google::protobuf::Message
       ::google::protobuf::Message* PROTOBUF_NULLABLE unit_destroyed_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE unit_sniped_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE pickup_powerup_;
+      ::google::protobuf::Message* PROTOBUF_NULLABLE build_event_;
     } event_type_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint32_t _oneof_case_[1];
@@ -3611,7 +4297,7 @@ class ClientStatSession final : public ::google::protobuf::Message
     return *reinterpret_cast<const ClientStatSession*>(
         &_ClientStatSession_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 12;
+  static constexpr int kIndexInFileMessages = 14;
   friend void swap(ClientStatSession& a, ClientStatSession& b) { a.Swap(&b); }
   inline void Swap(ClientStatSession* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -5902,18 +6588,167 @@ inline void PlayerState::_internal_set_has_target(bool value) {
 
 // -------------------------------------------------------------------
 
+// ResourceState
+
+// uint32 current_scrap = 1;
+inline bool ResourceState::has_current_scrap() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000001U);
+  return value;
+}
+inline void ResourceState::clear_current_scrap() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.current_scrap_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline ::uint32_t ResourceState::current_scrap() const {
+  // @@protoc_insertion_point(field_get:statsgate.ResourceState.current_scrap)
+  return _internal_current_scrap();
+}
+inline void ResourceState::set_current_scrap(::uint32_t value) {
+  _internal_set_current_scrap(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_set:statsgate.ResourceState.current_scrap)
+}
+inline ::uint32_t ResourceState::_internal_current_scrap() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.current_scrap_;
+}
+inline void ResourceState::_internal_set_current_scrap(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.current_scrap_ = value;
+}
+
+// uint32 max_scrap = 2;
+inline bool ResourceState::has_max_scrap() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  return value;
+}
+inline void ResourceState::clear_max_scrap() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.max_scrap_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline ::uint32_t ResourceState::max_scrap() const {
+  // @@protoc_insertion_point(field_get:statsgate.ResourceState.max_scrap)
+  return _internal_max_scrap();
+}
+inline void ResourceState::set_max_scrap(::uint32_t value) {
+  _internal_set_max_scrap(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  // @@protoc_insertion_point(field_set:statsgate.ResourceState.max_scrap)
+}
+inline ::uint32_t ResourceState::_internal_max_scrap() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.max_scrap_;
+}
+inline void ResourceState::_internal_set_max_scrap(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.max_scrap_ = value;
+}
+
+// .statsgate.ScrapStatus scrap_status = 3;
+inline bool ResourceState::has_scrap_status() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  return value;
+}
+inline void ResourceState::clear_scrap_status() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.scrap_status_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline ::statsgate::ScrapStatus ResourceState::scrap_status() const {
+  // @@protoc_insertion_point(field_get:statsgate.ResourceState.scrap_status)
+  return _internal_scrap_status();
+}
+inline void ResourceState::set_scrap_status(::statsgate::ScrapStatus value) {
+  _internal_set_scrap_status(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  // @@protoc_insertion_point(field_set:statsgate.ResourceState.scrap_status)
+}
+inline ::statsgate::ScrapStatus ResourceState::_internal_scrap_status() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::statsgate::ScrapStatus>(_impl_.scrap_status_);
+}
+inline void ResourceState::_internal_set_scrap_status(::statsgate::ScrapStatus value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.scrap_status_ = value;
+}
+
+// uint32 pool_count = 4;
+inline bool ResourceState::has_pool_count() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
+  return value;
+}
+inline void ResourceState::clear_pool_count() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.pool_count_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000008U);
+}
+inline ::uint32_t ResourceState::pool_count() const {
+  // @@protoc_insertion_point(field_get:statsgate.ResourceState.pool_count)
+  return _internal_pool_count();
+}
+inline void ResourceState::set_pool_count(::uint32_t value) {
+  _internal_set_pool_count(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  // @@protoc_insertion_point(field_set:statsgate.ResourceState.pool_count)
+}
+inline ::uint32_t ResourceState::_internal_pool_count() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.pool_count_;
+}
+inline void ResourceState::_internal_set_pool_count(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.pool_count_ = value;
+}
+
+// uint32 upgrade_count = 5;
+inline bool ResourceState::has_upgrade_count() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
+  return value;
+}
+inline void ResourceState::clear_upgrade_count() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.upgrade_count_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000010U);
+}
+inline ::uint32_t ResourceState::upgrade_count() const {
+  // @@protoc_insertion_point(field_get:statsgate.ResourceState.upgrade_count)
+  return _internal_upgrade_count();
+}
+inline void ResourceState::set_upgrade_count(::uint32_t value) {
+  _internal_set_upgrade_count(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  // @@protoc_insertion_point(field_set:statsgate.ResourceState.upgrade_count)
+}
+inline ::uint32_t ResourceState::_internal_upgrade_count() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.upgrade_count_;
+}
+inline void ResourceState::_internal_set_upgrade_count(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.upgrade_count_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // UpdateTick
 
 // uint32 tick = 1;
 inline bool UpdateTick::has_tick() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
   return value;
 }
 inline void UpdateTick::clear_tick() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.tick_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000002U);
+                  0x00000008U);
 }
 inline ::uint32_t UpdateTick::tick() const {
   // @@protoc_insertion_point(field_get:statsgate.UpdateTick.tick)
@@ -5921,7 +6756,7 @@ inline ::uint32_t UpdateTick::tick() const {
 }
 inline void UpdateTick::set_tick(::uint32_t value) {
   _internal_set_tick(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
   // @@protoc_insertion_point(field_set:statsgate.UpdateTick.tick)
 }
 inline ::uint32_t UpdateTick::_internal_tick() const {
@@ -5987,6 +6822,204 @@ inline ::google::protobuf::RepeatedPtrField<::statsgate::PlayerState>* PROTOBUF_
 UpdateTick::_internal_mutable_players() {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return &_impl_.players_;
+}
+
+// .statsgate.ResourceState team1_resources = 3;
+inline bool UpdateTick::has_team1_resources() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  PROTOBUF_ASSUME(!value || _impl_.team1_resources_ != nullptr);
+  return value;
+}
+inline void UpdateTick::clear_team1_resources() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.team1_resources_ != nullptr) _impl_.team1_resources_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::statsgate::ResourceState& UpdateTick::_internal_team1_resources() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::statsgate::ResourceState* p = _impl_.team1_resources_;
+  return p != nullptr ? *p : reinterpret_cast<const ::statsgate::ResourceState&>(::statsgate::_ResourceState_default_instance_);
+}
+inline const ::statsgate::ResourceState& UpdateTick::team1_resources() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.UpdateTick.team1_resources)
+  return _internal_team1_resources();
+}
+inline void UpdateTick::unsafe_arena_set_allocated_team1_resources(
+    ::statsgate::ResourceState* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.team1_resources_);
+  }
+  _impl_.team1_resources_ = reinterpret_cast<::statsgate::ResourceState*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.UpdateTick.team1_resources)
+}
+inline ::statsgate::ResourceState* PROTOBUF_NULLABLE UpdateTick::release_team1_resources() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::ResourceState* released = _impl_.team1_resources_;
+  _impl_.team1_resources_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::statsgate::ResourceState* PROTOBUF_NULLABLE UpdateTick::unsafe_arena_release_team1_resources() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.UpdateTick.team1_resources)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::ResourceState* temp = _impl_.team1_resources_;
+  _impl_.team1_resources_ = nullptr;
+  return temp;
+}
+inline ::statsgate::ResourceState* PROTOBUF_NONNULL UpdateTick::_internal_mutable_team1_resources() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.team1_resources_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::statsgate::ResourceState>(GetArena());
+    _impl_.team1_resources_ = reinterpret_cast<::statsgate::ResourceState*>(p);
+  }
+  return _impl_.team1_resources_;
+}
+inline ::statsgate::ResourceState* PROTOBUF_NONNULL UpdateTick::mutable_team1_resources()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::ResourceState* _msg = _internal_mutable_team1_resources();
+  // @@protoc_insertion_point(field_mutable:statsgate.UpdateTick.team1_resources)
+  return _msg;
+}
+inline void UpdateTick::set_allocated_team1_resources(::statsgate::ResourceState* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.team1_resources_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+
+  _impl_.team1_resources_ = reinterpret_cast<::statsgate::ResourceState*>(value);
+  // @@protoc_insertion_point(field_set_allocated:statsgate.UpdateTick.team1_resources)
+}
+
+// .statsgate.ResourceState team2_resources = 4;
+inline bool UpdateTick::has_team2_resources() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  PROTOBUF_ASSUME(!value || _impl_.team2_resources_ != nullptr);
+  return value;
+}
+inline void UpdateTick::clear_team2_resources() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.team2_resources_ != nullptr) _impl_.team2_resources_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline const ::statsgate::ResourceState& UpdateTick::_internal_team2_resources() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::statsgate::ResourceState* p = _impl_.team2_resources_;
+  return p != nullptr ? *p : reinterpret_cast<const ::statsgate::ResourceState&>(::statsgate::_ResourceState_default_instance_);
+}
+inline const ::statsgate::ResourceState& UpdateTick::team2_resources() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.UpdateTick.team2_resources)
+  return _internal_team2_resources();
+}
+inline void UpdateTick::unsafe_arena_set_allocated_team2_resources(
+    ::statsgate::ResourceState* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.team2_resources_);
+  }
+  _impl_.team2_resources_ = reinterpret_cast<::statsgate::ResourceState*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.UpdateTick.team2_resources)
+}
+inline ::statsgate::ResourceState* PROTOBUF_NULLABLE UpdateTick::release_team2_resources() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::ResourceState* released = _impl_.team2_resources_;
+  _impl_.team2_resources_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::statsgate::ResourceState* PROTOBUF_NULLABLE UpdateTick::unsafe_arena_release_team2_resources() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.UpdateTick.team2_resources)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::ResourceState* temp = _impl_.team2_resources_;
+  _impl_.team2_resources_ = nullptr;
+  return temp;
+}
+inline ::statsgate::ResourceState* PROTOBUF_NONNULL UpdateTick::_internal_mutable_team2_resources() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.team2_resources_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::statsgate::ResourceState>(GetArena());
+    _impl_.team2_resources_ = reinterpret_cast<::statsgate::ResourceState*>(p);
+  }
+  return _impl_.team2_resources_;
+}
+inline ::statsgate::ResourceState* PROTOBUF_NONNULL UpdateTick::mutable_team2_resources()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::ResourceState* _msg = _internal_mutable_team2_resources();
+  // @@protoc_insertion_point(field_mutable:statsgate.UpdateTick.team2_resources)
+  return _msg;
+}
+inline void UpdateTick::set_allocated_team2_resources(::statsgate::ResourceState* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.team2_resources_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+
+  _impl_.team2_resources_ = reinterpret_cast<::statsgate::ResourceState*>(value);
+  // @@protoc_insertion_point(field_set_allocated:statsgate.UpdateTick.team2_resources)
 }
 
 // -------------------------------------------------------------------
@@ -6823,6 +7856,195 @@ inline void PickupPowerup::set_allocated_powerup_odf(::std::string* PROTOBUF_NUL
 
 // -------------------------------------------------------------------
 
+// BuildEvent
+
+// uint32 tick = 1;
+inline bool BuildEvent::has_tick() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  return value;
+}
+inline void BuildEvent::clear_tick() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tick_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline ::uint32_t BuildEvent::tick() const {
+  // @@protoc_insertion_point(field_get:statsgate.BuildEvent.tick)
+  return _internal_tick();
+}
+inline void BuildEvent::set_tick(::uint32_t value) {
+  _internal_set_tick(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  // @@protoc_insertion_point(field_set:statsgate.BuildEvent.tick)
+}
+inline ::uint32_t BuildEvent::_internal_tick() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.tick_;
+}
+inline void BuildEvent::_internal_set_tick(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tick_ = value;
+}
+
+// .statsgate.BuildEventType type = 2;
+inline bool BuildEvent::has_type() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  return value;
+}
+inline void BuildEvent::clear_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.type_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline ::statsgate::BuildEventType BuildEvent::type() const {
+  // @@protoc_insertion_point(field_get:statsgate.BuildEvent.type)
+  return _internal_type();
+}
+inline void BuildEvent::set_type(::statsgate::BuildEventType value) {
+  _internal_set_type(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  // @@protoc_insertion_point(field_set:statsgate.BuildEvent.type)
+}
+inline ::statsgate::BuildEventType BuildEvent::_internal_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::statsgate::BuildEventType>(_impl_.type_);
+}
+inline void BuildEvent::_internal_set_type(::statsgate::BuildEventType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.type_ = value;
+}
+
+// .statsgate.ProducerType producer = 3;
+inline bool BuildEvent::has_producer() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
+  return value;
+}
+inline void BuildEvent::clear_producer() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.producer_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000008U);
+}
+inline ::statsgate::ProducerType BuildEvent::producer() const {
+  // @@protoc_insertion_point(field_get:statsgate.BuildEvent.producer)
+  return _internal_producer();
+}
+inline void BuildEvent::set_producer(::statsgate::ProducerType value) {
+  _internal_set_producer(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  // @@protoc_insertion_point(field_set:statsgate.BuildEvent.producer)
+}
+inline ::statsgate::ProducerType BuildEvent::_internal_producer() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::statsgate::ProducerType>(_impl_.producer_);
+}
+inline void BuildEvent::_internal_set_producer(::statsgate::ProducerType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.producer_ = value;
+}
+
+// uint32 teamnum = 4;
+inline bool BuildEvent::has_teamnum() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
+  return value;
+}
+inline void BuildEvent::clear_teamnum() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.teamnum_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000010U);
+}
+inline ::uint32_t BuildEvent::teamnum() const {
+  // @@protoc_insertion_point(field_get:statsgate.BuildEvent.teamnum)
+  return _internal_teamnum();
+}
+inline void BuildEvent::set_teamnum(::uint32_t value) {
+  _internal_set_teamnum(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  // @@protoc_insertion_point(field_set:statsgate.BuildEvent.teamnum)
+}
+inline ::uint32_t BuildEvent::_internal_teamnum() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.teamnum_;
+}
+inline void BuildEvent::_internal_set_teamnum(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.teamnum_ = value;
+}
+
+// string build_odf = 5;
+inline bool BuildEvent::has_build_odf() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000001U);
+  return value;
+}
+inline void BuildEvent::clear_build_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.build_odf_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline const ::std::string& BuildEvent::build_odf() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.BuildEvent.build_odf)
+  return _internal_build_odf();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void BuildEvent::set_build_odf(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  _impl_.build_odf_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:statsgate.BuildEvent.build_odf)
+}
+inline ::std::string* PROTOBUF_NONNULL BuildEvent::mutable_build_odf()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::std::string* _s = _internal_mutable_build_odf();
+  // @@protoc_insertion_point(field_mutable:statsgate.BuildEvent.build_odf)
+  return _s;
+}
+inline const ::std::string& BuildEvent::_internal_build_odf() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.build_odf_.Get();
+}
+inline void BuildEvent::_internal_set_build_odf(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.build_odf_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL BuildEvent::_internal_mutable_build_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.build_odf_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE BuildEvent::release_build_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.BuildEvent.build_odf)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  auto* released = _impl_.build_odf_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.build_odf_.Set("", GetArena());
+  }
+  return released;
+}
+inline void BuildEvent::set_allocated_build_odf(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+  _impl_.build_odf_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.build_odf_.IsDefault()) {
+    _impl_.build_odf_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:statsgate.BuildEvent.build_odf)
+}
+
+// -------------------------------------------------------------------
+
 // StatEvent
 
 // .statsgate.BulletInit bullet_init = 1;
@@ -7399,6 +8621,88 @@ inline ::statsgate::PickupPowerup* PROTOBUF_NONNULL StatEvent::mutable_pickup_po
   return _msg;
 }
 
+// .statsgate.BuildEvent build_event = 9;
+inline bool StatEvent::has_build_event() const {
+  return event_type_case() == kBuildEvent;
+}
+inline bool StatEvent::_internal_has_build_event() const {
+  return event_type_case() == kBuildEvent;
+}
+inline void StatEvent::set_has_build_event() {
+  _impl_._oneof_case_[0] = kBuildEvent;
+}
+inline void StatEvent::clear_build_event() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (event_type_case() == kBuildEvent) {
+    if (GetArena() == nullptr) {
+      delete _impl_.event_type_.build_event_;
+    } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+      ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.event_type_.build_event_);
+    }
+    clear_has_event_type();
+  }
+}
+inline ::statsgate::BuildEvent* PROTOBUF_NULLABLE StatEvent::release_build_event() {
+  // @@protoc_insertion_point(field_release:statsgate.StatEvent.build_event)
+  if (event_type_case() == kBuildEvent) {
+    clear_has_event_type();
+    auto* temp = reinterpret_cast<::statsgate::BuildEvent*>(_impl_.event_type_.build_event_);
+    if (GetArena() != nullptr) {
+      temp = ::google::protobuf::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.event_type_.build_event_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::statsgate::BuildEvent& StatEvent::_internal_build_event() const {
+  return event_type_case() == kBuildEvent ? static_cast<const ::statsgate::BuildEvent&>(*reinterpret_cast<::statsgate::BuildEvent*>(_impl_.event_type_.build_event_))
+                     : reinterpret_cast<const ::statsgate::BuildEvent&>(::statsgate::_BuildEvent_default_instance_);
+}
+inline const ::statsgate::BuildEvent& StatEvent::build_event() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.StatEvent.build_event)
+  return _internal_build_event();
+}
+inline ::statsgate::BuildEvent* PROTOBUF_NULLABLE StatEvent::unsafe_arena_release_build_event() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:statsgate.StatEvent.build_event)
+  if (event_type_case() == kBuildEvent) {
+    clear_has_event_type();
+    auto* temp = reinterpret_cast<::statsgate::BuildEvent*>(_impl_.event_type_.build_event_);
+    _impl_.event_type_.build_event_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void StatEvent::unsafe_arena_set_allocated_build_event(
+    ::statsgate::BuildEvent* PROTOBUF_NULLABLE value) {
+  // We rely on the oneof clear method to free the earlier contents
+  // of this oneof. We can directly use the pointer we're given to
+  // set the new value.
+  clear_event_type();
+  if (value) {
+    set_has_build_event();
+    _impl_.event_type_.build_event_ = reinterpret_cast<::google::protobuf::Message*>(value);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.StatEvent.build_event)
+}
+inline ::statsgate::BuildEvent* PROTOBUF_NONNULL StatEvent::_internal_mutable_build_event() {
+  if (event_type_case() != kBuildEvent) {
+    clear_event_type();
+    set_has_build_event();
+    _impl_.event_type_.build_event_ = reinterpret_cast<::google::protobuf::Message*>(
+        ::google::protobuf::Message::DefaultConstruct<::statsgate::BuildEvent>(GetArena()));
+  }
+  return reinterpret_cast<::statsgate::BuildEvent*>(_impl_.event_type_.build_event_);
+}
+inline ::statsgate::BuildEvent* PROTOBUF_NONNULL StatEvent::mutable_build_event()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::statsgate::BuildEvent* _msg = _internal_mutable_build_event();
+  // @@protoc_insertion_point(field_mutable:statsgate.StatEvent.build_event)
+  return _msg;
+}
+
 inline bool StatEvent::has_event_type() const {
   return event_type_case() != EVENT_TYPE_NOT_SET;
 }
@@ -7589,6 +8893,24 @@ struct is_proto_enum<::statsgate::Outcome> : std::true_type {};
 template <>
 inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::statsgate::Outcome>() {
   return ::statsgate::Outcome_descriptor();
+}
+template <>
+struct is_proto_enum<::statsgate::ScrapStatus> : std::true_type {};
+template <>
+inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::statsgate::ScrapStatus>() {
+  return ::statsgate::ScrapStatus_descriptor();
+}
+template <>
+struct is_proto_enum<::statsgate::BuildEventType> : std::true_type {};
+template <>
+inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::statsgate::BuildEventType>() {
+  return ::statsgate::BuildEventType_descriptor();
+}
+template <>
+struct is_proto_enum<::statsgate::ProducerType> : std::true_type {};
+template <>
+inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::statsgate::ProducerType>() {
+  return ::statsgate::ProducerType_descriptor();
 }
 
 }  // namespace protobuf

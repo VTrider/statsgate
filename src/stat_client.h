@@ -62,8 +62,11 @@ namespace statsgate
 		void record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);
 		void record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF);
 		void record_damage(const int curWorld, Handle h, const char* pContext, const DAMAGE& dmg);
+		void record_build_event(exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem);
+		void record_resource_state(UpdateTick* tick);
 
 		void first_tick();
+		void poll_tick(); // this function does polling and records handles before record_update()
 		void last_tick();
 
 		// MisnExport
@@ -79,6 +82,9 @@ namespace statsgate
 		static PreSnipeReturnCodes PreSnipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);
 		static void BulletInit(Handle shooterHandle, const Matrix &ordnanceMat, const Vector &ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF);
 		static void PreDamage(const int curWorld, Handle h, const char* pContext, DAMAGE& dmg);
+
+		// Extra Utilities 2
+		static void BuildEvent(exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem);
 
 	private:
 		enum class output_format : uint8_t
@@ -120,6 +126,7 @@ namespace statsgate
 		std::unordered_set<std::string> ignored_odfs; // any event containing these odfs will be ignored
 
 		std::unordered_map<uint64_t, PlayerInfo> player_list; // list of players that appeared in the session
+		std::vector<Handle> current_tick_handles;
 
 		// Helper functions
 		static void register_instance(stat_client* self);
@@ -129,6 +136,10 @@ namespace statsgate
 		uint64_t s64_from_h(Handle h);
 		std::string get_odf(Handle h);
 		std::optional<uint64_t> is_player(Handle h);
+		uint32_t get_pool_count(int teamnum);
+		uint32_t get_upgrade_count(int teamnum);
+		ScrapStatus get_scrap_status(int teamnum);
+		std::string get_gameobj_class(Handle h);
 	};
 }
 

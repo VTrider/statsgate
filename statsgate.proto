@@ -124,9 +124,27 @@ message PlayerState {
   bool has_target = 7; // are they using the T key?
 }
 
+enum ScrapStatus {
+  SCRAP_STATUS_UNSPECIFIED = 0;
+  SCRAP_STATUS_GREEN = 1;
+  SCRAP_STATUS_YELLOW = 2;
+  SCRAP_STATUS_RED = 3;
+  SCRAP_STATUS_PARALLEL = 4; // currently unused for mods with parallel scrap pools
+}
+
+message ResourceState {
+  uint32 current_scrap = 1;
+  uint32 max_scrap = 2;
+  ScrapStatus scrap_status = 3;
+  uint32 pool_count = 4;
+  uint32 upgrade_count = 5;
+}
+
 message UpdateTick {
   uint32 tick = 1;
   repeated PlayerState players = 2;
+  ResourceState team1_resources = 3;
+  ResourceState team2_resources = 4;
 }
 
 message UnitDestroyed {
@@ -167,6 +185,28 @@ message PickupPowerup {
   string powerup_odf = 6;
 }
 
+enum BuildEventType {
+  BUILD_EVENT_TYPE_UNSPECIFIED = 0;
+  BUILD_EVENT_TYPE_QUEUE = 1;
+  BUILD_EVENT_TYPE_CANCEL = 2;
+  BUILD_EVENT_TYPE_BUILD = 3;
+}
+
+enum ProducerType {
+  PRODUCER_TYPE_UNSPECIFIED = 0;
+  PRODUCER_TYPE_FACTORY = 1;
+  PRODUCER_TYPE_CONSTRUCTOR = 2;
+  PRODUCER_TYPE_ARMORY = 3;
+}
+
+message BuildEvent {
+  uint32 tick = 1;
+  BuildEventType type = 2;
+  ProducerType producer = 3;
+  uint32 teamnum = 4;
+  string build_odf = 5;
+}
+
 message StatEvent {
   reserved 4;
   oneof event_type {
@@ -177,6 +217,7 @@ message StatEvent {
     UnitDestroyed unit_destroyed = 6;
     UnitSniped unit_sniped = 7;
     PickupPowerup pickup_powerup = 8;
+    BuildEvent build_event = 9;
   }
 }
 

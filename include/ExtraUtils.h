@@ -12,21 +12,33 @@
 #include <delayimp.h>
 #undef CONST
 
+#include <concepts>
 #include <cstdint>
+#include <expected>
 #include <filesystem>
 #include <format>
+#include <string>
+#include <type_traits>
+#include <unordered_map>
 
 namespace exu2
 {
+	namespace detail
+	{
+		inline bool noSplashText = false;
+	}
+
 #ifndef EXU_EXPORTS
 	const std::filesystem::path GetWorkshopPath();
+
 
 	// WARNING: You MUST call these two functions in DLL_PROCESS_ATTACH, and DLL_PROCESS_DETACH
 	// respectively if you are using this library in a dll mission. By default this uses the 
 	// version of the library currently on the steam workshop. If you are using a custom or
 	// development build, you must set the dll directory accordingly. See the README on
 	// GitHub for more info.
-	inline void ProcessAttach(const std::filesystem::path& dllDirectory = GetWorkshopPath() / "3515140097" / "Bin")
+	inline void ProcessAttach(const std::filesystem::path& dllDirectory = GetWorkshopPath() / "3515140097" / "Bin",
+							  bool noSplashText = false)
 	{
 		SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_APPLICATION_DIR |
 								 LOAD_LIBRARY_SEARCH_DEFAULT_DIRS | 
@@ -34,6 +46,7 @@ namespace exu2
 								 LOAD_LIBRARY_SEARCH_USER_DIRS
         );
 		AddDllDirectory(dllDirectory.wstring().c_str());
+		detail::noSplashText = noSplashText;
 	}
 
 	inline void ProcessDetach()
@@ -46,13 +59,16 @@ namespace exu2
 
 	// Use this to compare against the DLL version. You should make sure that
 	// your header is up to date with the latest DLL.
-	constexpr const char* HEADER_VERSION = "1.4.0";
+	constexpr const char* HEADER_VERSION = "1.6.0";
 #else
-	constexpr int MINIMUM_REQUIRED_VERSION = 185;
+	constexpr int MINIMUM_REQUIRED_VERSION = 205;
 #endif
 
 	// Returns the minor version of the game, use this if your mod only supports a certain version(s)
 	EXUAPI int DLLAPI GetGameMinorVersion();
+	
+	// Returns the patch version of the game
+	EXUAPI int DLLAPI GetGamePatchVersion();
 
 	// Returns the current dll version Major.Minor.Patch
 	EXUAPI const char* DLLAPI GetDLLVersion();
@@ -63,6 +79,33 @@ namespace exu2
 	{
 		int x, y;
 	};
+
+	// Callbacks
+
+	enum class BuildEventType
+	{
+		QUEUE,
+		CANCEL,
+		BUILD
+	};
+
+	enum class ProducerType
+	{
+		FACTORY, // recycler is also a factory
+		CONSTRUCTOR,
+		ARMORY
+	};
+
+	// TODO: implement lua api
+
+	// This callback records any build event from producers. IMPORTANT NOTE: `buildItemOdf` will always be defined,
+	// but the handle `buildItem` is ONLY defined for the event `BUILD`, it will instead be 0, due to the other events not having an object in the
+	// world yet.
+	// I'm pretty sure this WONT work with hover constructors, but since they are so rare I don't really care to implement it unless it's despra
+	// 
+	// When cancelling stacks of units from the recycler/factory, this callback will be called multiple times corresponding to how many units were in the stack.
+	using BuildEventCallback_t = void(*)(ProducerType producerType, Handle producer, int producerTeam, BuildEventType event, const char* buildItemOdf, Handle buildItem);
+	EXUAPI void DLLAPI SetBuildEventCallback(BuildEventCallback_t callback);
 
 	// Camera
 
@@ -124,6 +167,8 @@ namespace exu2
 
 	// Helpers for common directories that mods usually use
 	const std::filesystem::path GetBZCCPath();
+	// WARNING: if the user has the `-novista` launch option this will result in all reads and writes
+	// to this directory and its children being redirected to `../steamapps/common/BZ2R`
 	const std::filesystem::path GetMyDocs();
 	const std::filesystem::path GetWorkshopPath();
 
@@ -152,6 +197,23 @@ namespace exu2
 	// Returns 0 if there is no player associated with the team.
 	EXUAPI uint64_t DLLAPI GetSteam64(int team);
 
+	// Terrain
+
+	enum class TerrainQueryResult : uint32_t
+	{
+		NOT_BUILDABLE,
+		BUILDABLE,
+		INVALID_ODF
+	};
+
+	// Queries if the tile closest to `pos` is valid for building the given `team` and `odf`. `front` is the direction
+	// the building is facing. BUILDABLE if the tile is buildable and fills the out parameter `pos` with
+	// the resulting build matrix position. Returns NOT_BUILDABLE if the tile is not buildable and `pos` is unmodified.
+	// Returns INVALID_ODF if the odf does not have a GameObjectClass associated with it (probably malformed in some way)
+	// IMPORTANT NOTE: if you don't want the game to stutter the first time you call this function for a given odf,
+	// make sure to call PreloadODF(odf) in InitialSetup/Start or wherever you want beforehand.
+	EXUAPI TerrainQueryResult DLLAPI IsTerrainBuildable(int team, const char* odf, Vector& pos, const Vector& front);
+
 	// VarSys
 
 	// Low level create command. Creates an "unregistered" VarSys command, it will show up in the `ls` command but
@@ -176,6 +238,7 @@ namespace exu2
 	// Uninstalls the installed global handler if it exists
 	EXUAPI void DLLAPI VarSys_UninstallGlobalHandler();
 
+	// TODO: Reverse the rest of the flags
 	enum class VarFlag : uint32_t {
 		CONST = 0x4,
 		NODELETE = 0x8000
@@ -200,6 +263,66 @@ namespace exu2
 	inline int GetTPS()
 	{
 		return SecondsToTurns(1.0f);
+	}
+
+	namespace detail
+	{
+		class CachedODF
+		{
+		public:
+			CachedODF(const std::string& name) 
+				: name(name)
+			{
+				OpenODF(name.c_str());
+			}
+			~CachedODF()
+			{
+				CloseODF(name.c_str());
+			}
+
+		private:
+			std::string name;
+		};
+
+		inline std::unordered_map<std::string, CachedODF> odf_cache; // this will be closed automatically when the dll exits
+	}
+
+	enum class ODFError
+	{
+		VALUE_NOT_FOUND, // not found without inheritance
+		REACHED_BASE_ODF // not found through the entire inheritance tree
+	};
+
+	inline std::expected<float, ODFError> GetODFFloat(const std::string& odf, const std::string& block, const std::string& name, bool useInheritance = true)
+	{
+		if (!detail::odf_cache.contains(odf))
+			detail::odf_cache.emplace(odf, odf);
+
+		float value;
+
+		if (::GetODFFloat(odf.c_str(), block.c_str(), name.c_str(), &value))
+			return value;
+
+		if (!useInheritance)
+			return std::unexpected(ODFError::VALUE_NOT_FOUND);
+
+		std::string current_odf = odf;
+		char buf[ODF_MAX_LEN];
+		while (::GetODFString(current_odf.c_str(), "GameObjectClass", "classLabel", ODF_MAX_LEN, buf))
+		{
+			std::string parent = buf;
+			parent += ".odf";
+
+			if (!detail::odf_cache.contains(parent))
+				detail::odf_cache.emplace(parent, parent);
+
+			if (::GetODFFloat(parent.c_str(), block.c_str(), name.c_str(), &value))
+				return value;
+
+			current_odf = parent;
+		}
+
+		return std::unexpected(ODFError::REACHED_BASE_ODF);
 	}
 
 	// Do not modify
@@ -244,7 +367,9 @@ namespace exu2
 			{
 				const wchar_t* msg = L"Failed to find ExtraUtilities2.dll. This can happen if the workshop item "
 									  "is not installed, or if you are running a custom build and failed to set "
-									  "the dll search path. See the README on GitHub for more info.";
+									  "the dll search path. Please subscribe to the workshop item at " 
+								      "https://steamcommunity.com/sharedfiles/filedetails/?id=3515140097 "
+					                  "or see the README on GitHub for more info.";
 				MessageBoxW(NULL, msg, L"Extra Utilities 2", MB_ICONERROR | MB_APPLMODAL);
 				std::terminate();
 			}
@@ -258,4 +383,78 @@ namespace exu2
 	extern "C" __declspec(selectany) const PfnDliHook  __pfnDliNotifyHook2 = DelayLoadHandler;
 	extern "C" __declspec(selectany) const PfnDliHook  __pfnDliFailureHook2 = DelayLoadHandler;
 #endif
+}
+
+namespace std
+{
+	using namespace exu2;
+
+	template<>
+	struct formatter<BuildEventType> : formatter<string>
+	{
+		auto format(BuildEventType t, format_context& ctx) const
+		{
+			using enum BuildEventType;
+			std::string str;
+			switch (t)
+			{
+			case QUEUE:
+				str = "QUEUE";
+				break;
+			case CANCEL:
+				str = "CANCEL";
+				break;
+			case BUILD:
+				str = "BUILD";
+				break;
+			}
+			return format_to(ctx.out(), "{}", str);
+		}
+	};
+
+	template<>
+	struct formatter<ProducerType> : formatter<string>
+	{
+		auto format(ProducerType t, format_context& ctx) const
+		{
+			using enum ProducerType;
+			std::string str;
+			switch (t)
+			{
+			case FACTORY:
+				str = "FACTORY";
+				break;
+			case CONSTRUCTOR:
+				str = "CONSTRUCTOR";
+				break;
+			case ARMORY:
+				str = "ARMORY";
+				break;
+			}
+			return format_to(ctx.out(), "{}", str);
+		}
+	};
+
+	template <>
+	struct formatter<TerrainQueryResult>: formatter<string>
+	{
+		auto format(TerrainQueryResult r, format_context& ctx) const
+		{
+			using enum TerrainQueryResult;
+			std::string str;
+			switch (r)
+			{
+			case NOT_BUILDABLE:
+				str = "NOT_BUILDABLE";
+				break;
+			case BUILDABLE:
+				str = "BUILDABLE";
+				break;
+			case INVALID_ODF:
+				str = "INVALID_ODF";
+				break;
+			}
+			return format_to(ctx.out(), "{}", str);
+		}
+	};
 }

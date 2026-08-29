@@ -46,7 +46,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
         });
 		GOOGLE_PROTOBUF_VERIFY_VERSION;
         exu2::ProcessAttach();
-        // exu2::ProcessAttach(R"(C:\Users\vtrider\Dev\ExtraUtilities2\Release)");
 		break;
     }
     case DLL_PROCESS_DETACH:

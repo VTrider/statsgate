@@ -47,6 +47,7 @@ namespace statsgate
 	{
 		{
 			//ZoneScopedN("stat_client::Update")
+			client()->poll_tick();
 			client()->record_update();
 		}
 		{
@@ -103,6 +104,11 @@ namespace statsgate
 		client()->record_damage(curWorld, h, pContext, dmg);
 		if (auto* cb = client()->hooks.get_mission2().m_pPreDamageCallback)
 			cb(curWorld, h, pContext, dmg);
+	}
+
+	void stat_client::BuildEvent(exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem)
+	{
+		client()->record_build_event(producerType, producer, producerTeam, event, buildItemOdf, buildItem);
 	}
 
 	stat_client::stat_client(type t, std::atomic_flag* running_freestanding)
@@ -210,6 +216,9 @@ namespace statsgate
 
 			player->set_has_target(GetUserTarget(teamnum) ? true : false);
 		}
+
+		record_resource_state(tick);
+
 		stat_session.mutable_header()->set_last_tick(cur_turn);
 	}
 
@@ -343,11 +352,48 @@ namespace statsgate
 		damage->set_amount(dmg.value);
 	}
 
+	// Todo put this somewhere else idek
+	template <typename ProtoEnum, typename ExuEnum>
+	ProtoEnum translate_enum(ExuEnum e)
+	{
+		return static_cast<ProtoEnum>(std::to_underlying(e) + 1); // this is dumb I can't wait for reflection
+	}
+
+	void stat_client::record_build_event(exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem)
+	{
+		auto* build_event = stat_session.add_event_stream()->mutable_build_event();
+
+		build_event->set_tick(GetLockstepTurn());
+		build_event->set_type(translate_enum<statsgate::BuildEventType>(event));
+		build_event->set_producer(translate_enum<statsgate::ProducerType>(producerType));
+		build_event->set_teamnum(producerTeam);
+		build_event->set_build_odf(buildItemOdf);
+	}
+
+	void stat_client::record_resource_state(UpdateTick* tick)
+	{
+		auto* team1 = tick->mutable_team1_resources();
+		team1->set_current_scrap(GetScrap(1));
+		team1->set_max_scrap(GetMaxScrap(1));
+		team1->set_scrap_status(get_scrap_status(1));
+		team1->set_pool_count(get_pool_count(1));
+		team1->set_upgrade_count(get_upgrade_count(1));
+
+		auto* team2 = tick->mutable_team2_resources();
+		team2->set_current_scrap(GetScrap(6));
+		team2->set_max_scrap(GetMaxScrap(6));
+		team2->set_scrap_status(get_scrap_status(6));
+		team2->set_pool_count(get_pool_count(6));
+		team2->set_upgrade_count(get_upgrade_count(6));
+	}
+
 	void stat_client::first_tick()
 	{
 		auto now = std::chrono::system_clock::now();
 		session_identifier = std::format("{:%Y-%m-%d-%H-%M-%S}", std::chrono::floor<std::chrono::seconds>(now));
 		exu2::PrintConsoleMessage("Started stat session {}", session_identifier);
+
+		exu2::SetBuildEventCallback(stat_client::BuildEvent);
 
 		StatHeader header;
 		header.set_map(GetMissionFilename());
@@ -410,6 +456,14 @@ namespace statsgate
 		*stat_session.mutable_header() = header;
 	}
 
+	void stat_client::poll_tick()
+	{
+		size_t buf_size;
+		GetAllGameObjectHandles(buf_size, nullptr);
+		current_tick_handles.resize(buf_size);
+		GetAllGameObjectHandles(buf_size, current_tick_handles.data());
+	}
+
 	void stat_client::last_tick()
 	{
 		HWND hwnd = FindWindowW(L"BZCC Main Window", nullptr);
@@ -451,8 +505,6 @@ namespace statsgate
 		// Todo: directx fullscreen stuff these functions dont work to fix black screen after prompt
 		// InvalidateRect(hwnd, nullptr, true);
 		// UpdateWindow(hwnd);
-
-		exu2::PrintConsoleMessage("Pressed {}", std::to_underlying(outcome));
 
 		auto* header = stat_session.mutable_header();
 
@@ -625,5 +677,71 @@ namespace statsgate
 			return std::nullopt;
 
 		return maybe_s64;
+	}
+
+	uint32_t stat_client::get_pool_count(int teamnum)
+	{
+		uint32_t count = 0;
+		for (Handle h : current_tick_handles)
+		{
+			if (GetTeamNum(h) != teamnum)
+				continue;
+
+			if (get_gameobj_class(h) == "CLASS_EXTRACTOR")
+				count++;
+		}
+
+		return count;
+	}
+
+	uint32_t stat_client::get_upgrade_count(int teamnum)
+	{
+		uint32_t count = 0;
+		for (Handle h : current_tick_handles)
+		{
+			if (GetTeamNum(h) != teamnum)
+				continue;
+
+			// There's probably a better way to detect an upgrade but the stock and hadean upgrades don't share the same
+			// virtual classes so this is the only way I can think of. There might be a config in the future to set this to a custom
+			// value for mods outside of stock and VSR.
+			if (get_gameobj_class(h) == "CLASS_EXTRACTOR")
+			{
+				if (auto result = exu2::GetODFFloat(get_odf(h), "ExtractorClass", "scrapDelay"); result.has_value())
+					if (result == 0.5f)
+						count++;
+			}
+		}
+		return count;
+	}
+
+	ScrapStatus stat_client::get_scrap_status(int teamnum)
+	{
+		uint32_t pool_count = get_pool_count(teamnum);
+		uint32_t upg_count = get_upgrade_count(teamnum);
+		uint32_t current_scrap = GetScrap(teamnum);
+
+		// Hardcoded for stock/VSR like upg detection for now
+		constexpr uint32_t pool_scrap_hold = 20;
+
+		if (current_scrap < upg_count * pool_scrap_hold)
+		{
+			return SCRAP_STATUS_RED;
+		}
+		else if (current_scrap < pool_count * pool_scrap_hold)
+		{
+			return SCRAP_STATUS_YELLOW;
+		}
+		else
+		{
+			return SCRAP_STATUS_GREEN;
+		}
+	}
+
+	std::string stat_client::get_gameobj_class(Handle h)
+	{
+		char odf[ODF_MAX_LEN];
+		GetObjInfo(h, Get_GOClass, odf);
+		return std::string(odf);
 	}
 }
