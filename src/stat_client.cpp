@@ -37,10 +37,10 @@ namespace statsgate
 
 	MisnExport2 stat_client::export2_funcs{
 		.m_pPreOrdnanceHitCallback = stat_client::BulletHit,
-		.m_pPrePickupPowerupCallback = stat_client::PickupPowerup,
 		.m_pPreSnipeCallback = stat_client::PreSnipe,
 		.m_pPostBulletInitCallback = stat_client::BulletInit,
-		.m_pPreDamageCallback = stat_client::PreDamage
+		.m_pPreDamageCallback = stat_client::PreDamage,
+		.m_pPostPickupPowerupCallback = stat_client::PickupPowerup,
 	};
 
 	void stat_client::Update()
@@ -75,12 +75,11 @@ namespace statsgate
 			cb(shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF);
 	}
 
-	PrePickupPowerupReturnCodes stat_client::PickupPowerup(const int curWorld, Handle me, Handle powerupHandle)
+	void stat_client::PickupPowerup(const int curWorld, Handle me, Handle powerupHandle)
 	{
 		client()->record_pickup_powerup(curWorld, me, powerupHandle);
-		if (auto* cb = client()->hooks.get_mission2().m_pPrePickupPowerupCallback)
+		if (auto* cb = client()->hooks.get_mission2().m_pPostPickupPowerupCallback)
 			return cb(curWorld, me, powerupHandle);
-		return PREPICKUPPOWERUP_ALLOW; // works
 	}
 
 	PreSnipeReturnCodes stat_client::PreSnipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
@@ -279,6 +278,10 @@ namespace statsgate
 
 	void stat_client::record_pickup_powerup(const int curWorld, Handle me, Handle powerupHandle)
 	{
+		// This callback is triggered on visual worlds for some reason and sends duplicate events
+		if (curWorld != 0)
+			return;
+
 		auto* pickup = stat_session.add_event_stream()->mutable_pickup_powerup();
 
 		pickup->set_tick(GetLockstepTurn());
@@ -294,6 +297,9 @@ namespace statsgate
 
 	void stat_client::record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
 	{
+		if (curWorld != 0)
+			return;
+
 		auto* snipe = stat_session.add_event_stream()->mutable_unit_sniped();
 
 		snipe->set_tick(GetLockstepTurn());
@@ -322,6 +328,9 @@ namespace statsgate
 
 	void stat_client::record_damage(const int curWorld, Handle h, const char* pContext, const DAMAGE& dmg)
 	{
+		if (curWorld != 0)
+			return;
+
 		// Many events for collisions are fired off which do not provide any meaningful data
 		if (dmg.damageType == DAMAGE_TYPE_COLLISION)
 			return;

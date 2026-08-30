@@ -16,14 +16,15 @@ namespace statsgate
 	// MisnExport2 without default constructor to allow designated initializer
 	struct MisnExport2 
 	{
-		ChatMessageSentCallback		m_pChatMessageSentCallback = nullptr;
 		PostTargetChangedCallback	m_pPostTargetChangedCallback = nullptr;
 		PreGetInCallback			m_pPreGetInCallback = nullptr;
 		PreOrdnanceHitCallback		m_pPreOrdnanceHitCallback = nullptr;
 		PrePickupPowerupCallback	m_pPrePickupPowerupCallback = nullptr;
 		PreSnipeCallback			m_pPreSnipeCallback = nullptr;
+		ChatMessageSentCallback		m_pChatMessageSentCallback = nullptr;
 		PostBulletInitCallback		m_pPostBulletInitCallback = nullptr;
 		PreDamageCallback			m_pPreDamageCallback = nullptr;
+		PostPickupPowerupCallback	m_pPostPickupPowerupCallback = nullptr;
 
 		// Make it convertable to stock this is stupid lol idk why you can't just cast
 		// it has the same memory layout
@@ -76,7 +77,7 @@ namespace statsgate
 
 		// MisnExport2
 		static void BulletHit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);
-		static PrePickupPowerupReturnCodes PickupPowerup(const int curWorld, Handle me, Handle powerupHandle);
+		static void PickupPowerup(const int curWorld, Handle me, Handle powerupHandle);
 		// I'm not sure if PreSnipe is the best callback to use over the ObjectSniped callback in MisnExport,
 		// but I think it might be more likely to give valid data since it's before the snipe actually happens.
 		static PreSnipeReturnCodes PreSnipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);

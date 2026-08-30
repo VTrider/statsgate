@@ -7,7 +7,7 @@
 
 namespace statsgate
 {
-	inline const char* version = "1.0.0-beta.2";
+	inline const char* version = "1.0.0-beta.3";
 	inline const std::filesystem::path mod_folder = exu2::GetMyDocs() / "statsgate";
 
 	bool check_singleton();

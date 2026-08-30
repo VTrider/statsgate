@@ -59,7 +59,7 @@ namespace exu2
 
 	// Use this to compare against the DLL version. You should make sure that
 	// your header is up to date with the latest DLL.
-	constexpr const char* HEADER_VERSION = "1.6.0";
+	constexpr const char* HEADER_VERSION = "1.6.1";
 #else
 	constexpr int MINIMUM_REQUIRED_VERSION = 205;
 #endif
@@ -263,6 +263,13 @@ namespace exu2
 	inline int GetTPS()
 	{
 		return SecondsToTurns(1.0f);
+	}
+
+	// Still not sure the implications of the different worlds but I think you should only
+	// do important stuff in world 0 (lockstep world)
+	inline bool IsLockstepWorld()
+	{
+		return GetCurWorld() == 0;
 	}
 
 	namespace detail
