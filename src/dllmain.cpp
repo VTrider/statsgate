@@ -41,7 +41,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
         {
             std::ofstream crash_log(statsgate::mod_folder / "crash.txt", std::ios::app);
             crash_log << std::stacktrace::current() << std::endl;
-            MessageBoxW(NULL, L"statsgate", L"statsgate.dll has exited abnormally. See why in mydocs\\statesgate\\crash.txt", MB_ICONERROR | MB_APPLMODAL);
+            MessageBoxW(NULL, L"statsgate.dll has exited abnormally. See why in mydocs\\statesgate\\crash.txt", L"statsgate", MB_ICONERROR | MB_APPLMODAL);
             std::abort();
         });
 		GOOGLE_PROTOBUF_VERIFY_VERSION;

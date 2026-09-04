@@ -113,6 +113,7 @@ namespace statsgate
 	stat_client::stat_client(type t, std::atomic_flag* running_freestanding)
 		: client_type(t), hooks(export_funcs, export2_funcs), running_freestanding(running_freestanding)
 	{
+		exu2::VerifyVersion();
 		register_instance(this);
 		register_commands();
 		std::filesystem::create_directories(mod_folder);
@@ -382,6 +383,15 @@ namespace statsgate
 		build_event->set_producer(translate_enum<statsgate::ProducerType>(producerType));
 		build_event->set_teamnum(producerTeam);
 		build_event->set_build_odf(buildItemOdf);
+		if (IsAround(buildItem))
+		{
+			statsgate::Vec3 message_pos;
+			Vector pos = GetPosition(buildItem);
+			message_pos.set_x(pos.x);
+			message_pos.set_y(pos.y);
+			message_pos.set_z(pos.z);
+			*build_event->mutable_build_position() = message_pos;
+		}
 	}
 
 	void stat_client::record_resource_state(UpdateTick* tick)

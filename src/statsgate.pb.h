@@ -2662,254 +2662,6 @@ class BulletHit final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull BulletHit_class_data_;
 // -------------------------------------------------------------------
 
-class BuildEvent final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:statsgate.BuildEvent) */ {
- public:
-  inline BuildEvent() : BuildEvent(nullptr) {}
-  ~BuildEvent() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(BuildEvent* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(BuildEvent));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR BuildEvent(::google::protobuf::internal::ConstantInitialized);
-
-  inline BuildEvent(const BuildEvent& from) : BuildEvent(nullptr, from) {}
-  inline BuildEvent(BuildEvent&& from) noexcept
-      : BuildEvent(nullptr, ::std::move(from)) {}
-  inline BuildEvent& operator=(const BuildEvent& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline BuildEvent& operator=(BuildEvent&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const BuildEvent& default_instance() {
-    return *reinterpret_cast<const BuildEvent*>(
-        &_BuildEvent_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 12;
-  friend void swap(BuildEvent& a, BuildEvent& b) { a.Swap(&b); }
-  inline void Swap(BuildEvent* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(BuildEvent* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  BuildEvent* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<BuildEvent>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const BuildEvent& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const BuildEvent& from) { BuildEvent::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(BuildEvent* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "statsgate.BuildEvent"; }
-
-  explicit BuildEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  BuildEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const BuildEvent& from);
-  BuildEvent(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, BuildEvent&& from) noexcept
-      : BuildEvent(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kBuildOdfFieldNumber = 5,
-    kTickFieldNumber = 1,
-    kTypeFieldNumber = 2,
-    kProducerFieldNumber = 3,
-    kTeamnumFieldNumber = 4,
-  };
-  // string build_odf = 5;
-  bool has_build_odf() const;
-  void clear_build_odf() ;
-  const ::std::string& build_odf() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_build_odf(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_build_odf();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_build_odf();
-  void set_allocated_build_odf(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_build_odf() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_build_odf(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_build_odf();
-
-  public:
-  // uint32 tick = 1;
-  bool has_tick() const;
-  void clear_tick() ;
-  ::uint32_t tick() const;
-  void set_tick(::uint32_t value);
-
-  private:
-  ::uint32_t _internal_tick() const;
-  void _internal_set_tick(::uint32_t value);
-
-  public:
-  // .statsgate.BuildEventType type = 2;
-  bool has_type() const;
-  void clear_type() ;
-  ::statsgate::BuildEventType type() const;
-  void set_type(::statsgate::BuildEventType value);
-
-  private:
-  ::statsgate::BuildEventType _internal_type() const;
-  void _internal_set_type(::statsgate::BuildEventType value);
-
-  public:
-  // .statsgate.ProducerType producer = 3;
-  bool has_producer() const;
-  void clear_producer() ;
-  ::statsgate::ProducerType producer() const;
-  void set_producer(::statsgate::ProducerType value);
-
-  private:
-  ::statsgate::ProducerType _internal_producer() const;
-  void _internal_set_producer(::statsgate::ProducerType value);
-
-  public:
-  // uint32 teamnum = 4;
-  bool has_teamnum() const;
-  void clear_teamnum() ;
-  ::uint32_t teamnum() const;
-  void set_teamnum(::uint32_t value);
-
-  private:
-  ::uint32_t _internal_teamnum() const;
-  void _internal_set_teamnum(::uint32_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:statsgate.BuildEvent)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 5,
-                                   0, 38,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const BuildEvent& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr build_odf_;
-    ::uint32_t tick_;
-    int type_;
-    int producer_;
-    ::uint32_t teamnum_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_statsgate_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull BuildEvent_class_data_;
-// -------------------------------------------------------------------
-
 class StatHeader final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:statsgate.StatHeader) */ {
  public:
@@ -3623,6 +3375,271 @@ class PlayerState final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull PlayerState_class_data_;
+// -------------------------------------------------------------------
+
+class BuildEvent final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:statsgate.BuildEvent) */ {
+ public:
+  inline BuildEvent() : BuildEvent(nullptr) {}
+  ~BuildEvent() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(BuildEvent* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(BuildEvent));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR BuildEvent(::google::protobuf::internal::ConstantInitialized);
+
+  inline BuildEvent(const BuildEvent& from) : BuildEvent(nullptr, from) {}
+  inline BuildEvent(BuildEvent&& from) noexcept
+      : BuildEvent(nullptr, ::std::move(from)) {}
+  inline BuildEvent& operator=(const BuildEvent& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline BuildEvent& operator=(BuildEvent&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const BuildEvent& default_instance() {
+    return *reinterpret_cast<const BuildEvent*>(
+        &_BuildEvent_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 12;
+  friend void swap(BuildEvent& a, BuildEvent& b) { a.Swap(&b); }
+  inline void Swap(BuildEvent* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(BuildEvent* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  BuildEvent* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<BuildEvent>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const BuildEvent& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const BuildEvent& from) { BuildEvent::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(BuildEvent* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "statsgate.BuildEvent"; }
+
+  explicit BuildEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  BuildEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const BuildEvent& from);
+  BuildEvent(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, BuildEvent&& from) noexcept
+      : BuildEvent(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kBuildOdfFieldNumber = 5,
+    kBuildPositionFieldNumber = 6,
+    kTickFieldNumber = 1,
+    kTypeFieldNumber = 2,
+    kProducerFieldNumber = 3,
+    kTeamnumFieldNumber = 4,
+  };
+  // string build_odf = 5;
+  bool has_build_odf() const;
+  void clear_build_odf() ;
+  const ::std::string& build_odf() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_build_odf(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_build_odf();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_build_odf();
+  void set_allocated_build_odf(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_build_odf() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_build_odf(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_build_odf();
+
+  public:
+  // .statsgate.Vec3 build_position = 6;
+  bool has_build_position() const;
+  void clear_build_position() ;
+  const ::statsgate::Vec3& build_position() const;
+  [[nodiscard]] ::statsgate::Vec3* PROTOBUF_NULLABLE release_build_position();
+  ::statsgate::Vec3* PROTOBUF_NONNULL mutable_build_position();
+  void set_allocated_build_position(::statsgate::Vec3* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_build_position(::statsgate::Vec3* PROTOBUF_NULLABLE value);
+  ::statsgate::Vec3* PROTOBUF_NULLABLE unsafe_arena_release_build_position();
+
+  private:
+  const ::statsgate::Vec3& _internal_build_position() const;
+  ::statsgate::Vec3* PROTOBUF_NONNULL _internal_mutable_build_position();
+
+  public:
+  // uint32 tick = 1;
+  bool has_tick() const;
+  void clear_tick() ;
+  ::uint32_t tick() const;
+  void set_tick(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_tick() const;
+  void _internal_set_tick(::uint32_t value);
+
+  public:
+  // .statsgate.BuildEventType type = 2;
+  bool has_type() const;
+  void clear_type() ;
+  ::statsgate::BuildEventType type() const;
+  void set_type(::statsgate::BuildEventType value);
+
+  private:
+  ::statsgate::BuildEventType _internal_type() const;
+  void _internal_set_type(::statsgate::BuildEventType value);
+
+  public:
+  // .statsgate.ProducerType producer = 3;
+  bool has_producer() const;
+  void clear_producer() ;
+  ::statsgate::ProducerType producer() const;
+  void set_producer(::statsgate::ProducerType value);
+
+  private:
+  ::statsgate::ProducerType _internal_producer() const;
+  void _internal_set_producer(::statsgate::ProducerType value);
+
+  public:
+  // uint32 teamnum = 4;
+  bool has_teamnum() const;
+  void clear_teamnum() ;
+  ::uint32_t teamnum() const;
+  void set_teamnum(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_teamnum() const;
+  void _internal_set_teamnum(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:statsgate.BuildEvent)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<3, 6,
+                                   1, 38,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const BuildEvent& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr build_odf_;
+    ::statsgate::Vec3* PROTOBUF_NULLABLE build_position_;
+    ::uint32_t tick_;
+    int type_;
+    int producer_;
+    ::uint32_t teamnum_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_statsgate_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull BuildEvent_class_data_;
 // -------------------------------------------------------------------
 
 class UpdateTick final : public ::google::protobuf::Message
@@ -7860,14 +7877,14 @@ inline void PickupPowerup::set_allocated_powerup_odf(::std::string* PROTOBUF_NUL
 
 // uint32 tick = 1;
 inline bool BuildEvent::has_tick() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
   return value;
 }
 inline void BuildEvent::clear_tick() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.tick_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000002U);
+                  0x00000004U);
 }
 inline ::uint32_t BuildEvent::tick() const {
   // @@protoc_insertion_point(field_get:statsgate.BuildEvent.tick)
@@ -7875,7 +7892,7 @@ inline ::uint32_t BuildEvent::tick() const {
 }
 inline void BuildEvent::set_tick(::uint32_t value) {
   _internal_set_tick(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
   // @@protoc_insertion_point(field_set:statsgate.BuildEvent.tick)
 }
 inline ::uint32_t BuildEvent::_internal_tick() const {
@@ -7889,14 +7906,14 @@ inline void BuildEvent::_internal_set_tick(::uint32_t value) {
 
 // .statsgate.BuildEventType type = 2;
 inline bool BuildEvent::has_type() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
   return value;
 }
 inline void BuildEvent::clear_type() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.type_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000004U);
+                  0x00000008U);
 }
 inline ::statsgate::BuildEventType BuildEvent::type() const {
   // @@protoc_insertion_point(field_get:statsgate.BuildEvent.type)
@@ -7904,7 +7921,7 @@ inline ::statsgate::BuildEventType BuildEvent::type() const {
 }
 inline void BuildEvent::set_type(::statsgate::BuildEventType value) {
   _internal_set_type(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
   // @@protoc_insertion_point(field_set:statsgate.BuildEvent.type)
 }
 inline ::statsgate::BuildEventType BuildEvent::_internal_type() const {
@@ -7918,14 +7935,14 @@ inline void BuildEvent::_internal_set_type(::statsgate::BuildEventType value) {
 
 // .statsgate.ProducerType producer = 3;
 inline bool BuildEvent::has_producer() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
   return value;
 }
 inline void BuildEvent::clear_producer() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.producer_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000008U);
+                  0x00000010U);
 }
 inline ::statsgate::ProducerType BuildEvent::producer() const {
   // @@protoc_insertion_point(field_get:statsgate.BuildEvent.producer)
@@ -7933,7 +7950,7 @@ inline ::statsgate::ProducerType BuildEvent::producer() const {
 }
 inline void BuildEvent::set_producer(::statsgate::ProducerType value) {
   _internal_set_producer(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
   // @@protoc_insertion_point(field_set:statsgate.BuildEvent.producer)
 }
 inline ::statsgate::ProducerType BuildEvent::_internal_producer() const {
@@ -7947,14 +7964,14 @@ inline void BuildEvent::_internal_set_producer(::statsgate::ProducerType value) 
 
 // uint32 teamnum = 4;
 inline bool BuildEvent::has_teamnum() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000020U);
   return value;
 }
 inline void BuildEvent::clear_teamnum() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.teamnum_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000010U);
+                  0x00000020U);
 }
 inline ::uint32_t BuildEvent::teamnum() const {
   // @@protoc_insertion_point(field_get:statsgate.BuildEvent.teamnum)
@@ -7962,7 +7979,7 @@ inline ::uint32_t BuildEvent::teamnum() const {
 }
 inline void BuildEvent::set_teamnum(::uint32_t value) {
   _internal_set_teamnum(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
   // @@protoc_insertion_point(field_set:statsgate.BuildEvent.teamnum)
 }
 inline ::uint32_t BuildEvent::_internal_teamnum() const {
@@ -8041,6 +8058,105 @@ inline void BuildEvent::set_allocated_build_odf(::std::string* PROTOBUF_NULLABLE
     _impl_.build_odf_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:statsgate.BuildEvent.build_odf)
+}
+
+// .statsgate.Vec3 build_position = 6;
+inline bool BuildEvent::has_build_position() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  PROTOBUF_ASSUME(!value || _impl_.build_position_ != nullptr);
+  return value;
+}
+inline void BuildEvent::clear_build_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.build_position_ != nullptr) _impl_.build_position_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::statsgate::Vec3& BuildEvent::_internal_build_position() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::statsgate::Vec3* p = _impl_.build_position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::statsgate::Vec3&>(::statsgate::_Vec3_default_instance_);
+}
+inline const ::statsgate::Vec3& BuildEvent::build_position() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.BuildEvent.build_position)
+  return _internal_build_position();
+}
+inline void BuildEvent::unsafe_arena_set_allocated_build_position(
+    ::statsgate::Vec3* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.build_position_);
+  }
+  _impl_.build_position_ = reinterpret_cast<::statsgate::Vec3*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.BuildEvent.build_position)
+}
+inline ::statsgate::Vec3* PROTOBUF_NULLABLE BuildEvent::release_build_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::Vec3* released = _impl_.build_position_;
+  _impl_.build_position_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::statsgate::Vec3* PROTOBUF_NULLABLE BuildEvent::unsafe_arena_release_build_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.BuildEvent.build_position)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::Vec3* temp = _impl_.build_position_;
+  _impl_.build_position_ = nullptr;
+  return temp;
+}
+inline ::statsgate::Vec3* PROTOBUF_NONNULL BuildEvent::_internal_mutable_build_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.build_position_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::statsgate::Vec3>(GetArena());
+    _impl_.build_position_ = reinterpret_cast<::statsgate::Vec3*>(p);
+  }
+  return _impl_.build_position_;
+}
+inline ::statsgate::Vec3* PROTOBUF_NONNULL BuildEvent::mutable_build_position()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::Vec3* _msg = _internal_mutable_build_position();
+  // @@protoc_insertion_point(field_mutable:statsgate.BuildEvent.build_position)
+  return _msg;
+}
+inline void BuildEvent::set_allocated_build_position(::statsgate::Vec3* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.build_position_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+
+  _impl_.build_position_ = reinterpret_cast<::statsgate::Vec3*>(value);
+  // @@protoc_insertion_point(field_set_allocated:statsgate.BuildEvent.build_position)
 }
 
 // -------------------------------------------------------------------

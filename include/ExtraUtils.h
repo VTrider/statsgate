@@ -52,17 +52,6 @@ namespace exu2
 	inline void ProcessAttach(const std::filesystem::path& dllDirectory = GetWorkshopPath() / "3515140097" / "Bin",
 							  bool noSplashText = false)
 	{
-		if (strcmp(exu2::GetDLLVersion(), exu2::HEADER_VERSION) != 0)
-		{
-			std::string message = std::format(
-				"Mission DLL is compiled with exu2 header version {},"
-				"but the current workshop version is {}."
-				"If the mission header is lower than the workshop version, please contact the mod author to update the mod to the latest header."
-				"If the mission header is higher than the workshop version, your workshop item is out of date, verify integrity to get the latest update.",
-				exu2::HEADER_VERSION, exu2::GetDLLVersion());
-			MessageBoxA(NULL, message.c_str(), "Extra Utilities 2", MB_ICONERROR | MB_APPLMODAL);
-			std::abort();
-		}
 
 		SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_APPLICATION_DIR |
 								 LOAD_LIBRARY_SEARCH_DEFAULT_DIRS | 
@@ -78,6 +67,22 @@ namespace exu2
 		if (GetModuleHandleW(L"ExtraUtilities2.dll"))
 		{
 			__FUnloadDelayLoadedDLL2("ExtraUtilities2.dll");
+		}
+	}
+
+	// Use this to verify your dll is up to date to prevent unexpected crashes. DO NOT CALL IN DLL_PROCESS_ATTACH
+	inline void VerifyVersion()
+	{
+		if (strcmp(exu2::GetDLLVersion(), exu2::HEADER_VERSION) != 0)
+		{
+			std::string message = std::format(
+				"Mission DLL is compiled with exu2 header version {}, "
+				"but the current workshop version is {}. "
+				"If the mission header is lower than the workshop version, please contact the mod author to update the mod to the latest header."
+				"If the mission header is higher than the workshop version, your workshop item is out of date, verify integrity to get the latest update.",
+				exu2::HEADER_VERSION, exu2::GetDLLVersion());
+			MessageBoxA(NULL, message.c_str(), "Extra Utilities 2", MB_ICONERROR | MB_APPLMODAL);
+			std::abort();
 		}
 	}
 #else
