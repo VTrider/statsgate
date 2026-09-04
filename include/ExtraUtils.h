@@ -28,9 +28,21 @@ namespace exu2
 		inline bool noSplashText = false;
 	}
 
+	// Returns the minor version of the game, use this if your mod only supports a certain version(s)
+	EXUAPI int DLLAPI GetGameMinorVersion();
+	
+	// Returns the patch version of the game
+	EXUAPI int DLLAPI GetGamePatchVersion();
+
+	// Returns the current dll version Major.Minor.Patch
+	EXUAPI const char* DLLAPI GetDLLVersion();
+
 #ifndef EXU_EXPORTS
 	const std::filesystem::path GetWorkshopPath();
 
+	// Use this to compare against the DLL version. You should make sure that
+	// your header is up to date with the latest DLL.
+	constexpr const char* HEADER_VERSION = "1.6.3";
 
 	// WARNING: You MUST call these two functions in DLL_PROCESS_ATTACH, and DLL_PROCESS_DETACH
 	// respectively if you are using this library in a dll mission. By default this uses the 
@@ -40,6 +52,18 @@ namespace exu2
 	inline void ProcessAttach(const std::filesystem::path& dllDirectory = GetWorkshopPath() / "3515140097" / "Bin",
 							  bool noSplashText = false)
 	{
+		if (strcmp(exu2::GetDLLVersion(), exu2::HEADER_VERSION) != 0)
+		{
+			std::string message = std::format(
+				"Mission DLL is compiled with exu2 header version {},"
+				"but the current workshop version is {}."
+				"If the mission header is lower than the workshop version, please contact the mod author to update the mod to the latest header."
+				"If the mission header is higher than the workshop version, your workshop item is out of date, verify integrity to get the latest update.",
+				exu2::HEADER_VERSION, exu2::GetDLLVersion());
+			MessageBoxA(NULL, message.c_str(), "Extra Utilities 2", MB_ICONERROR | MB_APPLMODAL);
+			std::abort();
+		}
+
 		SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_APPLICATION_DIR |
 								 LOAD_LIBRARY_SEARCH_DEFAULT_DIRS | 
 								 LOAD_LIBRARY_SEARCH_SYSTEM32 |
@@ -56,22 +80,9 @@ namespace exu2
 			__FUnloadDelayLoadedDLL2("ExtraUtilities2.dll");
 		}
 	}
-
-	// Use this to compare against the DLL version. You should make sure that
-	// your header is up to date with the latest DLL.
-	constexpr const char* HEADER_VERSION = "1.6.1";
 #else
 	constexpr int MINIMUM_REQUIRED_VERSION = 205;
 #endif
-
-	// Returns the minor version of the game, use this if your mod only supports a certain version(s)
-	EXUAPI int DLLAPI GetGameMinorVersion();
-	
-	// Returns the patch version of the game
-	EXUAPI int DLLAPI GetGamePatchVersion();
-
-	// Returns the current dll version Major.Minor.Patch
-	EXUAPI const char* DLLAPI GetDLLVersion();
 
 	using VarSysHandler = void(__cdecl*)(unsigned long crc);
 
@@ -104,7 +115,10 @@ namespace exu2
 	// I'm pretty sure this WONT work with hover constructors, but since they are so rare I don't really care to implement it unless it's despra
 	// 
 	// When cancelling stacks of units from the recycler/factory, this callback will be called multiple times corresponding to how many units were in the stack.
-	using BuildEventCallback_t = void(*)(ProducerType producerType, Handle producer, int producerTeam, BuildEventType event, const char* buildItemOdf, Handle buildItem);
+	//
+	// In multiplayer this callback will be called with duplicate events in each "world", no one really knows the implications of this but if you want to read the "real" event,
+	// filter by world 0 (lockstep).
+	using BuildEventCallback_t = void(*)(int curWorld, ProducerType producerType, Handle producer, int producerTeam, BuildEventType event, const char* buildItemOdf, Handle buildItem);
 	EXUAPI void DLLAPI SetBuildEventCallback(BuildEventCallback_t callback);
 
 	// Camera

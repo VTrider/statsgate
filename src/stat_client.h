@@ -63,7 +63,7 @@ namespace statsgate
 		void record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF);
 		void record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF);
 		void record_damage(const int curWorld, Handle h, const char* pContext, const DAMAGE& dmg);
-		void record_build_event(exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem);
+		void record_build_event(int curWorld, exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem);
 		void record_resource_state(UpdateTick* tick);
 
 		void first_tick();
@@ -85,7 +85,7 @@ namespace statsgate
 		static void PreDamage(const int curWorld, Handle h, const char* pContext, DAMAGE& dmg);
 
 		// Extra Utilities 2
-		static void BuildEvent(exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem);
+		static void BuildEvent(int curWorld, exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem);
 
 	private:
 		enum class output_format : uint8_t

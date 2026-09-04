@@ -105,9 +105,9 @@ namespace statsgate
 			cb(curWorld, h, pContext, dmg);
 	}
 
-	void stat_client::BuildEvent(exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem)
+	void stat_client::BuildEvent(int curWorld, exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem)
 	{
-		client()->record_build_event(producerType, producer, producerTeam, event, buildItemOdf, buildItem);
+		client()->record_build_event(curWorld, producerType, producer, producerTeam, event, buildItemOdf, buildItem);
 	}
 
 	stat_client::stat_client(type t, std::atomic_flag* running_freestanding)
@@ -368,8 +368,13 @@ namespace statsgate
 		return static_cast<ProtoEnum>(std::to_underlying(e) + 1); // this is dumb I can't wait for reflection
 	}
 
-	void stat_client::record_build_event(exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem)
+	void stat_client::record_build_event(int curWorld, exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem)
 	{
+		// SUPER UNTESTED, there are duplicate events if multiworld is not 0, only applicable in multiplayer.
+		// I have no idea what happens if you modify the items in this callback when world isn't 0.
+		if (curWorld != 0)
+			return;
+
 		auto* build_event = stat_session.add_event_stream()->mutable_build_event();
 
 		build_event->set_tick(GetLockstepTurn());
