@@ -428,10 +428,10 @@ namespace statsgate
 	//	const char* targetOdf;
 	//};
 
-	void cb(exu2::MagnetType type, const exu2::MagnetForceInfo* info)
-	{
-		exu2::PrintConsoleMessage("{} {} {} {} {} {} {} {} {} {}", GetCurWorld(), type, info->magnetHandle, info->magnetOwner, info->magnetTeam, info->magnetOdf, info->targetType, info->targetHandle, info->targetTeam, info->targetOdf);
-	}
+	//void cb(exu2::MagnetType type, const exu2::MagnetForceInfo* info)
+	//{
+	//	exu2::PrintConsoleMessage("{} {} {} {} {} {} {} {} {} {}", GetCurWorld(), type, info->magnetHandle, info->magnetOwner, info->magnetTeam, info->magnetOdf, info->targetType, info->targetHandle, info->targetTeam, info->targetOdf);
+	//}
 
 	void stat_client::first_tick()
 	{
@@ -632,7 +632,10 @@ namespace statsgate
 		command shutdown("stats.shutdown", [this]()
 		{
 			if (client_type != type::freestanding)
+			{
 				PrintConsoleMessage("Shutdown is not supported for hosted clients, please exit the mission");
+				return;
+			}
 
 			if (recording)
 			{
