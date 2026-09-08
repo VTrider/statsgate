@@ -410,6 +410,28 @@ namespace statsgate
 		team2->set_pool_count(get_pool_count(6));
 		team2->set_upgrade_count(get_upgrade_count(6));
 	}
+	
+	//struct MagnetForceInfo
+	//{
+	//	Handle magnetHandle; // ONLY defined for type MINE
+	//	Handle magnetOwner;
+	//	int magnetTeam;
+	//	const char* magnetOdf;
+
+	//	MagnetTarget targetType;
+	//	union
+	//	{
+	//		Handle targetHandle; // MagnetTarget::GAME_OBJECT
+	//		uintptr_t targetOrdnance; // MagnetTarget::ORDNANCE - Use this to differentiate between different events on the same ordnance
+	//	};
+	//	int targetTeam;
+	//	const char* targetOdf;
+	//};
+
+	void cb(exu2::MagnetType type, const exu2::MagnetForceInfo* info)
+	{
+		exu2::PrintConsoleMessage("{} {} {} {} {} {} {} {} {} {}", GetCurWorld(), type, info->magnetHandle, info->magnetOwner, info->magnetTeam, info->magnetOdf, info->targetType, info->targetHandle, info->targetTeam, info->targetOdf);
+	}
 
 	void stat_client::first_tick()
 	{
@@ -418,6 +440,7 @@ namespace statsgate
 		exu2::PrintConsoleMessage("Started stat session {}", session_identifier);
 
 		exu2::SetBuildEventCallback(stat_client::BuildEvent);
+		// exu2::SetMagnetForceCallback(cb);
 
 		StatHeader header;
 		header.set_map(GetMissionFilename());
@@ -508,6 +531,8 @@ namespace statsgate
 			if (player.teamnum() == 6)
 				cmdr_t2 = player.nickname();
 		}
+
+		player_list.clear(); // clear it for the next game
 
 		std::wstring team_overview = std::format(L"Team 1 Cmdr: {} - Team 2 Cmdr: {}",
 			std::wstring(cmdr_t1.begin(), cmdr_t1.end()),
