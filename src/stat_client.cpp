@@ -532,8 +532,6 @@ namespace statsgate
 				cmdr_t2 = player.nickname();
 		}
 
-		player_list.clear(); // clear it for the next game
-
 		std::wstring team_overview = std::format(L"Team 1 Cmdr: {} - Team 2 Cmdr: {}",
 			std::wstring(cmdr_t1.begin(), cmdr_t1.end()),
 			std::wstring(cmdr_t2.begin(), cmdr_t2.end())
@@ -568,6 +566,8 @@ namespace statsgate
 			auto* recorded_player = header->add_players();
 			*recorded_player = player;
 		}
+
+		player_list.clear(); // clear it for the next game
 
 		std::ofstream file = std::ofstream(std::filesystem::path(client_config.output_directory) / std::format("{}.binpb.gz", session_identifier), std::ios::binary);
 		google::protobuf::io::OstreamOutputStream output_stream(&file);
