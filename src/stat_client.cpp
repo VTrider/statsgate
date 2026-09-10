@@ -567,6 +567,8 @@ namespace statsgate
 			*recorded_player = player;
 		}
 
+		player_list.clear(); // clear it for the next game
+
 		std::ofstream file = std::ofstream(std::filesystem::path(client_config.output_directory) / std::format("{}.binpb.gz", session_identifier), std::ios::binary);
 		google::protobuf::io::OstreamOutputStream output_stream(&file);
 
