@@ -532,8 +532,6 @@ namespace statsgate
 				cmdr_t2 = player.nickname();
 		}
 
-		player_list.clear(); // clear it for the next game
-
 		std::wstring team_overview = std::format(L"Team 1 Cmdr: {} - Team 2 Cmdr: {}",
 			std::wstring(cmdr_t1.begin(), cmdr_t1.end()),
 			std::wstring(cmdr_t2.begin(), cmdr_t2.end())
@@ -592,6 +590,7 @@ namespace statsgate
 		gzip_stream.Flush();
 		file.flush();
 		stat_session.Clear();
+		player_list.clear(); // clear it for the next game
 		session_identifier.clear();
 		recording = false;
 	}
