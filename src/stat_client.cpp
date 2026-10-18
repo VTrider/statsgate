@@ -251,10 +251,10 @@ namespace statsgate
 
 	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
 	{
-		// Do not record AI vs AI hits, but AI vs player hits may be interesting
+		// Record all hits from player fired ordnance, todo for replays: record all hits even AI
 		auto shooter = is_player(shooterHandle);
 		auto victim = is_player(victimHandle);
-		if (!shooter || !victim)
+		if (!shooter)
 			return;
 
 		auto* hit = stat_session.add_event_stream()->mutable_bullet_hit();

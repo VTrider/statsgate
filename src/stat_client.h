@@ -43,7 +43,7 @@ namespace statsgate
 		{
 			freestanding, // injected dll to record autonomously
 			hosted_dll,   // integration into DLL mission by map author
-			hosted_lua    // integration into LuaMission by map author
+			hosted_lua    // integration into Lua mission by map author
 		};
 
 		stat_client(type t, std::atomic_flag* running_freestanding);

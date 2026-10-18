@@ -10,6 +10,13 @@ message Vec3 {
   float z = 3;
 }
 
+message Quat {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+  float w = 4;
+}
+
 enum Race {
   RACE_UNSPECIFIED = 0;
   RACE_ISDF = 1;
@@ -33,6 +40,13 @@ message PlayerInfo {
   uint64 steam64 = 1;
   uint32 teamnum = 2;
   string nickname = 3; // the nickname they had when first recorded
+}
+
+enum RecorderType {
+  RECORDER_TYPE_UNSPECIFIED = 0;
+  RECORDER_TYPE_FREESTANDING = 1; // injected dll to record autonomously
+  RECORDER_TYPE_HOSTED_DLL = 2;   // integration into DLL mission by map author
+  RECORDER_TYPE_HOSTED_LUA = 3;   // integration into Lua mission by map author
 }
 
 // Important notes:
@@ -72,6 +86,8 @@ message StatHeader {
   Outcome game_outcome = 21;
 
   repeated PlayerInfo players = 22;
+
+  RecorderType recorder_type = 23;
 }
 
 // As of now these events only track player shots
@@ -122,6 +138,18 @@ message PlayerState {
   float ammo = 5;   // Same as health
   string odf = 6;
   bool has_target = 7; // are they using the T key?
+
+  // Replay mode data
+  Quat orientation = 9;
+}
+
+// Unused, planned for replay mode
+message AIState {
+  string odf = 1;
+  Vec3 position = 2;
+  Quat orientation = 3;
+  float health = 4;
+  float ammo = 5;
 }
 
 enum ScrapStatus {
@@ -208,6 +236,27 @@ message BuildEvent {
   Vec3 build_position = 6; // Only defined for BUILD events
 }
 
+// This describes whether an object or an ordnance was pushed/deflected
+enum MagnetTarget {
+  MAGNET_TARGET_UNSPECIFIED = 0;
+  MAGNET_TARGET_GAME_OBJECT = 1;
+  MAGNET_TARGET_ORDNANCE = 2;
+}
+
+// This event is triggered for any of the "magnet" items like
+// sonic wave, mits, mcurt, etc.
+message MagnetForce {
+  uint32 tick = 1;
+  uint64 magnet_owner = 2; // undefined if ai owns the weapon/mine, otherwise the player s64
+  uint32 magnet_team = 3;
+  string magnet_odf = 4;
+
+  MagnetTarget magnet_target = 5;
+  uint32 magnet_handle = 6; // use this to differentiate between different events on the same object/ordnance
+  uint32 target_team = 7;
+  string target_odf = 8;
+}
+
 message StatEvent {
   reserved 4;
   oneof event_type {
@@ -219,6 +268,7 @@ message StatEvent {
     UnitSniped unit_sniped = 7;
     PickupPowerup pickup_powerup = 8;
     BuildEvent build_event = 9;
+    MagnetForce magnet_force = 10;
   }
 }
 
