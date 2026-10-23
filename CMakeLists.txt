@@ -18,7 +18,5 @@ else()
     message(FATAL_ERROR "MSVC is required to build this project")
 endif()
 
-# find_package(glad CONFIG REQUIRED)
-
 add_subdirectory(statslauncher)
 add_subdirectory(statsrecorder)
