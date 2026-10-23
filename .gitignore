@@ -457,3 +457,5 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudio,c++
 
 vcpkg_installed/
+compile_commands.json
+build/

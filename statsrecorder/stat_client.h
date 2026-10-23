@@ -46,6 +46,12 @@ namespace statsgate
 			hosted_lua    // integration into Lua mission by map author
 		};
 
+		enum class output_format : uint8_t
+		{
+			proto,
+			json
+		};
+
 		stat_client(type t, std::atomic_flag* running_freestanding);
 		~stat_client();
 		static stat_client* client();
@@ -88,12 +94,6 @@ namespace statsgate
 		static void BuildEvent(int curWorld, exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem);
 
 	private:
-		enum class output_format : uint8_t
-		{
-			proto,
-			json
-		};
-
 		struct config
 		{
 			bool enable_recorder;

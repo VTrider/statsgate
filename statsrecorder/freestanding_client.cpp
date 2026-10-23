@@ -17,7 +17,7 @@ extern "C" __declspec(dllexport) DWORD WINAPI run_freestanding(LPVOID hModule)
     if (!check_singleton())
     {
 		FreeLibraryAndExitThread(static_cast<HMODULE>(hModule), 0);
-        return 0;
+        std::unreachable();
     }
     
     running_freestanding.test_and_set(std::memory_order::relaxed);
