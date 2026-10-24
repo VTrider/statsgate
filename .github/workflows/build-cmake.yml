@@ -16,6 +16,11 @@ jobs:
     - name: Get CMake and Ninja
       uses: lukka/get-cmake@latest
 
+    - name: Configure MSVC Developer Environment (x86)
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x86
+
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
