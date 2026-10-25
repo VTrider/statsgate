@@ -16,21 +16,20 @@ jobs:
     - name: Get CMake and Ninja
       uses: lukka/get-cmake@latest
 
-    - name: Configure MSVC Developer Environment (x86)
-      uses: ilammy/msvc-dev-cmd@v1
-      with:
-        arch: x86
-
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
         vcpkgGitCommitId: 'b8922ae57c61d4192a504bbb955d19599fa68f2a'
 
-    - name: Run CMake
-      uses: lukka/run-cmake@v10
+    - name: Setup x86 Dev Tools
+      uses: ilammy/msvc-dev-cmd@v1
       with:
-        configurePreset: 'x86-release'
-        buildPreset: 'x86-release'
+        arch: x86
+
+    - name: Build
+      run: |
+        cmake --preset --x86-release
+        cmake --build --preset --x86-release
 
     - name: Upload binaries
       uses: actions/upload-artifact@v4
