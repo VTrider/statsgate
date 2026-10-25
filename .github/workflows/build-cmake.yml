@@ -37,10 +37,16 @@ jobs:
         cmake --preset x86-release
         cmake --build --preset x86-release
 
+    - name: Generate Short SHA
+      shell: pwsh
+      run: |
+        $shortSha = $env:GITHUB_SHA.Substring(0, 7)
+        echo "SHORT_SHA=$shortSha" >> $env:GITHUB_ENV
+
     - name: Upload binaries
       uses: actions/upload-artifact@v4
       with:
-        name: statsgate-nightly-${{ substr(github.sha, 0, 7) }}
+        name: statsgate-nightly-${{ env.SHORT_SHA }}
         path: |
           build/x86-release/bin/*.exe
           build/x86-release/bin/*.dll
