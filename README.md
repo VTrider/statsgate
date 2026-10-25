@@ -19,7 +19,7 @@ in the console for a list of commands. The stat sessions will be saved to the `s
 
 Make sure to run the powershell script to compile new protobuf headers if the schema changes.
 
-[Download the nightly binaries here](https://nightly.link/vtrider/statsgate/workflows/build/main/nightly-binaries.zip)
+[Download the nightly binaries here](https://nightly.link/VTrider/statsgate/workflows/build/main/statsgate-nightly.zip)
 
 ## Website
 
