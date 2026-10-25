@@ -16,6 +16,12 @@ jobs:
     - name: Get CMake and Ninja
       uses: lukka/get-cmake@latest
 
+    - name: Cache vcpkg binaries
+      uses: actions/cache@v6
+      with:
+        path: ${{ github.workspace }}/vcpkg_installed
+        key: ${{ runner.os }}-${{ hashFiles('**/vcpkg.json') }}
+
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
@@ -34,7 +40,7 @@ jobs:
     - name: Upload binaries
       uses: actions/upload-artifact@v4
       with:
-        name: statsgate-nightly-${{ github.sha }}
+        name: statsgate-nightly-${{ substr(github.sha, 0, 7) }}
         path: |
           build/x86-release/bin/*.exe
           build/x86-release/bin/*.dll
