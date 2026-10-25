@@ -12,7 +12,7 @@ Things you need:
 - vcpkg
 - Python maybe
 - [Extra Utilities 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3515140097) (the workshop item just needs to be installed)
-- BZCC Version >= 2.0.203
+- BZCC Version >= 2.0.206.10 (latest devtest)
 
 Simply run statslauncher.exe with BZCC open and it will start the stat client. Use the `stats` command
 in the console for a list of commands. The stat sessions will be saved to the `statsgate` folder in mydocs.
@@ -21,9 +21,9 @@ Make sure to run the powershell script to compile new protobuf headers if the sc
 
 [Download the nightly binaries here](https://nightly.link/vtrider/statsgate/workflows/build/main/nightly-binaries.zip)
 
-## Contributing Stats
+## Website
 
-Just make a folder in the sessions folder with your known nick and add stat files to it, feel free to send a PR!
+For the latest data go to https://vtstats.bz
 
 The name is a VSR joke from when players stopped playing out of fear of their winrate
 decreasing after F9bomber started publishing stats.
