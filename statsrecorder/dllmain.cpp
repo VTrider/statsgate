@@ -6,7 +6,6 @@
 #include <google/protobuf/stubs/common.h>
 #include <windows.h>
 
-#include <chrono>
 #include <filesystem>
 #include <fstream>
 #include <stacktrace>
@@ -29,7 +28,7 @@ bool statsgate::check_singleton()
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
+                       [[maybe_unused]] LPVOID lpReserved
                      )
 {
     switch (ul_reason_for_call)

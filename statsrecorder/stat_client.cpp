@@ -111,7 +111,7 @@ namespace statsgate
 	}
 
 	stat_client::stat_client(type t, std::atomic_flag* running_freestanding)
-		: client_type(t), hooks(export_funcs, export2_funcs), running_freestanding(running_freestanding)
+		: client_type(t), running_freestanding(running_freestanding), hooks(export_funcs, export2_funcs)
 	{
 		exu2::VerifyVersion();
 		register_instance(this);
@@ -249,7 +249,7 @@ namespace statsgate
 		unit->set_victim_odf(std::move(victim_odf));
 	}
 
-	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
+	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, [[maybe_unused]] int ordnanceTeam, const char* pOrdnanceODF)
 	{
 		// Record all hits from player fired ordnance, todo for replays: record all hits even AI
 		auto shooter = is_player(shooterHandle);
@@ -296,7 +296,7 @@ namespace statsgate
 		pickup->set_powerup_odf(get_odf(powerupHandle));
 	}
 
-	void stat_client::record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, int ordnanceTeam, const char* pOrdnanceODF)
+	void stat_client::record_snipe(const int curWorld, Handle shooterHandle, Handle victimHandle, [[maybe_unused]] int ordnanceTeam, [[maybe_unused]] const char* pOrdnanceODF)
 	{
 		if (curWorld != 0)
 			return;
@@ -316,7 +316,8 @@ namespace statsgate
 		snipe->set_victim_odf(get_odf(victimHandle));
 	}
 
-	void stat_client::record_bullet_init(Handle shooterHandle, const Matrix& ordnanceMat, const Vector& ordnanceVel, int ordnanceTeam, float ordnanceLifespan, const char* pOrdnanceODF)
+	void stat_client::record_bullet_init(Handle shooterHandle, [[maybe_unused]] const Matrix& ordnanceMat,
+            [[maybe_unused]] const Vector& ordnanceVel, [[maybe_unused]] int ordnanceTeam, [[maybe_unused]] float ordnanceLifespan, const char* pOrdnanceODF)
 	{
 		if (!is_player(shooterHandle))
 			return;
@@ -369,7 +370,7 @@ namespace statsgate
 		return static_cast<ProtoEnum>(std::to_underlying(e) + 1); // this is dumb I can't wait for reflection
 	}
 
-	void stat_client::record_build_event(int curWorld, exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem)
+	void stat_client::record_build_event(int curWorld, exu2::ProducerType producerType, [[maybe_unused]] Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem)
 	{
 		// SUPER UNTESTED, there are duplicate events if multiworld is not 0, only applicable in multiplayer.
 		// I have no idea what happens if you modify the items in this callback when world isn't 0.

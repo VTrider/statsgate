@@ -10,12 +10,12 @@ namespace statsgate
 {
 	static std::unique_ptr<stat_client> client;
 
-	int start_lua_client(lua_State* L)
+	int start_lua_client([[maybe_unused]] lua_State* L)
 	{
 		return 0;
 	}
 
-	extern "C" __declspec(dllexport) void DLLAPI luaopen_statsgate(lua_State* L)
+	extern "C" __declspec(dllexport) void DLLAPI luaopen_statsgate([[maybe_unused]] lua_State* L)
 	{
 		if (!check_singleton())
 			return;
