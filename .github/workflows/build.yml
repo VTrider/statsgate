@@ -46,7 +46,9 @@ jobs:
     - name: Upload binaries
       uses: actions/upload-artifact@v4
       with:
-        name: statsgate-nightly-${{ env.SHORT_SHA }}
+        # this breaks nightly.link so idk what to do with it
+        # name: statsgate-nightly-${{ env.SHORT_SHA }}
+        name: statsgate-nightly
         path: |
           build/x86-release/bin/*.exe
           build/x86-release/bin/*.dll
