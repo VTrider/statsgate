@@ -13,45 +13,40 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Get CMake and Ninja
+      uses: lukka/get-cmake@latest
+
+    - name: Cache vcpkg binaries
+      uses: actions/cache@v6
+      with:
+        path: ${{ github.workspace }}/vcpkg_installed
+        key: ${{ runner.os }}-${{ hashFiles('**/vcpkg.json') }}
+
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgJsonGlob: 'vcpkg.json'
+        vcpkgGitCommitId: 'b8922ae57c61d4192a504bbb955d19599fa68f2a'
 
-    - name: Integrate vcpkg
-      run: vcpkg integrate install
+    - name: Setup x86 Dev Tools
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x86
 
-    # Source - https://stackoverflow.com/a/79852893
-    # Posted by Amit, modified by community. See post 'Timeline' for change history
-    # Retrieved 2026-04-16, License - CC BY-SA 4.0
-    - name: Install Visual Studio Build Tools
+    - name: Build
+      run: |
+        cmake --preset x86-release
+        cmake --build --preset x86-release
+
+    - name: Generate Short SHA
       shell: pwsh
       run: |
-        Write-Host "Installing VS 2026 Build Tools..."
-        choco install visualstudio2026buildtools `
-          --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --includeRecommended --quiet" `
-          -y --ignore-package-exit-codes=3010
-        Write-Host "VS 2026 Build Tools installation completed" 
-
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v3
-
-    # Source - https://stackoverflow.com/a/79852893
-    # Posted by Amit, modified by community. See post 'Timeline' for change history
-    # Retrieved 2026-04-16, License - CC BY-SA 4.0
-    - name: Build Solution
-      shell: cmd
-      run: |
-        call "C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\Common7\Tools\VsDevCmd.bat"
-        msbuild /m ^
-          /p:Configuration=Release ^
-          /p:Platform=x86 ^
-          statsgate.sln
+        $shortSha = $env:GITHUB_SHA.Substring(0, 7)
+        echo "SHORT_SHA=$shortSha" >> $env:GITHUB_ENV
 
     - name: Upload binaries
       uses: actions/upload-artifact@v4
       with:
-        name: nightly-binaries
+        name: statsgate-nightly-${{ env.SHORT_SHA }}
         path: |
-          Release/*.exe
-          Release/*.dll
+          build/x86-release/bin/*.exe
+          build/x86-release/bin/*.dll
