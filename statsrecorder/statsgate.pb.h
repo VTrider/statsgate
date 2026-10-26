@@ -57,14 +57,22 @@ extern const ::google::protobuf::internal::DescriptorTable descriptor_table_stat
 namespace statsgate {
 enum BuildEventType : int;
 extern const uint32_t BuildEventType_internal_data_[];
+enum MagnetTarget : int;
+extern const uint32_t MagnetTarget_internal_data_[];
 enum Outcome : int;
 extern const uint32_t Outcome_internal_data_[];
 enum ProducerType : int;
 extern const uint32_t ProducerType_internal_data_[];
 enum Race : int;
 extern const uint32_t Race_internal_data_[];
+enum RecorderType : int;
+extern const uint32_t RecorderType_internal_data_[];
 enum ScrapStatus : int;
 extern const uint32_t ScrapStatus_internal_data_[];
+class AIState;
+struct AIStateDefaultTypeInternal;
+extern AIStateDefaultTypeInternal _AIState_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull AIState_class_data_;
 class BuildEvent;
 struct BuildEventDefaultTypeInternal;
 extern BuildEventDefaultTypeInternal _BuildEvent_default_instance_;
@@ -85,6 +93,10 @@ class DamageDealt;
 struct DamageDealtDefaultTypeInternal;
 extern DamageDealtDefaultTypeInternal _DamageDealt_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull DamageDealt_class_data_;
+class MagnetForce;
+struct MagnetForceDefaultTypeInternal;
+extern MagnetForceDefaultTypeInternal _MagnetForce_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull MagnetForce_class_data_;
 class PickupPowerup;
 struct PickupPowerupDefaultTypeInternal;
 extern PickupPowerupDefaultTypeInternal _PickupPowerup_default_instance_;
@@ -97,6 +109,14 @@ class PlayerState;
 struct PlayerStateDefaultTypeInternal;
 extern PlayerStateDefaultTypeInternal _PlayerState_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull PlayerState_class_data_;
+class PoolPlanted;
+struct PoolPlantedDefaultTypeInternal;
+extern PoolPlantedDefaultTypeInternal _PoolPlanted_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull PoolPlanted_class_data_;
+class Quat;
+struct QuatDefaultTypeInternal;
+extern QuatDefaultTypeInternal _Quat_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull Quat_class_data_;
 class ResourceState;
 struct ResourceStateDefaultTypeInternal;
 extern ResourceStateDefaultTypeInternal _ResourceState_default_instance_;
@@ -132,6 +152,9 @@ template <>
 internal::EnumTraitsT<::statsgate::BuildEventType_internal_data_>
     internal::EnumTraitsImpl::value<::statsgate::BuildEventType>;
 template <>
+internal::EnumTraitsT<::statsgate::MagnetTarget_internal_data_>
+    internal::EnumTraitsImpl::value<::statsgate::MagnetTarget>;
+template <>
 internal::EnumTraitsT<::statsgate::Outcome_internal_data_>
     internal::EnumTraitsImpl::value<::statsgate::Outcome>;
 template <>
@@ -140,6 +163,9 @@ internal::EnumTraitsT<::statsgate::ProducerType_internal_data_>
 template <>
 internal::EnumTraitsT<::statsgate::Race_internal_data_>
     internal::EnumTraitsImpl::value<::statsgate::Race>;
+template <>
+internal::EnumTraitsT<::statsgate::RecorderType_internal_data_>
+    internal::EnumTraitsImpl::value<::statsgate::RecorderType>;
 template <>
 internal::EnumTraitsT<::statsgate::ScrapStatus_internal_data_>
     internal::EnumTraitsImpl::value<::statsgate::ScrapStatus>;
@@ -217,6 +243,44 @@ const ::std::string& Outcome_Name(T value) {
 inline bool Outcome_Parse(
     ::absl::string_view name, Outcome* PROTOBUF_NONNULL value) {
   return ::google::protobuf::internal::ParseNamedEnum<Outcome>(Outcome_descriptor(), name,
+                                           value);
+}
+enum RecorderType : int {
+  RECORDER_TYPE_UNSPECIFIED = 0,
+  RECORDER_TYPE_FREESTANDING = 1,
+  RECORDER_TYPE_HOSTED_DLL = 2,
+  RECORDER_TYPE_HOSTED_LUA = 3,
+  RecorderType_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::min(),
+  RecorderType_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::max(),
+};
+
+extern const uint32_t RecorderType_internal_data_[];
+inline constexpr RecorderType RecorderType_MIN =
+    static_cast<RecorderType>(0);
+inline constexpr RecorderType RecorderType_MAX =
+    static_cast<RecorderType>(3);
+inline bool RecorderType_IsValid(int value) {
+  return 0 <= value && value <= 3;
+}
+inline constexpr int RecorderType_ARRAYSIZE = 3 + 1;
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL RecorderType_descriptor();
+template <typename T>
+const ::std::string& RecorderType_Name(T value) {
+  static_assert(::std::is_same<T, RecorderType>::value ||
+                    ::std::is_integral<T>::value,
+                "Incorrect type passed to RecorderType_Name().");
+  return RecorderType_Name(static_cast<RecorderType>(value));
+}
+template <>
+inline const ::std::string& RecorderType_Name(RecorderType value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<RecorderType_descriptor, 0, 3>(
+      static_cast<int>(value));
+}
+inline bool RecorderType_Parse(
+    ::absl::string_view name, RecorderType* PROTOBUF_NONNULL value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RecorderType>(RecorderType_descriptor(), name,
                                            value);
 }
 enum ScrapStatus : int {
@@ -332,6 +396,43 @@ inline const ::std::string& ProducerType_Name(ProducerType value) {
 inline bool ProducerType_Parse(
     ::absl::string_view name, ProducerType* PROTOBUF_NONNULL value) {
   return ::google::protobuf::internal::ParseNamedEnum<ProducerType>(ProducerType_descriptor(), name,
+                                           value);
+}
+enum MagnetTarget : int {
+  MAGNET_TARGET_UNSPECIFIED = 0,
+  MAGNET_TARGET_GAME_OBJECT = 1,
+  MAGNET_TARGET_ORDNANCE = 2,
+  MagnetTarget_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::min(),
+  MagnetTarget_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::max(),
+};
+
+extern const uint32_t MagnetTarget_internal_data_[];
+inline constexpr MagnetTarget MagnetTarget_MIN =
+    static_cast<MagnetTarget>(0);
+inline constexpr MagnetTarget MagnetTarget_MAX =
+    static_cast<MagnetTarget>(2);
+inline bool MagnetTarget_IsValid(int value) {
+  return 0 <= value && value <= 2;
+}
+inline constexpr int MagnetTarget_ARRAYSIZE = 2 + 1;
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL MagnetTarget_descriptor();
+template <typename T>
+const ::std::string& MagnetTarget_Name(T value) {
+  static_assert(::std::is_same<T, MagnetTarget>::value ||
+                    ::std::is_integral<T>::value,
+                "Incorrect type passed to MagnetTarget_Name().");
+  return MagnetTarget_Name(static_cast<MagnetTarget>(value));
+}
+template <>
+inline const ::std::string& MagnetTarget_Name(MagnetTarget value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<MagnetTarget_descriptor, 0, 2>(
+      static_cast<int>(value));
+}
+inline bool MagnetTarget_Parse(
+    ::absl::string_view name, MagnetTarget* PROTOBUF_NONNULL value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MagnetTarget>(MagnetTarget_descriptor(), name,
                                            value);
 }
 
@@ -612,7 +713,7 @@ class UnitSniped final : public ::google::protobuf::Message
     return *reinterpret_cast<const UnitSniped*>(
         &_UnitSniped_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 10;
+  static constexpr int kIndexInFileMessages = 12;
   friend void swap(UnitSniped& a, UnitSniped& b) { a.Swap(&b); }
   inline void Swap(UnitSniped* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -891,7 +992,7 @@ class UnitDestroyed final : public ::google::protobuf::Message
     return *reinterpret_cast<const UnitDestroyed*>(
         &_UnitDestroyed_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 9;
+  static constexpr int kIndexInFileMessages = 11;
   friend void swap(UnitDestroyed& a, UnitDestroyed& b) { a.Swap(&b); }
   inline void Swap(UnitDestroyed* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1170,7 +1271,7 @@ class ResourceState final : public ::google::protobuf::Message
     return *reinterpret_cast<const ResourceState*>(
         &_ResourceState_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 7;
+  static constexpr int kIndexInFileMessages = 9;
   friend void swap(ResourceState& a, ResourceState& b) { a.Swap(&b); }
   inline void Swap(ResourceState* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1358,6 +1459,236 @@ class ResourceState final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull ResourceState_class_data_;
 // -------------------------------------------------------------------
 
+class Quat final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:statsgate.Quat) */ {
+ public:
+  inline Quat() : Quat(nullptr) {}
+  ~Quat() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(Quat* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(Quat));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR Quat(::google::protobuf::internal::ConstantInitialized);
+
+  inline Quat(const Quat& from) : Quat(nullptr, from) {}
+  inline Quat(Quat&& from) noexcept
+      : Quat(nullptr, ::std::move(from)) {}
+  inline Quat& operator=(const Quat& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Quat& operator=(Quat&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Quat& default_instance() {
+    return *reinterpret_cast<const Quat*>(
+        &_Quat_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 1;
+  friend void swap(Quat& a, Quat& b) { a.Swap(&b); }
+  inline void Swap(Quat* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Quat* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Quat* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<Quat>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const Quat& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const Quat& from) { Quat::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(Quat* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "statsgate.Quat"; }
+
+  explicit Quat(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  Quat(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Quat& from);
+  Quat(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, Quat&& from) noexcept
+      : Quat(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kXFieldNumber = 1,
+    kYFieldNumber = 2,
+    kZFieldNumber = 3,
+    kWFieldNumber = 4,
+  };
+  // float x = 1;
+  bool has_x() const;
+  void clear_x() ;
+  float x() const;
+  void set_x(float value);
+
+  private:
+  float _internal_x() const;
+  void _internal_set_x(float value);
+
+  public:
+  // float y = 2;
+  bool has_y() const;
+  void clear_y() ;
+  float y() const;
+  void set_y(float value);
+
+  private:
+  float _internal_y() const;
+  void _internal_set_y(float value);
+
+  public:
+  // float z = 3;
+  bool has_z() const;
+  void clear_z() ;
+  float z() const;
+  void set_z(float value);
+
+  private:
+  float _internal_z() const;
+  void _internal_set_z(float value);
+
+  public:
+  // float w = 4;
+  bool has_w() const;
+  void clear_w() ;
+  float w() const;
+  void set_w(float value);
+
+  private:
+  float _internal_w() const;
+  void _internal_set_w(float value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:statsgate.Quat)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 4,
+                                   0, 0,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const Quat& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    float x_;
+    float y_;
+    float z_;
+    float w_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_statsgate_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull Quat_class_data_;
+// -------------------------------------------------------------------
+
 class PlayerInfo final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:statsgate.PlayerInfo) */ {
  public:
@@ -1413,7 +1744,7 @@ class PlayerInfo final : public ::google::protobuf::Message
     return *reinterpret_cast<const PlayerInfo*>(
         &_PlayerInfo_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 1;
+  static constexpr int kIndexInFileMessages = 2;
   friend void swap(PlayerInfo& a, PlayerInfo& b) { a.Swap(&b); }
   inline void Swap(PlayerInfo* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1635,7 +1966,7 @@ class PickupPowerup final : public ::google::protobuf::Message
     return *reinterpret_cast<const PickupPowerup*>(
         &_PickupPowerup_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 11;
+  static constexpr int kIndexInFileMessages = 13;
   friend void swap(PickupPowerup& a, PickupPowerup& b) { a.Swap(&b); }
   inline void Swap(PickupPowerup* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1846,6 +2177,298 @@ class PickupPowerup final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull PickupPowerup_class_data_;
 // -------------------------------------------------------------------
 
+class MagnetForce final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:statsgate.MagnetForce) */ {
+ public:
+  inline MagnetForce() : MagnetForce(nullptr) {}
+  ~MagnetForce() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(MagnetForce* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(MagnetForce));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR MagnetForce(::google::protobuf::internal::ConstantInitialized);
+
+  inline MagnetForce(const MagnetForce& from) : MagnetForce(nullptr, from) {}
+  inline MagnetForce(MagnetForce&& from) noexcept
+      : MagnetForce(nullptr, ::std::move(from)) {}
+  inline MagnetForce& operator=(const MagnetForce& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MagnetForce& operator=(MagnetForce&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const MagnetForce& default_instance() {
+    return *reinterpret_cast<const MagnetForce*>(
+        &_MagnetForce_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 16;
+  friend void swap(MagnetForce& a, MagnetForce& b) { a.Swap(&b); }
+  inline void Swap(MagnetForce* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(MagnetForce* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  MagnetForce* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<MagnetForce>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const MagnetForce& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const MagnetForce& from) { MagnetForce::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(MagnetForce* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "statsgate.MagnetForce"; }
+
+  explicit MagnetForce(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  MagnetForce(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const MagnetForce& from);
+  MagnetForce(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, MagnetForce&& from) noexcept
+      : MagnetForce(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kMagnetOdfFieldNumber = 4,
+    kTargetOdfFieldNumber = 8,
+    kMagnetOwnerFieldNumber = 2,
+    kTickFieldNumber = 1,
+    kMagnetTeamFieldNumber = 3,
+    kMagnetTargetFieldNumber = 5,
+    kMagnetHandleFieldNumber = 6,
+    kTargetTeamFieldNumber = 7,
+  };
+  // string magnet_odf = 4;
+  bool has_magnet_odf() const;
+  void clear_magnet_odf() ;
+  const ::std::string& magnet_odf() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_magnet_odf(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_magnet_odf();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_magnet_odf();
+  void set_allocated_magnet_odf(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_magnet_odf() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_magnet_odf(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_magnet_odf();
+
+  public:
+  // string target_odf = 8;
+  bool has_target_odf() const;
+  void clear_target_odf() ;
+  const ::std::string& target_odf() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_target_odf(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_target_odf();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_target_odf();
+  void set_allocated_target_odf(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_target_odf() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_target_odf(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_target_odf();
+
+  public:
+  // uint64 magnet_owner = 2;
+  bool has_magnet_owner() const;
+  void clear_magnet_owner() ;
+  ::uint64_t magnet_owner() const;
+  void set_magnet_owner(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_magnet_owner() const;
+  void _internal_set_magnet_owner(::uint64_t value);
+
+  public:
+  // uint32 tick = 1;
+  bool has_tick() const;
+  void clear_tick() ;
+  ::uint32_t tick() const;
+  void set_tick(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_tick() const;
+  void _internal_set_tick(::uint32_t value);
+
+  public:
+  // uint32 magnet_team = 3;
+  bool has_magnet_team() const;
+  void clear_magnet_team() ;
+  ::uint32_t magnet_team() const;
+  void set_magnet_team(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_magnet_team() const;
+  void _internal_set_magnet_team(::uint32_t value);
+
+  public:
+  // .statsgate.MagnetTarget magnet_target = 5;
+  bool has_magnet_target() const;
+  void clear_magnet_target() ;
+  ::statsgate::MagnetTarget magnet_target() const;
+  void set_magnet_target(::statsgate::MagnetTarget value);
+
+  private:
+  ::statsgate::MagnetTarget _internal_magnet_target() const;
+  void _internal_set_magnet_target(::statsgate::MagnetTarget value);
+
+  public:
+  // uint32 magnet_handle = 6;
+  bool has_magnet_handle() const;
+  void clear_magnet_handle() ;
+  ::uint32_t magnet_handle() const;
+  void set_magnet_handle(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_magnet_handle() const;
+  void _internal_set_magnet_handle(::uint32_t value);
+
+  public:
+  // uint32 target_team = 7;
+  bool has_target_team() const;
+  void clear_target_team() ;
+  ::uint32_t target_team() const;
+  void set_target_team(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_target_team() const;
+  void _internal_set_target_team(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:statsgate.MagnetForce)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<3, 8,
+                                   0, 58,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const MagnetForce& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr magnet_odf_;
+    ::google::protobuf::internal::ArenaStringPtr target_odf_;
+    ::uint64_t magnet_owner_;
+    ::uint32_t tick_;
+    ::uint32_t magnet_team_;
+    int magnet_target_;
+    ::uint32_t magnet_handle_;
+    ::uint32_t target_team_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_statsgate_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull MagnetForce_class_data_;
+// -------------------------------------------------------------------
+
 class DamageDealt final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:statsgate.DamageDealt) */ {
  public:
@@ -1901,7 +2524,7 @@ class DamageDealt final : public ::google::protobuf::Message
     return *reinterpret_cast<const DamageDealt*>(
         &_DamageDealt_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 5;
+  static constexpr int kIndexInFileMessages = 6;
   friend void swap(DamageDealt& a, DamageDealt& b) { a.Swap(&b); }
   inline void Swap(DamageDealt* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2211,7 +2834,7 @@ class BulletInit final : public ::google::protobuf::Message
     return *reinterpret_cast<const BulletInit*>(
         &_BulletInit_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 3;
+  static constexpr int kIndexInFileMessages = 4;
   friend void swap(BulletInit& a, BulletInit& b) { a.Swap(&b); }
   inline void Swap(BulletInit* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2433,7 +3056,7 @@ class BulletHit final : public ::google::protobuf::Message
     return *reinterpret_cast<const BulletHit*>(
         &_BulletHit_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 4;
+  static constexpr int kIndexInFileMessages = 5;
   friend void swap(BulletHit& a, BulletHit& b) { a.Swap(&b); }
   inline void Swap(BulletHit* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2717,7 +3340,7 @@ class StatHeader final : public ::google::protobuf::Message
     return *reinterpret_cast<const StatHeader*>(
         &_StatHeader_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 2;
+  static constexpr int kIndexInFileMessages = 3;
   friend void swap(StatHeader& a, StatHeader& b) { a.Swap(&b); }
   inline void Swap(StatHeader* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2822,6 +3445,7 @@ class StatHeader final : public ::google::protobuf::Message
     kTeam1RaceFieldNumber = 19,
     kTeam2RaceFieldNumber = 20,
     kGameOutcomeFieldNumber = 21,
+    kRecorderTypeFieldNumber = 23,
   };
   // repeated .statsgate.PlayerInfo players = 22;
   int players_size() const;
@@ -3046,11 +3670,22 @@ class StatHeader final : public ::google::protobuf::Message
   void _internal_set_game_outcome(::statsgate::Outcome value);
 
   public:
+  // .statsgate.RecorderType recorder_type = 23;
+  bool has_recorder_type() const;
+  void clear_recorder_type() ;
+  ::statsgate::RecorderType recorder_type() const;
+  void set_recorder_type(::statsgate::RecorderType value);
+
+  private:
+  ::statsgate::RecorderType _internal_recorder_type() const;
+  void _internal_set_recorder_type(::statsgate::RecorderType value);
+
+  public:
   // @@protoc_insertion_point(class_scope:statsgate.StatHeader)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<5, 18,
+  static const ::google::protobuf::internal::TcParseTable<5, 19,
                                    2, 80,
                                    2>
       _table_;
@@ -3090,6 +3725,7 @@ class StatHeader final : public ::google::protobuf::Message
     int team1_race_;
     int team2_race_;
     int game_outcome_;
+    int recorder_type_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -3097,6 +3733,227 @@ class StatHeader final : public ::google::protobuf::Message
 };
 
 extern const ::google::protobuf::internal::ClassDataFull StatHeader_class_data_;
+// -------------------------------------------------------------------
+
+class PoolPlanted final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:statsgate.PoolPlanted) */ {
+ public:
+  inline PoolPlanted() : PoolPlanted(nullptr) {}
+  ~PoolPlanted() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(PoolPlanted* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(PoolPlanted));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR PoolPlanted(::google::protobuf::internal::ConstantInitialized);
+
+  inline PoolPlanted(const PoolPlanted& from) : PoolPlanted(nullptr, from) {}
+  inline PoolPlanted(PoolPlanted&& from) noexcept
+      : PoolPlanted(nullptr, ::std::move(from)) {}
+  inline PoolPlanted& operator=(const PoolPlanted& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PoolPlanted& operator=(PoolPlanted&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PoolPlanted& default_instance() {
+    return *reinterpret_cast<const PoolPlanted*>(
+        &_PoolPlanted_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 15;
+  friend void swap(PoolPlanted& a, PoolPlanted& b) { a.Swap(&b); }
+  inline void Swap(PoolPlanted* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PoolPlanted* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PoolPlanted* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<PoolPlanted>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const PoolPlanted& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const PoolPlanted& from) { PoolPlanted::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(PoolPlanted* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "statsgate.PoolPlanted"; }
+
+  explicit PoolPlanted(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  PoolPlanted(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const PoolPlanted& from);
+  PoolPlanted(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, PoolPlanted&& from) noexcept
+      : PoolPlanted(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kPositionFieldNumber = 3,
+    kTickFieldNumber = 1,
+    kTeamnumFieldNumber = 2,
+  };
+  // .statsgate.Vec3 position = 3;
+  bool has_position() const;
+  void clear_position() ;
+  const ::statsgate::Vec3& position() const;
+  [[nodiscard]] ::statsgate::Vec3* PROTOBUF_NULLABLE release_position();
+  ::statsgate::Vec3* PROTOBUF_NONNULL mutable_position();
+  void set_allocated_position(::statsgate::Vec3* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_position(::statsgate::Vec3* PROTOBUF_NULLABLE value);
+  ::statsgate::Vec3* PROTOBUF_NULLABLE unsafe_arena_release_position();
+
+  private:
+  const ::statsgate::Vec3& _internal_position() const;
+  ::statsgate::Vec3* PROTOBUF_NONNULL _internal_mutable_position();
+
+  public:
+  // uint32 tick = 1;
+  bool has_tick() const;
+  void clear_tick() ;
+  ::uint32_t tick() const;
+  void set_tick(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_tick() const;
+  void _internal_set_tick(::uint32_t value);
+
+  public:
+  // uint32 teamnum = 2;
+  bool has_teamnum() const;
+  void clear_teamnum() ;
+  ::uint32_t teamnum() const;
+  void set_teamnum(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_teamnum() const;
+  void _internal_set_teamnum(::uint32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:statsgate.PoolPlanted)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 3,
+                                   1, 0,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const PoolPlanted& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::statsgate::Vec3* PROTOBUF_NULLABLE position_;
+    ::uint32_t tick_;
+    ::uint32_t teamnum_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_statsgate_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull PoolPlanted_class_data_;
 // -------------------------------------------------------------------
 
 class PlayerState final : public ::google::protobuf::Message
@@ -3154,7 +4011,7 @@ class PlayerState final : public ::google::protobuf::Message
     return *reinterpret_cast<const PlayerState*>(
         &_PlayerState_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 6;
+  static constexpr int kIndexInFileMessages = 7;
   friend void swap(PlayerState& a, PlayerState& b) { a.Swap(&b); }
   inline void Swap(PlayerState* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -3243,6 +4100,7 @@ class PlayerState final : public ::google::protobuf::Message
   enum : int {
     kOdfFieldNumber = 6,
     kPositionFieldNumber = 2,
+    kOrientationFieldNumber = 9,
     kPlayerFieldNumber = 1,
     kSpeedFieldNumber = 3,
     kHealthFieldNumber = 4,
@@ -3278,6 +4136,21 @@ class PlayerState final : public ::google::protobuf::Message
   private:
   const ::statsgate::Vec3& _internal_position() const;
   ::statsgate::Vec3* PROTOBUF_NONNULL _internal_mutable_position();
+
+  public:
+  // .statsgate.Quat orientation = 9;
+  bool has_orientation() const;
+  void clear_orientation() ;
+  const ::statsgate::Quat& orientation() const;
+  [[nodiscard]] ::statsgate::Quat* PROTOBUF_NULLABLE release_orientation();
+  ::statsgate::Quat* PROTOBUF_NONNULL mutable_orientation();
+  void set_allocated_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value);
+  ::statsgate::Quat* PROTOBUF_NULLABLE unsafe_arena_release_orientation();
+
+  private:
+  const ::statsgate::Quat& _internal_orientation() const;
+  ::statsgate::Quat* PROTOBUF_NONNULL _internal_mutable_orientation();
 
   public:
   // uint64 player = 1;
@@ -3339,8 +4212,8 @@ class PlayerState final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 7,
-                                   1, 33,
+  static const ::google::protobuf::internal::TcParseTable<4, 8,
+                                   2, 41,
                                    2>
       _table_;
 
@@ -3363,6 +4236,7 @@ class PlayerState final : public ::google::protobuf::Message
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr odf_;
     ::statsgate::Vec3* PROTOBUF_NULLABLE position_;
+    ::statsgate::Quat* PROTOBUF_NULLABLE orientation_;
     ::uint64_t player_;
     float speed_;
     float health_;
@@ -3432,7 +4306,7 @@ class BuildEvent final : public ::google::protobuf::Message
     return *reinterpret_cast<const BuildEvent*>(
         &_BuildEvent_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 12;
+  static constexpr int kIndexInFileMessages = 14;
   friend void swap(BuildEvent& a, BuildEvent& b) { a.Swap(&b); }
   inline void Swap(BuildEvent* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -3642,6 +4516,262 @@ class BuildEvent final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull BuildEvent_class_data_;
 // -------------------------------------------------------------------
 
+class AIState final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:statsgate.AIState) */ {
+ public:
+  inline AIState() : AIState(nullptr) {}
+  ~AIState() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(AIState* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(AIState));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR AIState(::google::protobuf::internal::ConstantInitialized);
+
+  inline AIState(const AIState& from) : AIState(nullptr, from) {}
+  inline AIState(AIState&& from) noexcept
+      : AIState(nullptr, ::std::move(from)) {}
+  inline AIState& operator=(const AIState& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AIState& operator=(AIState&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AIState& default_instance() {
+    return *reinterpret_cast<const AIState*>(
+        &_AIState_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 8;
+  friend void swap(AIState& a, AIState& b) { a.Swap(&b); }
+  inline void Swap(AIState* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AIState* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AIState* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<AIState>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const AIState& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const AIState& from) { AIState::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(AIState* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "statsgate.AIState"; }
+
+  explicit AIState(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  AIState(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const AIState& from);
+  AIState(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, AIState&& from) noexcept
+      : AIState(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kOdfFieldNumber = 1,
+    kPositionFieldNumber = 2,
+    kOrientationFieldNumber = 3,
+    kHealthFieldNumber = 4,
+    kAmmoFieldNumber = 5,
+  };
+  // string odf = 1;
+  bool has_odf() const;
+  void clear_odf() ;
+  const ::std::string& odf() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_odf(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_odf();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_odf();
+  void set_allocated_odf(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_odf() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_odf(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_odf();
+
+  public:
+  // .statsgate.Vec3 position = 2;
+  bool has_position() const;
+  void clear_position() ;
+  const ::statsgate::Vec3& position() const;
+  [[nodiscard]] ::statsgate::Vec3* PROTOBUF_NULLABLE release_position();
+  ::statsgate::Vec3* PROTOBUF_NONNULL mutable_position();
+  void set_allocated_position(::statsgate::Vec3* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_position(::statsgate::Vec3* PROTOBUF_NULLABLE value);
+  ::statsgate::Vec3* PROTOBUF_NULLABLE unsafe_arena_release_position();
+
+  private:
+  const ::statsgate::Vec3& _internal_position() const;
+  ::statsgate::Vec3* PROTOBUF_NONNULL _internal_mutable_position();
+
+  public:
+  // .statsgate.Quat orientation = 3;
+  bool has_orientation() const;
+  void clear_orientation() ;
+  const ::statsgate::Quat& orientation() const;
+  [[nodiscard]] ::statsgate::Quat* PROTOBUF_NULLABLE release_orientation();
+  ::statsgate::Quat* PROTOBUF_NONNULL mutable_orientation();
+  void set_allocated_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value);
+  ::statsgate::Quat* PROTOBUF_NULLABLE unsafe_arena_release_orientation();
+
+  private:
+  const ::statsgate::Quat& _internal_orientation() const;
+  ::statsgate::Quat* PROTOBUF_NONNULL _internal_mutable_orientation();
+
+  public:
+  // float health = 4;
+  bool has_health() const;
+  void clear_health() ;
+  float health() const;
+  void set_health(float value);
+
+  private:
+  float _internal_health() const;
+  void _internal_set_health(float value);
+
+  public:
+  // float ammo = 5;
+  bool has_ammo() const;
+  void clear_ammo() ;
+  float ammo() const;
+  void set_ammo(float value);
+
+  private:
+  float _internal_ammo() const;
+  void _internal_set_ammo(float value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:statsgate.AIState)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<3, 5,
+                                   2, 29,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const AIState& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr odf_;
+    ::statsgate::Vec3* PROTOBUF_NULLABLE position_;
+    ::statsgate::Quat* PROTOBUF_NULLABLE orientation_;
+    float health_;
+    float ammo_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_statsgate_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull AIState_class_data_;
+// -------------------------------------------------------------------
+
 class UpdateTick final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:statsgate.UpdateTick) */ {
  public:
@@ -3697,7 +4827,7 @@ class UpdateTick final : public ::google::protobuf::Message
     return *reinterpret_cast<const UpdateTick*>(
         &_UpdateTick_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 8;
+  static constexpr int kIndexInFileMessages = 10;
   friend void swap(UpdateTick& a, UpdateTick& b) { a.Swap(&b); }
   inline void Swap(UpdateTick* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -3950,9 +5080,11 @@ class StatEvent final : public ::google::protobuf::Message
     kUnitSniped = 7,
     kPickupPowerup = 8,
     kBuildEvent = 9,
+    kPoolPlanted = 10,
+    kMagnetForce = 11,
     EVENT_TYPE_NOT_SET = 0,
   };
-  static constexpr int kIndexInFileMessages = 13;
+  static constexpr int kIndexInFileMessages = 17;
   friend void swap(StatEvent& a, StatEvent& b) { a.Swap(&b); }
   inline void Swap(StatEvent* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -4047,6 +5179,8 @@ class StatEvent final : public ::google::protobuf::Message
     kUnitSnipedFieldNumber = 7,
     kPickupPowerupFieldNumber = 8,
     kBuildEventFieldNumber = 9,
+    kPoolPlantedFieldNumber = 10,
+    kMagnetForceFieldNumber = 11,
   };
   // .statsgate.BulletInit bullet_init = 1;
   bool has_bullet_init() const;
@@ -4200,6 +5334,44 @@ class StatEvent final : public ::google::protobuf::Message
   ::statsgate::BuildEvent* PROTOBUF_NONNULL _internal_mutable_build_event();
 
   public:
+  // .statsgate.PoolPlanted pool_planted = 10;
+  bool has_pool_planted() const;
+  private:
+  bool _internal_has_pool_planted() const;
+
+  public:
+  void clear_pool_planted() ;
+  const ::statsgate::PoolPlanted& pool_planted() const;
+  [[nodiscard]] ::statsgate::PoolPlanted* PROTOBUF_NULLABLE release_pool_planted();
+  ::statsgate::PoolPlanted* PROTOBUF_NONNULL mutable_pool_planted();
+  void set_allocated_pool_planted(::statsgate::PoolPlanted* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_pool_planted(::statsgate::PoolPlanted* PROTOBUF_NULLABLE value);
+  ::statsgate::PoolPlanted* PROTOBUF_NULLABLE unsafe_arena_release_pool_planted();
+
+  private:
+  const ::statsgate::PoolPlanted& _internal_pool_planted() const;
+  ::statsgate::PoolPlanted* PROTOBUF_NONNULL _internal_mutable_pool_planted();
+
+  public:
+  // .statsgate.MagnetForce magnet_force = 11;
+  bool has_magnet_force() const;
+  private:
+  bool _internal_has_magnet_force() const;
+
+  public:
+  void clear_magnet_force() ;
+  const ::statsgate::MagnetForce& magnet_force() const;
+  [[nodiscard]] ::statsgate::MagnetForce* PROTOBUF_NULLABLE release_magnet_force();
+  ::statsgate::MagnetForce* PROTOBUF_NONNULL mutable_magnet_force();
+  void set_allocated_magnet_force(::statsgate::MagnetForce* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_magnet_force(::statsgate::MagnetForce* PROTOBUF_NULLABLE value);
+  ::statsgate::MagnetForce* PROTOBUF_NULLABLE unsafe_arena_release_magnet_force();
+
+  private:
+  const ::statsgate::MagnetForce& _internal_magnet_force() const;
+  ::statsgate::MagnetForce* PROTOBUF_NONNULL _internal_mutable_magnet_force();
+
+  public:
   void clear_event_type();
   EventTypeCase event_type_case() const;
   // @@protoc_insertion_point(class_scope:statsgate.StatEvent)
@@ -4213,11 +5385,13 @@ class StatEvent final : public ::google::protobuf::Message
   void set_has_unit_sniped();
   void set_has_pickup_powerup();
   void set_has_build_event();
+  void set_has_pool_planted();
+  void set_has_magnet_force();
   inline bool has_event_type() const;
   inline void clear_has_event_type();
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 8,
-                                   8, 0,
+  static const ::google::protobuf::internal::TcParseTable<0, 10,
+                                   10, 0,
                                    2>
       _table_;
 
@@ -4247,6 +5421,8 @@ class StatEvent final : public ::google::protobuf::Message
       ::google::protobuf::Message* PROTOBUF_NULLABLE unit_sniped_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE pickup_powerup_;
       ::google::protobuf::Message* PROTOBUF_NULLABLE build_event_;
+      ::google::protobuf::Message* PROTOBUF_NULLABLE pool_planted_;
+      ::google::protobuf::Message* PROTOBUF_NULLABLE magnet_force_;
     } event_type_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint32_t _oneof_case_[1];
@@ -4314,7 +5490,7 @@ class ClientStatSession final : public ::google::protobuf::Message
     return *reinterpret_cast<const ClientStatSession*>(
         &_ClientStatSession_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 14;
+  static constexpr int kIndexInFileMessages = 18;
   friend void swap(ClientStatSession& a, ClientStatSession& b) { a.Swap(&b); }
   inline void Swap(ClientStatSession* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -4573,6 +5749,126 @@ inline float Vec3::_internal_z() const {
 inline void Vec3::_internal_set_z(float value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.z_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// Quat
+
+// float x = 1;
+inline bool Quat::has_x() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000001U);
+  return value;
+}
+inline void Quat::clear_x() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.x_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline float Quat::x() const {
+  // @@protoc_insertion_point(field_get:statsgate.Quat.x)
+  return _internal_x();
+}
+inline void Quat::set_x(float value) {
+  _internal_set_x(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  // @@protoc_insertion_point(field_set:statsgate.Quat.x)
+}
+inline float Quat::_internal_x() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.x_;
+}
+inline void Quat::_internal_set_x(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.x_ = value;
+}
+
+// float y = 2;
+inline bool Quat::has_y() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  return value;
+}
+inline void Quat::clear_y() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.y_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline float Quat::y() const {
+  // @@protoc_insertion_point(field_get:statsgate.Quat.y)
+  return _internal_y();
+}
+inline void Quat::set_y(float value) {
+  _internal_set_y(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  // @@protoc_insertion_point(field_set:statsgate.Quat.y)
+}
+inline float Quat::_internal_y() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.y_;
+}
+inline void Quat::_internal_set_y(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.y_ = value;
+}
+
+// float z = 3;
+inline bool Quat::has_z() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  return value;
+}
+inline void Quat::clear_z() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.z_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline float Quat::z() const {
+  // @@protoc_insertion_point(field_get:statsgate.Quat.z)
+  return _internal_z();
+}
+inline void Quat::set_z(float value) {
+  _internal_set_z(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  // @@protoc_insertion_point(field_set:statsgate.Quat.z)
+}
+inline float Quat::_internal_z() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.z_;
+}
+inline void Quat::_internal_set_z(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.z_ = value;
+}
+
+// float w = 4;
+inline bool Quat::has_w() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
+  return value;
+}
+inline void Quat::clear_w() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.w_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000008U);
+}
+inline float Quat::w() const {
+  // @@protoc_insertion_point(field_get:statsgate.Quat.w)
+  return _internal_w();
+}
+inline void Quat::set_w(float value) {
+  _internal_set_w(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  // @@protoc_insertion_point(field_set:statsgate.Quat.w)
+}
+inline float Quat::_internal_w() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.w_;
+}
+inline void Quat::_internal_set_w(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.w_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -5443,6 +6739,35 @@ StatHeader::_internal_mutable_players() {
   return &_impl_.players_;
 }
 
+// .statsgate.RecorderType recorder_type = 23;
+inline bool StatHeader::has_recorder_type() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00040000U);
+  return value;
+}
+inline void StatHeader::clear_recorder_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.recorder_type_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00040000U);
+}
+inline ::statsgate::RecorderType StatHeader::recorder_type() const {
+  // @@protoc_insertion_point(field_get:statsgate.StatHeader.recorder_type)
+  return _internal_recorder_type();
+}
+inline void StatHeader::set_recorder_type(::statsgate::RecorderType value) {
+  _internal_set_recorder_type(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00040000U);
+  // @@protoc_insertion_point(field_set:statsgate.StatHeader.recorder_type)
+}
+inline ::statsgate::RecorderType StatHeader::_internal_recorder_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::statsgate::RecorderType>(_impl_.recorder_type_);
+}
+inline void StatHeader::_internal_set_recorder_type(::statsgate::RecorderType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.recorder_type_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // BulletInit
@@ -6292,14 +7617,14 @@ inline void DamageDealt::_internal_set_amount(float value) {
 
 // uint64 player = 1;
 inline bool PlayerState::has_player() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
   return value;
 }
 inline void PlayerState::clear_player() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.player_ = ::uint64_t{0u};
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000004U);
+                  0x00000008U);
 }
 inline ::uint64_t PlayerState::player() const {
   // @@protoc_insertion_point(field_get:statsgate.PlayerState.player)
@@ -6307,7 +7632,7 @@ inline ::uint64_t PlayerState::player() const {
 }
 inline void PlayerState::set_player(::uint64_t value) {
   _internal_set_player(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
   // @@protoc_insertion_point(field_set:statsgate.PlayerState.player)
 }
 inline ::uint64_t PlayerState::_internal_player() const {
@@ -6420,14 +7745,14 @@ inline void PlayerState::set_allocated_position(::statsgate::Vec3* PROTOBUF_NULL
 
 // float speed = 3;
 inline bool PlayerState::has_speed() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
   return value;
 }
 inline void PlayerState::clear_speed() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.speed_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000008U);
+                  0x00000010U);
 }
 inline float PlayerState::speed() const {
   // @@protoc_insertion_point(field_get:statsgate.PlayerState.speed)
@@ -6435,7 +7760,7 @@ inline float PlayerState::speed() const {
 }
 inline void PlayerState::set_speed(float value) {
   _internal_set_speed(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
   // @@protoc_insertion_point(field_set:statsgate.PlayerState.speed)
 }
 inline float PlayerState::_internal_speed() const {
@@ -6449,14 +7774,14 @@ inline void PlayerState::_internal_set_speed(float value) {
 
 // float health = 4;
 inline bool PlayerState::has_health() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000020U);
   return value;
 }
 inline void PlayerState::clear_health() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.health_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000010U);
+                  0x00000020U);
 }
 inline float PlayerState::health() const {
   // @@protoc_insertion_point(field_get:statsgate.PlayerState.health)
@@ -6464,7 +7789,7 @@ inline float PlayerState::health() const {
 }
 inline void PlayerState::set_health(float value) {
   _internal_set_health(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
   // @@protoc_insertion_point(field_set:statsgate.PlayerState.health)
 }
 inline float PlayerState::_internal_health() const {
@@ -6478,14 +7803,14 @@ inline void PlayerState::_internal_set_health(float value) {
 
 // float ammo = 5;
 inline bool PlayerState::has_ammo() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000020U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
   return value;
 }
 inline void PlayerState::clear_ammo() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.ammo_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000020U);
+                  0x00000040U);
 }
 inline float PlayerState::ammo() const {
   // @@protoc_insertion_point(field_get:statsgate.PlayerState.ammo)
@@ -6493,7 +7818,7 @@ inline float PlayerState::ammo() const {
 }
 inline void PlayerState::set_ammo(float value) {
   _internal_set_ammo(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
   // @@protoc_insertion_point(field_set:statsgate.PlayerState.ammo)
 }
 inline float PlayerState::_internal_ammo() const {
@@ -6576,14 +7901,14 @@ inline void PlayerState::set_allocated_odf(::std::string* PROTOBUF_NULLABLE valu
 
 // bool has_target = 7;
 inline bool PlayerState::has_has_target() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000080U);
   return value;
 }
 inline void PlayerState::clear_has_target() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.has_target_ = false;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000040U);
+                  0x00000080U);
 }
 inline bool PlayerState::has_target() const {
   // @@protoc_insertion_point(field_get:statsgate.PlayerState.has_target)
@@ -6591,7 +7916,7 @@ inline bool PlayerState::has_target() const {
 }
 inline void PlayerState::set_has_target(bool value) {
   _internal_set_has_target(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
   // @@protoc_insertion_point(field_set:statsgate.PlayerState.has_target)
 }
 inline bool PlayerState::_internal_has_target() const {
@@ -6601,6 +7926,434 @@ inline bool PlayerState::_internal_has_target() const {
 inline void PlayerState::_internal_set_has_target(bool value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.has_target_ = value;
+}
+
+// .statsgate.Quat orientation = 9;
+inline bool PlayerState::has_orientation() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  PROTOBUF_ASSUME(!value || _impl_.orientation_ != nullptr);
+  return value;
+}
+inline void PlayerState::clear_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.orientation_ != nullptr) _impl_.orientation_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline const ::statsgate::Quat& PlayerState::_internal_orientation() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::statsgate::Quat* p = _impl_.orientation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::statsgate::Quat&>(::statsgate::_Quat_default_instance_);
+}
+inline const ::statsgate::Quat& PlayerState::orientation() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.PlayerState.orientation)
+  return _internal_orientation();
+}
+inline void PlayerState::unsafe_arena_set_allocated_orientation(
+    ::statsgate::Quat* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.orientation_);
+  }
+  _impl_.orientation_ = reinterpret_cast<::statsgate::Quat*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.PlayerState.orientation)
+}
+inline ::statsgate::Quat* PROTOBUF_NULLABLE PlayerState::release_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::Quat* released = _impl_.orientation_;
+  _impl_.orientation_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::statsgate::Quat* PROTOBUF_NULLABLE PlayerState::unsafe_arena_release_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.PlayerState.orientation)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::Quat* temp = _impl_.orientation_;
+  _impl_.orientation_ = nullptr;
+  return temp;
+}
+inline ::statsgate::Quat* PROTOBUF_NONNULL PlayerState::_internal_mutable_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.orientation_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::statsgate::Quat>(GetArena());
+    _impl_.orientation_ = reinterpret_cast<::statsgate::Quat*>(p);
+  }
+  return _impl_.orientation_;
+}
+inline ::statsgate::Quat* PROTOBUF_NONNULL PlayerState::mutable_orientation()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::Quat* _msg = _internal_mutable_orientation();
+  // @@protoc_insertion_point(field_mutable:statsgate.PlayerState.orientation)
+  return _msg;
+}
+inline void PlayerState::set_allocated_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.orientation_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+
+  _impl_.orientation_ = reinterpret_cast<::statsgate::Quat*>(value);
+  // @@protoc_insertion_point(field_set_allocated:statsgate.PlayerState.orientation)
+}
+
+// -------------------------------------------------------------------
+
+// AIState
+
+// string odf = 1;
+inline bool AIState::has_odf() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000001U);
+  return value;
+}
+inline void AIState::clear_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.odf_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline const ::std::string& AIState::odf() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.AIState.odf)
+  return _internal_odf();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void AIState::set_odf(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  _impl_.odf_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:statsgate.AIState.odf)
+}
+inline ::std::string* PROTOBUF_NONNULL AIState::mutable_odf()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::std::string* _s = _internal_mutable_odf();
+  // @@protoc_insertion_point(field_mutable:statsgate.AIState.odf)
+  return _s;
+}
+inline const ::std::string& AIState::_internal_odf() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.odf_.Get();
+}
+inline void AIState::_internal_set_odf(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.odf_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL AIState::_internal_mutable_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.odf_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE AIState::release_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.AIState.odf)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  auto* released = _impl_.odf_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.odf_.Set("", GetArena());
+  }
+  return released;
+}
+inline void AIState::set_allocated_odf(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+  _impl_.odf_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.odf_.IsDefault()) {
+    _impl_.odf_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:statsgate.AIState.odf)
+}
+
+// .statsgate.Vec3 position = 2;
+inline bool AIState::has_position() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  PROTOBUF_ASSUME(!value || _impl_.position_ != nullptr);
+  return value;
+}
+inline void AIState::clear_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.position_ != nullptr) _impl_.position_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::statsgate::Vec3& AIState::_internal_position() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::statsgate::Vec3* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::statsgate::Vec3&>(::statsgate::_Vec3_default_instance_);
+}
+inline const ::statsgate::Vec3& AIState::position() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.AIState.position)
+  return _internal_position();
+}
+inline void AIState::unsafe_arena_set_allocated_position(
+    ::statsgate::Vec3* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = reinterpret_cast<::statsgate::Vec3*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.AIState.position)
+}
+inline ::statsgate::Vec3* PROTOBUF_NULLABLE AIState::release_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::Vec3* released = _impl_.position_;
+  _impl_.position_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::statsgate::Vec3* PROTOBUF_NULLABLE AIState::unsafe_arena_release_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.AIState.position)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::Vec3* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
+}
+inline ::statsgate::Vec3* PROTOBUF_NONNULL AIState::_internal_mutable_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.position_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::statsgate::Vec3>(GetArena());
+    _impl_.position_ = reinterpret_cast<::statsgate::Vec3*>(p);
+  }
+  return _impl_.position_;
+}
+inline ::statsgate::Vec3* PROTOBUF_NONNULL AIState::mutable_position()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::Vec3* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:statsgate.AIState.position)
+  return _msg;
+}
+inline void AIState::set_allocated_position(::statsgate::Vec3* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.position_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+
+  _impl_.position_ = reinterpret_cast<::statsgate::Vec3*>(value);
+  // @@protoc_insertion_point(field_set_allocated:statsgate.AIState.position)
+}
+
+// .statsgate.Quat orientation = 3;
+inline bool AIState::has_orientation() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  PROTOBUF_ASSUME(!value || _impl_.orientation_ != nullptr);
+  return value;
+}
+inline void AIState::clear_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.orientation_ != nullptr) _impl_.orientation_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline const ::statsgate::Quat& AIState::_internal_orientation() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::statsgate::Quat* p = _impl_.orientation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::statsgate::Quat&>(::statsgate::_Quat_default_instance_);
+}
+inline const ::statsgate::Quat& AIState::orientation() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.AIState.orientation)
+  return _internal_orientation();
+}
+inline void AIState::unsafe_arena_set_allocated_orientation(
+    ::statsgate::Quat* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.orientation_);
+  }
+  _impl_.orientation_ = reinterpret_cast<::statsgate::Quat*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.AIState.orientation)
+}
+inline ::statsgate::Quat* PROTOBUF_NULLABLE AIState::release_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::Quat* released = _impl_.orientation_;
+  _impl_.orientation_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::statsgate::Quat* PROTOBUF_NULLABLE AIState::unsafe_arena_release_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.AIState.orientation)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::Quat* temp = _impl_.orientation_;
+  _impl_.orientation_ = nullptr;
+  return temp;
+}
+inline ::statsgate::Quat* PROTOBUF_NONNULL AIState::_internal_mutable_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.orientation_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::statsgate::Quat>(GetArena());
+    _impl_.orientation_ = reinterpret_cast<::statsgate::Quat*>(p);
+  }
+  return _impl_.orientation_;
+}
+inline ::statsgate::Quat* PROTOBUF_NONNULL AIState::mutable_orientation()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::Quat* _msg = _internal_mutable_orientation();
+  // @@protoc_insertion_point(field_mutable:statsgate.AIState.orientation)
+  return _msg;
+}
+inline void AIState::set_allocated_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.orientation_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+
+  _impl_.orientation_ = reinterpret_cast<::statsgate::Quat*>(value);
+  // @@protoc_insertion_point(field_set_allocated:statsgate.AIState.orientation)
+}
+
+// float health = 4;
+inline bool AIState::has_health() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
+  return value;
+}
+inline void AIState::clear_health() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.health_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000008U);
+}
+inline float AIState::health() const {
+  // @@protoc_insertion_point(field_get:statsgate.AIState.health)
+  return _internal_health();
+}
+inline void AIState::set_health(float value) {
+  _internal_set_health(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  // @@protoc_insertion_point(field_set:statsgate.AIState.health)
+}
+inline float AIState::_internal_health() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.health_;
+}
+inline void AIState::_internal_set_health(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.health_ = value;
+}
+
+// float ammo = 5;
+inline bool AIState::has_ammo() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
+  return value;
+}
+inline void AIState::clear_ammo() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ammo_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000010U);
+}
+inline float AIState::ammo() const {
+  // @@protoc_insertion_point(field_get:statsgate.AIState.ammo)
+  return _internal_ammo();
+}
+inline void AIState::set_ammo(float value) {
+  _internal_set_ammo(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  // @@protoc_insertion_point(field_set:statsgate.AIState.ammo)
+}
+inline float AIState::_internal_ammo() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.ammo_;
+}
+inline void AIState::_internal_set_ammo(float value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ammo_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -8161,6 +9914,483 @@ inline void BuildEvent::set_allocated_build_position(::statsgate::Vec3* PROTOBUF
 
 // -------------------------------------------------------------------
 
+// PoolPlanted
+
+// uint32 tick = 1;
+inline bool PoolPlanted::has_tick() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  return value;
+}
+inline void PoolPlanted::clear_tick() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tick_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline ::uint32_t PoolPlanted::tick() const {
+  // @@protoc_insertion_point(field_get:statsgate.PoolPlanted.tick)
+  return _internal_tick();
+}
+inline void PoolPlanted::set_tick(::uint32_t value) {
+  _internal_set_tick(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  // @@protoc_insertion_point(field_set:statsgate.PoolPlanted.tick)
+}
+inline ::uint32_t PoolPlanted::_internal_tick() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.tick_;
+}
+inline void PoolPlanted::_internal_set_tick(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tick_ = value;
+}
+
+// uint32 teamnum = 2;
+inline bool PoolPlanted::has_teamnum() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  return value;
+}
+inline void PoolPlanted::clear_teamnum() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.teamnum_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline ::uint32_t PoolPlanted::teamnum() const {
+  // @@protoc_insertion_point(field_get:statsgate.PoolPlanted.teamnum)
+  return _internal_teamnum();
+}
+inline void PoolPlanted::set_teamnum(::uint32_t value) {
+  _internal_set_teamnum(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  // @@protoc_insertion_point(field_set:statsgate.PoolPlanted.teamnum)
+}
+inline ::uint32_t PoolPlanted::_internal_teamnum() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.teamnum_;
+}
+inline void PoolPlanted::_internal_set_teamnum(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.teamnum_ = value;
+}
+
+// .statsgate.Vec3 position = 3;
+inline bool PoolPlanted::has_position() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000001U);
+  PROTOBUF_ASSUME(!value || _impl_.position_ != nullptr);
+  return value;
+}
+inline void PoolPlanted::clear_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.position_ != nullptr) _impl_.position_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline const ::statsgate::Vec3& PoolPlanted::_internal_position() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::statsgate::Vec3* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::statsgate::Vec3&>(::statsgate::_Vec3_default_instance_);
+}
+inline const ::statsgate::Vec3& PoolPlanted::position() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.PoolPlanted.position)
+  return _internal_position();
+}
+inline void PoolPlanted::unsafe_arena_set_allocated_position(
+    ::statsgate::Vec3* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = reinterpret_cast<::statsgate::Vec3*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.PoolPlanted.position)
+}
+inline ::statsgate::Vec3* PROTOBUF_NULLABLE PoolPlanted::release_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::statsgate::Vec3* released = _impl_.position_;
+  _impl_.position_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::statsgate::Vec3* PROTOBUF_NULLABLE PoolPlanted::unsafe_arena_release_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.PoolPlanted.position)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::statsgate::Vec3* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
+}
+inline ::statsgate::Vec3* PROTOBUF_NONNULL PoolPlanted::_internal_mutable_position() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.position_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::statsgate::Vec3>(GetArena());
+    _impl_.position_ = reinterpret_cast<::statsgate::Vec3*>(p);
+  }
+  return _impl_.position_;
+}
+inline ::statsgate::Vec3* PROTOBUF_NONNULL PoolPlanted::mutable_position()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::statsgate::Vec3* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:statsgate.PoolPlanted.position)
+  return _msg;
+}
+inline void PoolPlanted::set_allocated_position(::statsgate::Vec3* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.position_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+
+  _impl_.position_ = reinterpret_cast<::statsgate::Vec3*>(value);
+  // @@protoc_insertion_point(field_set_allocated:statsgate.PoolPlanted.position)
+}
+
+// -------------------------------------------------------------------
+
+// MagnetForce
+
+// uint32 tick = 1;
+inline bool MagnetForce::has_tick() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
+  return value;
+}
+inline void MagnetForce::clear_tick() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tick_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000008U);
+}
+inline ::uint32_t MagnetForce::tick() const {
+  // @@protoc_insertion_point(field_get:statsgate.MagnetForce.tick)
+  return _internal_tick();
+}
+inline void MagnetForce::set_tick(::uint32_t value) {
+  _internal_set_tick(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  // @@protoc_insertion_point(field_set:statsgate.MagnetForce.tick)
+}
+inline ::uint32_t MagnetForce::_internal_tick() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.tick_;
+}
+inline void MagnetForce::_internal_set_tick(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tick_ = value;
+}
+
+// uint64 magnet_owner = 2;
+inline bool MagnetForce::has_magnet_owner() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  return value;
+}
+inline void MagnetForce::clear_magnet_owner() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.magnet_owner_ = ::uint64_t{0u};
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline ::uint64_t MagnetForce::magnet_owner() const {
+  // @@protoc_insertion_point(field_get:statsgate.MagnetForce.magnet_owner)
+  return _internal_magnet_owner();
+}
+inline void MagnetForce::set_magnet_owner(::uint64_t value) {
+  _internal_set_magnet_owner(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  // @@protoc_insertion_point(field_set:statsgate.MagnetForce.magnet_owner)
+}
+inline ::uint64_t MagnetForce::_internal_magnet_owner() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.magnet_owner_;
+}
+inline void MagnetForce::_internal_set_magnet_owner(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.magnet_owner_ = value;
+}
+
+// uint32 magnet_team = 3;
+inline bool MagnetForce::has_magnet_team() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
+  return value;
+}
+inline void MagnetForce::clear_magnet_team() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.magnet_team_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000010U);
+}
+inline ::uint32_t MagnetForce::magnet_team() const {
+  // @@protoc_insertion_point(field_get:statsgate.MagnetForce.magnet_team)
+  return _internal_magnet_team();
+}
+inline void MagnetForce::set_magnet_team(::uint32_t value) {
+  _internal_set_magnet_team(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  // @@protoc_insertion_point(field_set:statsgate.MagnetForce.magnet_team)
+}
+inline ::uint32_t MagnetForce::_internal_magnet_team() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.magnet_team_;
+}
+inline void MagnetForce::_internal_set_magnet_team(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.magnet_team_ = value;
+}
+
+// string magnet_odf = 4;
+inline bool MagnetForce::has_magnet_odf() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000001U);
+  return value;
+}
+inline void MagnetForce::clear_magnet_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.magnet_odf_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline const ::std::string& MagnetForce::magnet_odf() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.MagnetForce.magnet_odf)
+  return _internal_magnet_odf();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void MagnetForce::set_magnet_odf(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  _impl_.magnet_odf_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:statsgate.MagnetForce.magnet_odf)
+}
+inline ::std::string* PROTOBUF_NONNULL MagnetForce::mutable_magnet_odf()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::std::string* _s = _internal_mutable_magnet_odf();
+  // @@protoc_insertion_point(field_mutable:statsgate.MagnetForce.magnet_odf)
+  return _s;
+}
+inline const ::std::string& MagnetForce::_internal_magnet_odf() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.magnet_odf_.Get();
+}
+inline void MagnetForce::_internal_set_magnet_odf(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.magnet_odf_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL MagnetForce::_internal_mutable_magnet_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.magnet_odf_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE MagnetForce::release_magnet_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.MagnetForce.magnet_odf)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  auto* released = _impl_.magnet_odf_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.magnet_odf_.Set("", GetArena());
+  }
+  return released;
+}
+inline void MagnetForce::set_allocated_magnet_odf(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+  _impl_.magnet_odf_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.magnet_odf_.IsDefault()) {
+    _impl_.magnet_odf_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:statsgate.MagnetForce.magnet_odf)
+}
+
+// .statsgate.MagnetTarget magnet_target = 5;
+inline bool MagnetForce::has_magnet_target() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000020U);
+  return value;
+}
+inline void MagnetForce::clear_magnet_target() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.magnet_target_ = 0;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000020U);
+}
+inline ::statsgate::MagnetTarget MagnetForce::magnet_target() const {
+  // @@protoc_insertion_point(field_get:statsgate.MagnetForce.magnet_target)
+  return _internal_magnet_target();
+}
+inline void MagnetForce::set_magnet_target(::statsgate::MagnetTarget value) {
+  _internal_set_magnet_target(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  // @@protoc_insertion_point(field_set:statsgate.MagnetForce.magnet_target)
+}
+inline ::statsgate::MagnetTarget MagnetForce::_internal_magnet_target() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::statsgate::MagnetTarget>(_impl_.magnet_target_);
+}
+inline void MagnetForce::_internal_set_magnet_target(::statsgate::MagnetTarget value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.magnet_target_ = value;
+}
+
+// uint32 magnet_handle = 6;
+inline bool MagnetForce::has_magnet_handle() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
+  return value;
+}
+inline void MagnetForce::clear_magnet_handle() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.magnet_handle_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000040U);
+}
+inline ::uint32_t MagnetForce::magnet_handle() const {
+  // @@protoc_insertion_point(field_get:statsgate.MagnetForce.magnet_handle)
+  return _internal_magnet_handle();
+}
+inline void MagnetForce::set_magnet_handle(::uint32_t value) {
+  _internal_set_magnet_handle(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  // @@protoc_insertion_point(field_set:statsgate.MagnetForce.magnet_handle)
+}
+inline ::uint32_t MagnetForce::_internal_magnet_handle() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.magnet_handle_;
+}
+inline void MagnetForce::_internal_set_magnet_handle(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.magnet_handle_ = value;
+}
+
+// uint32 target_team = 7;
+inline bool MagnetForce::has_target_team() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000080U);
+  return value;
+}
+inline void MagnetForce::clear_target_team() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.target_team_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000080U);
+}
+inline ::uint32_t MagnetForce::target_team() const {
+  // @@protoc_insertion_point(field_get:statsgate.MagnetForce.target_team)
+  return _internal_target_team();
+}
+inline void MagnetForce::set_target_team(::uint32_t value) {
+  _internal_set_target_team(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  // @@protoc_insertion_point(field_set:statsgate.MagnetForce.target_team)
+}
+inline ::uint32_t MagnetForce::_internal_target_team() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.target_team_;
+}
+inline void MagnetForce::_internal_set_target_team(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.target_team_ = value;
+}
+
+// string target_odf = 8;
+inline bool MagnetForce::has_target_odf() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  return value;
+}
+inline void MagnetForce::clear_target_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.target_odf_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::std::string& MagnetForce::target_odf() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.MagnetForce.target_odf)
+  return _internal_target_odf();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void MagnetForce::set_target_odf(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  _impl_.target_odf_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:statsgate.MagnetForce.target_odf)
+}
+inline ::std::string* PROTOBUF_NONNULL MagnetForce::mutable_target_odf()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::std::string* _s = _internal_mutable_target_odf();
+  // @@protoc_insertion_point(field_mutable:statsgate.MagnetForce.target_odf)
+  return _s;
+}
+inline const ::std::string& MagnetForce::_internal_target_odf() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.target_odf_.Get();
+}
+inline void MagnetForce::_internal_set_target_odf(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.target_odf_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL MagnetForce::_internal_mutable_target_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.target_odf_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE MagnetForce::release_target_odf() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.MagnetForce.target_odf)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  auto* released = _impl_.target_odf_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.target_odf_.Set("", GetArena());
+  }
+  return released;
+}
+inline void MagnetForce::set_allocated_target_odf(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+  _impl_.target_odf_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.target_odf_.IsDefault()) {
+    _impl_.target_odf_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:statsgate.MagnetForce.target_odf)
+}
+
+// -------------------------------------------------------------------
+
 // StatEvent
 
 // .statsgate.BulletInit bullet_init = 1;
@@ -8819,6 +11049,170 @@ inline ::statsgate::BuildEvent* PROTOBUF_NONNULL StatEvent::mutable_build_event(
   return _msg;
 }
 
+// .statsgate.PoolPlanted pool_planted = 10;
+inline bool StatEvent::has_pool_planted() const {
+  return event_type_case() == kPoolPlanted;
+}
+inline bool StatEvent::_internal_has_pool_planted() const {
+  return event_type_case() == kPoolPlanted;
+}
+inline void StatEvent::set_has_pool_planted() {
+  _impl_._oneof_case_[0] = kPoolPlanted;
+}
+inline void StatEvent::clear_pool_planted() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (event_type_case() == kPoolPlanted) {
+    if (GetArena() == nullptr) {
+      delete _impl_.event_type_.pool_planted_;
+    } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+      ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.event_type_.pool_planted_);
+    }
+    clear_has_event_type();
+  }
+}
+inline ::statsgate::PoolPlanted* PROTOBUF_NULLABLE StatEvent::release_pool_planted() {
+  // @@protoc_insertion_point(field_release:statsgate.StatEvent.pool_planted)
+  if (event_type_case() == kPoolPlanted) {
+    clear_has_event_type();
+    auto* temp = reinterpret_cast<::statsgate::PoolPlanted*>(_impl_.event_type_.pool_planted_);
+    if (GetArena() != nullptr) {
+      temp = ::google::protobuf::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.event_type_.pool_planted_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::statsgate::PoolPlanted& StatEvent::_internal_pool_planted() const {
+  return event_type_case() == kPoolPlanted ? static_cast<const ::statsgate::PoolPlanted&>(*reinterpret_cast<::statsgate::PoolPlanted*>(_impl_.event_type_.pool_planted_))
+                     : reinterpret_cast<const ::statsgate::PoolPlanted&>(::statsgate::_PoolPlanted_default_instance_);
+}
+inline const ::statsgate::PoolPlanted& StatEvent::pool_planted() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.StatEvent.pool_planted)
+  return _internal_pool_planted();
+}
+inline ::statsgate::PoolPlanted* PROTOBUF_NULLABLE StatEvent::unsafe_arena_release_pool_planted() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:statsgate.StatEvent.pool_planted)
+  if (event_type_case() == kPoolPlanted) {
+    clear_has_event_type();
+    auto* temp = reinterpret_cast<::statsgate::PoolPlanted*>(_impl_.event_type_.pool_planted_);
+    _impl_.event_type_.pool_planted_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void StatEvent::unsafe_arena_set_allocated_pool_planted(
+    ::statsgate::PoolPlanted* PROTOBUF_NULLABLE value) {
+  // We rely on the oneof clear method to free the earlier contents
+  // of this oneof. We can directly use the pointer we're given to
+  // set the new value.
+  clear_event_type();
+  if (value) {
+    set_has_pool_planted();
+    _impl_.event_type_.pool_planted_ = reinterpret_cast<::google::protobuf::Message*>(value);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.StatEvent.pool_planted)
+}
+inline ::statsgate::PoolPlanted* PROTOBUF_NONNULL StatEvent::_internal_mutable_pool_planted() {
+  if (event_type_case() != kPoolPlanted) {
+    clear_event_type();
+    set_has_pool_planted();
+    _impl_.event_type_.pool_planted_ = reinterpret_cast<::google::protobuf::Message*>(
+        ::google::protobuf::Message::DefaultConstruct<::statsgate::PoolPlanted>(GetArena()));
+  }
+  return reinterpret_cast<::statsgate::PoolPlanted*>(_impl_.event_type_.pool_planted_);
+}
+inline ::statsgate::PoolPlanted* PROTOBUF_NONNULL StatEvent::mutable_pool_planted()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::statsgate::PoolPlanted* _msg = _internal_mutable_pool_planted();
+  // @@protoc_insertion_point(field_mutable:statsgate.StatEvent.pool_planted)
+  return _msg;
+}
+
+// .statsgate.MagnetForce magnet_force = 11;
+inline bool StatEvent::has_magnet_force() const {
+  return event_type_case() == kMagnetForce;
+}
+inline bool StatEvent::_internal_has_magnet_force() const {
+  return event_type_case() == kMagnetForce;
+}
+inline void StatEvent::set_has_magnet_force() {
+  _impl_._oneof_case_[0] = kMagnetForce;
+}
+inline void StatEvent::clear_magnet_force() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (event_type_case() == kMagnetForce) {
+    if (GetArena() == nullptr) {
+      delete _impl_.event_type_.magnet_force_;
+    } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+      ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.event_type_.magnet_force_);
+    }
+    clear_has_event_type();
+  }
+}
+inline ::statsgate::MagnetForce* PROTOBUF_NULLABLE StatEvent::release_magnet_force() {
+  // @@protoc_insertion_point(field_release:statsgate.StatEvent.magnet_force)
+  if (event_type_case() == kMagnetForce) {
+    clear_has_event_type();
+    auto* temp = reinterpret_cast<::statsgate::MagnetForce*>(_impl_.event_type_.magnet_force_);
+    if (GetArena() != nullptr) {
+      temp = ::google::protobuf::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.event_type_.magnet_force_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::statsgate::MagnetForce& StatEvent::_internal_magnet_force() const {
+  return event_type_case() == kMagnetForce ? static_cast<const ::statsgate::MagnetForce&>(*reinterpret_cast<::statsgate::MagnetForce*>(_impl_.event_type_.magnet_force_))
+                     : reinterpret_cast<const ::statsgate::MagnetForce&>(::statsgate::_MagnetForce_default_instance_);
+}
+inline const ::statsgate::MagnetForce& StatEvent::magnet_force() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.StatEvent.magnet_force)
+  return _internal_magnet_force();
+}
+inline ::statsgate::MagnetForce* PROTOBUF_NULLABLE StatEvent::unsafe_arena_release_magnet_force() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:statsgate.StatEvent.magnet_force)
+  if (event_type_case() == kMagnetForce) {
+    clear_has_event_type();
+    auto* temp = reinterpret_cast<::statsgate::MagnetForce*>(_impl_.event_type_.magnet_force_);
+    _impl_.event_type_.magnet_force_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void StatEvent::unsafe_arena_set_allocated_magnet_force(
+    ::statsgate::MagnetForce* PROTOBUF_NULLABLE value) {
+  // We rely on the oneof clear method to free the earlier contents
+  // of this oneof. We can directly use the pointer we're given to
+  // set the new value.
+  clear_event_type();
+  if (value) {
+    set_has_magnet_force();
+    _impl_.event_type_.magnet_force_ = reinterpret_cast<::google::protobuf::Message*>(value);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.StatEvent.magnet_force)
+}
+inline ::statsgate::MagnetForce* PROTOBUF_NONNULL StatEvent::_internal_mutable_magnet_force() {
+  if (event_type_case() != kMagnetForce) {
+    clear_event_type();
+    set_has_magnet_force();
+    _impl_.event_type_.magnet_force_ = reinterpret_cast<::google::protobuf::Message*>(
+        ::google::protobuf::Message::DefaultConstruct<::statsgate::MagnetForce>(GetArena()));
+  }
+  return reinterpret_cast<::statsgate::MagnetForce*>(_impl_.event_type_.magnet_force_);
+}
+inline ::statsgate::MagnetForce* PROTOBUF_NONNULL StatEvent::mutable_magnet_force()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::statsgate::MagnetForce* _msg = _internal_mutable_magnet_force();
+  // @@protoc_insertion_point(field_mutable:statsgate.StatEvent.magnet_force)
+  return _msg;
+}
+
 inline bool StatEvent::has_event_type() const {
   return event_type_case() != EVENT_TYPE_NOT_SET;
 }
@@ -9011,6 +11405,12 @@ inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::statsgate::Out
   return ::statsgate::Outcome_descriptor();
 }
 template <>
+struct is_proto_enum<::statsgate::RecorderType> : std::true_type {};
+template <>
+inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::statsgate::RecorderType>() {
+  return ::statsgate::RecorderType_descriptor();
+}
+template <>
 struct is_proto_enum<::statsgate::ScrapStatus> : std::true_type {};
 template <>
 inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::statsgate::ScrapStatus>() {
@@ -9027,6 +11427,12 @@ struct is_proto_enum<::statsgate::ProducerType> : std::true_type {};
 template <>
 inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::statsgate::ProducerType>() {
   return ::statsgate::ProducerType_descriptor();
+}
+template <>
+struct is_proto_enum<::statsgate::MagnetTarget> : std::true_type {};
+template <>
+inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::statsgate::MagnetTarget>() {
+  return ::statsgate::MagnetTarget_descriptor();
 }
 
 }  // namespace protobuf

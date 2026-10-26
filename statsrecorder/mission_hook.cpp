@@ -44,6 +44,8 @@ namespace statsgate
 		current_export = const_cast<MisnExport*>(exu2::GetMissionExport());
 		old_mission = *current_export;
 		// TODO: add the rest of these
+        if (hooks.AddObject)
+			current_export->AddObject = hooks.AddObject;
 		if (hooks.Update)
 			current_export->Update = hooks.Update;
 		if (hooks.PostRun)

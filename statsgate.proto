@@ -236,6 +236,12 @@ message BuildEvent {
   Vec3 build_position = 6; // Only defined for BUILD events
 }
 
+message PoolPlanted {
+  uint32 tick = 1;
+  uint32 teamnum = 2;
+  Vec3 position = 3;
+}
+
 // This describes whether an object or an ordnance was pushed/deflected
 enum MagnetTarget {
   MAGNET_TARGET_UNSPECIFIED = 0;
@@ -268,7 +274,8 @@ message StatEvent {
     UnitSniped unit_sniped = 7;
     PickupPowerup pickup_powerup = 8;
     BuildEvent build_event = 9;
-    MagnetForce magnet_force = 10;
+    PoolPlanted pool_planted = 10;
+    MagnetForce magnet_force = 11;
   }
 }
 

@@ -1,8 +1,10 @@
 #include "stat_client.h"
 
+#include "ScriptUtils.h"
 #include "command.h"
 
 #include <ExtraUtils.h>
+#include <google/protobuf/stubs/common.h>
 #include <google/protobuf/util/time_util.h>
 #include <google/protobuf/util/json_util.h>
 #include <google/protobuf/io/gzip_stream.h>
@@ -30,6 +32,7 @@
 namespace statsgate
 {
 	MisnExport stat_client::export_funcs{
+        .AddObject = stat_client::AddObject,
 		.Update = stat_client::Update, 
 		.PostRun = stat_client::PostRun,
 		.ObjectKilled = stat_client::ObjectKilled
@@ -42,6 +45,11 @@ namespace statsgate
 		.m_pPreDamageCallback = stat_client::PreDamage,
 		.m_pPostPickupPowerupCallback = stat_client::PickupPowerup,
 	};
+
+    void stat_client::AddObject(Handle h)
+    {
+        client()->record_pool_planted(h);
+    }
 
 	void stat_client::Update()
 	{
@@ -119,6 +127,10 @@ namespace statsgate
 		std::filesystem::create_directories(mod_folder);
 		std::filesystem::create_directories(mod_folder / "stats");
 		register_config();
+
+        // This fixes the bug where ObjectDestroyed callbacks for ai units do not trigger unless
+        // the map author calls this function, this might get fixed in a future beta build.
+        WantBotKillMessages();
 	}
 
 	stat_client::~stat_client()
@@ -411,6 +423,25 @@ namespace statsgate
 		team2->set_pool_count(get_pool_count(6));
 		team2->set_upgrade_count(get_upgrade_count(6));
 	}
+
+    void stat_client::record_pool_planted(Handle h)
+    {
+        if (GetCurWorld() != 0 || !IsAround(h))
+            return;
+
+        std::string obj_class = get_gameobj_class(h);
+        if (obj_class != "CLASS_EXTRACTOR")
+            return;
+
+        auto* plant = stat_session.add_event_stream()->mutable_pool_planted();
+        plant->set_tick(GetLockstepTurn());
+        plant->set_teamnum(GetTeamNum(h));
+        Vector pos = GetPosition(h);
+        auto* message_pos = plant->mutable_position();
+        message_pos->set_x(pos.x);
+        message_pos->set_y(pos.y);
+        message_pos->set_z(pos.z);
+    }
 	
 	//struct MagnetForceInfo
 	//{
@@ -606,7 +637,7 @@ namespace statsgate
 	void stat_client::register_commands()
 	{
 		const char* splash_message = "statsgate.dll v{} by VTrider, special thanks to F9bomber, Sev, and the rest of the VSR community! "
-								     "Be sure to visit sevsunday.github.io/vt-stats for the latest data!";
+								     "Be sure to visit vtstats.bz for the latest data!";
 
         exu2::PrintConsoleMessage(splash_message, version);
         exu2::VarSys_RegisterHandler("stats", command::handler, 0);
@@ -651,20 +682,6 @@ namespace statsgate
 		{
 			exu2::PrintConsoleMessage("{}", client_config.enable_recorder);
 		});
-
-		// Todo: add chat rate limit bypass
-		//command flip("stats.flip", []()
-		//	{
-		//		static std::random_device rd;
-		//		static std::mt19937 gen(rd());
-		//		static std::uniform_int_distribution dist(0, 1);
-		//		for (int i = 0; i < 5; i++)
-		//		{
-		//			IFace_ConsoleCmd(std::format("network.chateditline \"{}\"", dist(gen) ? "Heads!" : "Tails!").c_str());
-		//			IFace_ConsoleCmd("network.chatline.entered");
-		//		}
-		//	});
-
 
 		const std::string client_type_str = [this]()
 		{

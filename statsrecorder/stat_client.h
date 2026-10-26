@@ -71,12 +71,14 @@ namespace statsgate
 		void record_damage(const int curWorld, Handle h, const char* pContext, const DAMAGE& dmg);
 		void record_build_event(int curWorld, exu2::ProducerType producerType, Handle producer, int producerTeam, exu2::BuildEventType event, const char* buildItemOdf, Handle buildItem);
 		void record_resource_state(UpdateTick* tick);
+        void record_pool_planted(Handle h);
 
 		void first_tick();
 		void poll_tick(); // this function does polling and records handles before record_update()
 		void last_tick();
 
 		// MisnExport
+        static void AddObject(Handle h);
 		static void Update();
 		static void PostRun();
 		static EjectKillRetCodes ObjectKilled(Handle DeadObjectHandle, Handle KillersHandle);
