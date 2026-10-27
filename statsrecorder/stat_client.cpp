@@ -49,6 +49,7 @@ namespace statsgate
     void stat_client::AddObject(Handle h)
     {
         client()->record_pool_planted(h);
+        client()->hooks.get_mission().AddObject(h);
     }
 
 	void stat_client::Update()
@@ -130,7 +131,8 @@ namespace statsgate
 
         // This fixes the bug where ObjectDestroyed callbacks for ai units do not trigger unless
         // the map author calls this function, this might get fixed in a future beta build.
-        WantBotKillMessages();
+        // Update: disabled temporarily until we find a better solution
+        // WantBotKillMessages();
 	}
 
 	stat_client::~stat_client()
