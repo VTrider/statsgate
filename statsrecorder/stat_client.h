@@ -1,5 +1,6 @@
 #pragma once
 
+#include "bzreplay.h"
 #include "mission_hook.h"
 #include "statsgate.h"
 #include "statsgate.pb.h"
@@ -118,6 +119,7 @@ namespace statsgate
 		std::atomic_flag* running_freestanding = nullptr; // for freestanding clients this will have a flag that controls the automatic hooks
 		bool recording = false;
 
+        bzreplay::replay replay_output;
 		ClientStatSession stat_session;
 		std::string session_identifier; // will be a timestamp formatted like OBS recordings
 

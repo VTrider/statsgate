@@ -21,7 +21,10 @@ target_sources(statsgate PRIVATE
 target_include_directories(statsgate PRIVATE ${CMAKE_SOURCE_DIR}/resource)
 target_sources(statsgate PRIVATE ${CMAKE_SOURCE_DIR}/resource/statsgate.rc)
 
-target_link_libraries(statsgate PRIVATE compiler-options)
+target_link_libraries(statsgate PRIVATE 
+    compiler-options
+    bzreplay
+)
 
 target_link_options(statsgate PRIVATE
     /DELAYLOAD:ExtraUtilities2.dll

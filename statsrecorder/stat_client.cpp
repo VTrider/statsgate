@@ -1,6 +1,7 @@
 #include "stat_client.h"
 
 #include "ScriptUtils.h"
+#include "bzreplay.h"
 #include "command.h"
 
 #include <ExtraUtils.h>
@@ -475,6 +476,19 @@ namespace statsgate
 
 		exu2::SetBuildEventCallback(stat_client::BuildEvent);
 		// exu2::SetMagnetForceCallback(cb);
+        
+        bzreplay::header rheader;
+        rheader.map = GetMissionFilename();
+        rheader.start_time = 0xDEADBEEF;
+        rheader.tick_rate = exu2::GetTPS();
+        rheader.active_config_mod = exu2::GetActiveConfigMod();
+        rheader.terrain_min_x = GetTerrainMinX();
+        rheader.terrain_max_x = GetTerrainMaxX();
+        rheader.terrain_min_y = GetTerrainMinY();
+        rheader.terrain_max_y = GetTerrainMaxY();
+        rheader.terrain_min_z = GetTerrainMinZ();
+        rheader.terrain_max_z = GetTerrainMaxZ();
+        rheader.shutdown_requested = false;
 
 		StatHeader header;
 		header.set_map(GetMissionFilename());
@@ -496,16 +510,19 @@ namespace statsgate
 		{
 			case 'i':
 			{
+                rheader.team1_race = bzreplay::race::isdf;
 				header.set_team1_race(RACE_ISDF);
 				break;
 			}
 			case 'f':
 			{
+                rheader.team1_race = bzreplay::race::scion;
 				header.set_team1_race(RACE_SCION);
 				break;
 			}
 			case 'e':
 			{
+                rheader.team1_race = bzreplay::race::hadean;
 				header.set_team1_race(RACE_HADEAN);
 				break;
 			}
@@ -517,16 +534,19 @@ namespace statsgate
 		{
 			case 'i':
 			{
+                rheader.team2_race = bzreplay::race::isdf;
 				header.set_team2_race(RACE_ISDF);
 				break;
 			}
 			case 'f':
 			{
+                rheader.team2_race = bzreplay::race::scion;
 				header.set_team2_race(RACE_SCION);
 				break;
 			}
 			case 'e':
 			{
+                rheader.team2_race = bzreplay::race::hadean;
 				header.set_team2_race(RACE_HADEAN);
 				break;
 			}
@@ -534,6 +554,7 @@ namespace statsgate
 				header.set_team2_race(RACE_UNSPECIFIED);
 		}
 
+        replay_output.header = std::move(rheader);
 		*stat_session.mutable_header() = header;
 	}
 
@@ -600,6 +621,11 @@ namespace statsgate
 			auto* recorded_player = header->add_players();
 			*recorded_player = player;
 		}
+
+        auto& rheader = replay_output.header;
+        rheader.game_outcome = bzreplay::outcome::game_cancelled;
+
+        replay_output.write_file(std::filesystem::path(client_config.output_directory) / std::format("{}.bzreplay", session_identifier));
 
 		std::ofstream file = std::ofstream(std::filesystem::path(client_config.output_directory) / std::format("{}.binpb.gz", session_identifier), std::ios::binary);
 		google::protobuf::io::OstreamOutputStream output_stream(&file);
