@@ -126,9 +126,12 @@ namespace statsgate
 		exu2::VerifyVersion();
 		register_instance(this);
 		register_commands();
-		std::filesystem::create_directories(mod_folder);
-		std::filesystem::create_directories(mod_folder / "stats");
 		register_config();
+		bool s0 = std::filesystem::create_directories(mod_folder);
+		bool s1 = std::filesystem::create_directories(mod_folder / "stats");
+
+        if (!s0 && !s1)
+            exu2::PrintConsoleMessage("[statsgate] WARNING: failed to create mod directories");
 
         // This fixes the bug where ObjectDestroyed callbacks for ai units do not trigger unless
         // the map author calls this function, this might get fixed in a future beta build.
@@ -625,8 +628,14 @@ namespace statsgate
         auto& rheader = replay_output.header;
         rheader.game_outcome = bzreplay::outcome::game_cancelled;
 
-        replay_output.write_file(std::filesystem::path(client_config.output_directory) / std::format("{}.bzreplay", session_identifier));
+        if (!std::filesystem::exists(client_config.output_directory))
+        {
+            exu2::PrintConsoleMessage("WARNING: stat output directory does not exist, falling back to default. "
+                                      "Double check your config file and consider deleting it to restore defaults.");
+            client_config = default_config;
+        }
 
+        replay_output.write_file(std::filesystem::path(client_config.output_directory) / std::format("{}.bzreplay", session_identifier));
 		std::ofstream file = std::ofstream(std::filesystem::path(client_config.output_directory) / std::format("{}.binpb.gz", session_identifier), std::ios::binary);
 		google::protobuf::io::OstreamOutputStream output_stream(&file);
 
