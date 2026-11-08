@@ -126,11 +126,16 @@ namespace statsgate
 		register_instance(this);
 		register_commands();
 		register_config();
-		bool s0 = std::filesystem::create_directories(mod_folder);
-		bool s1 = std::filesystem::create_directories(mod_folder / "stats");
 
-        if (!s0 && !s1)
-            exu2::PrintConsoleMessage("[statsgate] WARNING: failed to create mod directories");
+		try
+		{
+			std::filesystem::create_directories(mod_folder);
+			std::filesystem::create_directories(mod_folder / "stats");
+		}
+		catch (const std::filesystem::filesystem_error& e)
+		{
+            exu2::PrintConsoleMessage("[statsgate] WARNING: failed to create mod directories {}", e.what());
+		}
 
         // This fixes the bug where ObjectDestroyed callbacks for ai units do not trigger unless
         // the map author calls this function, this might get fixed in a future beta build.

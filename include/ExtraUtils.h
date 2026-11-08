@@ -42,7 +42,7 @@ namespace exu2
 
 	// Use this to compare against the DLL version. You should make sure that
 	// your header is up to date with the latest DLL.
-	constexpr const char* HEADER_VERSION = "1.6.3";
+	constexpr const char* HEADER_VERSION = "1.6.4";
 
 	// WARNING: You MUST call these two functions in DLL_PROCESS_ATTACH, and DLL_PROCESS_DETACH
 	// respectively if you are using this library in a dll mission. By default this uses the 
