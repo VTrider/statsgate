@@ -76,6 +76,10 @@ namespace statsgate
 			current_export2->m_pPreDamageCallback = hooks2.m_pPreDamageCallback;
 		if (hooks2.m_pPostPickupPowerupCallback)
 			current_export2->m_pPostPickupPowerupCallback = hooks2.m_pPostPickupPowerupCallback;
+        if (hooks2.m_pPreMagnetPushCallback)
+            current_export2->m_pPreMagnetPushCallback = hooks2.m_pPreMagnetPushCallback;
+        if (hooks2.m_pPreMagnetPushOrdnanceCallback)
+            current_export2->m_pPreMagnetPushOrdnanceCallback = hooks2.m_pPreMagnetPushOrdnanceCallback;
 
 		hooks_enabled = true;
 	}

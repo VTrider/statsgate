@@ -88,6 +88,27 @@ enum PrePickupPowerupReturnCodes
 	PREPICKUPPOWERUP_ALLOW, // Allow the powerup to be picked up
 };
 
+// Return codes from the PreMagnetPush DLL callback
+enum PreMagnetPushReturnCodes
+{
+	PREMAGNETPUSH_DENY = 0, // Deny the magnetic push/pull force
+	PREMAGNETPUSH_ALLOW = 1, // Allow the magnetic push/pull force
+};
+
+// Return codes from the PreExplosionJolt DLL callback
+enum PreExplosionJoltReturnCodes
+{
+	PREEXPLOSIONJOLT_DENY = 0, // Deny the explosion/shockwave jolt
+	PREEXPLOSIONJOLT_ALLOW = 1, // Allow the explosion/shockwave jolt
+};
+
+// Return codes from the PreCollision DLL callback
+enum PreCollisionReturnCodes
+{
+	PRECOLLISION_DENY = 0, // Deny the collision physical bounce and spin
+	PRECOLLISION_ALLOW = 1, // Allow the collision physical bounce and spin
+};
+
 enum PathType;
 
 #if MISN_INTERNAL
@@ -381,6 +402,26 @@ typedef void (DLLAPI *PostTargetChangedCallback)(Handle craft, Handle previousTa
 // chat message string. Returns nothing.
 typedef void (DLLAPI *ChatMessageSentCallback)(int senderTeam, long sentTurn, const char* message);
 
+// Typedef for PreMagnetPush callback. Is passed the current world (0=lockstep, 1/2=visual),
+// pusher handle, target handle, shooter handle, pusher team, pusher ODF string,
+// and a reference deltaVel vector that can be modified.
+typedef PreMagnetPushReturnCodes(DLLAPI *PreMagnetPushCallback)(const int curWorld, Handle pusherHandle, Handle targetHandle, Handle shooterHandle, int pusherTeam, const char* pPusherODF, Vector &deltaVel);
+
+// Typedef for PreMagnetPushOrdnance callback. Is passed the current world (0=lockstep, 1/2=visual),
+// pusher handle, pusher shooter handle, ordnance shooter handle, ordnance team,
+// pusher ODF string, ordnance ODF string, and a reference deltaVel vector that can be modified.
+typedef PreMagnetPushReturnCodes(DLLAPI *PreMagnetPushOrdnanceCallback)(const int curWorld, Handle pusherHandle, Handle pusherShooter, Handle ordnanceShooter, int ordnanceTeam, const char* pPusherODF, const char* pOrdnanceODF, Vector &deltaVel);
+
+// Typedef for PreExplosionJolt callback. Is passed the current world (0=lockstep, 1/2=visual),
+// source handle (explosion/mine/wave), target handle, shooter handle, source team, source ODF string,
+// blast position, and reference kickVeloc and kickOmega floats that can be modified.
+typedef PreExplosionJoltReturnCodes(DLLAPI *PreExplosionJoltCallback)(const int curWorld, Handle sourceHandle, Handle targetHandle, Handle shooterHandle, int sourceTeam, const char* pSourceODF, const Vector &blastPos, float &kickVeloc, float &kickOmega);
+
+// Typedef for PreCollision callback. Is passed the current world (0=lockstep, 1/2=visual),
+// craft handle, collider handle, craft ODF string, collider ODF string (NULL if unavailable),
+// and reference bounce velocity and spin omega that can be modified.
+typedef PreCollisionReturnCodes(DLLAPI *PreCollisionCallback)(const int curWorld, Handle craftHandle, Handle colliderHandle, const char* pCraftODF, const char* pColliderODF, Vector &bounceVel, Vector &spinOmega);
+
 
 // functions called by mission
 // Changes in MisnImport do _NOT_ require changes to LATEST_DLL_VERSION
@@ -473,6 +514,10 @@ struct MisnExport2
 	PostBulletInitCallback		m_pPostBulletInitCallback;
 	PreDamageCallback			m_pPreDamageCallback;
 	PostPickupPowerupCallback	m_pPostPickupPowerupCallback;
+	PreMagnetPushCallback		m_pPreMagnetPushCallback;
+	PreMagnetPushOrdnanceCallback m_pPreMagnetPushOrdnanceCallback;
+	PreExplosionJoltCallback	m_pPreExplosionJoltCallback;
+	PreCollisionCallback		m_pPreCollisionCallback;
 
 	// Constructor - sets all callbacks to unsubscribed
 	MisnExport2()
@@ -486,6 +531,10 @@ struct MisnExport2
 		m_pPostBulletInitCallback = NULL;
 		m_pPreDamageCallback = NULL;
 		m_pPostPickupPowerupCallback = NULL;
+		m_pPreMagnetPushCallback = NULL;
+		m_pPreMagnetPushOrdnanceCallback = NULL;
+		m_pPreExplosionJoltCallback = NULL;
+		m_pPreCollisionCallback = NULL;
 	}
 };
 
@@ -3117,5 +3166,49 @@ DLLEXPORT Handle DLLAPI GetNextWho(Handle me);
 // vector will always be zero if it has a where and an AiPath, not
 // actual terrain height.
 DLLEXPORT Vector DLLAPI GetNextCommandWhere(Handle h);
+
+// Callback to set item in MisnExport2 - notes that the DLL would like
+// to set a PreMagnetPush callback.
+DLLEXPORT void DLLAPI SetPreMagnetPushCallback(PreMagnetPushCallback callback);
+
+// Callback to set item in MisnExport2 - notes that the DLL would like
+// to set a PreMagnetPushOrdnance callback.
+DLLEXPORT void DLLAPI SetPreMagnetPushOrdnanceCallback(PreMagnetPushOrdnanceCallback callback);
+
+// Callback to set item in MisnExport2 - notes that the DLL would like
+// to set a PreExplosionJolt callback.
+DLLEXPORT void DLLAPI SetPreExplosionJoltCallback(PreExplosionJoltCallback callback);
+
+// Callback to set item in MisnExport2 - notes that the DLL would like
+// to set a PreCollision callback.
+DLLEXPORT void DLLAPI SetPreCollisionCallback(PreCollisionCallback callback);
+
+// Starts custom controller rumble on the SCRIPT channel.
+// Motors accept normalized values (0.0f .. 1.0f) or raw speeds (0 .. 65535).
+// durationMs of 0 plays indefinitely until StopRumble() is called.
+DLLEXPORT void DLLAPI StartRumble(float leftMotor, float rightMotor, unsigned long durationMs = 0);
+
+// Stops all scripted vibration and audio haptics on the SCRIPT channel.
+DLLEXPORT void DLLAPI StopRumble(void);
+
+// Plays audio-driven haptics on the SCRIPT channel using real-time waveform analysis.
+// Dynamically drives dual-motor vibration in sync with the specified sound.
+DLLEXPORT void DLLAPI PlayAudioRumble(const char *soundName, float gain = 1.0f, bool loop = false);
+
+// Triggers distance-attenuated controller rumble centered at a 3D world position.
+// Automatically calculates distance falloff to the player's craft up to maxDist.
+DLLEXPORT void DLLAPI PlayPositionalRumble(const Vector &pos, float maxDist, float leftMotor, float rightMotor, unsigned long durationMs = 0);
+
+// Triggers distance-attenuated controller rumble centered at a GameObject handle.
+DLLEXPORT void DLLAPI PlayPositionalRumble(Handle h, float maxDist, float leftMotor, float rightMotor, unsigned long durationMs = 0);
+
+// Triggers distance-attenuated audio-driven rumble centered at a 3D world position.
+DLLEXPORT void DLLAPI PlayPositionalAudioRumble(const char *soundName, const Vector &pos, float maxDist, float gain = 1.0f, bool loop = false);
+
+// Triggers distance-attenuated audio-driven rumble centered at a GameObject handle.
+DLLEXPORT void DLLAPI PlayPositionalAudioRumble(const char *soundName, Handle h, float maxDist, float gain = 1.0f, bool loop = false);
+
+// Returns true if any scripted vibration or audio haptic voice is currently active on the SCRIPT channel.
+DLLEXPORT bool DLLAPI IsRumbleActive(void);
 
 #endif
