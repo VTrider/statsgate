@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'include/**'
+      - 'statslauncher/**'
+      - 'statsrecorder/**'
+      - 'CMakeLists.txt'
+      - 'CMakePresets.json'
+      - 'vcpkg.json'
 
 jobs:
   build:
