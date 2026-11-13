@@ -54,6 +54,9 @@ enum RecorderType {
 // Anything with a `team` refers to the team slot
 // from 1-10, NOT the teamplay team.
 // Team 1 is teams 1-5, Team 2 is teams 6-10
+//
+// Anything labeled a "handle" is a unique identifier for a game object
+// for that current session.
 
 message StatHeader {
   string map = 1;
@@ -121,10 +124,12 @@ message DamageDealt {
   uint64 shooter = 2; // undefined if not a player
   int32 shooter_team = 3;
   string shooter_odf = 4;
+  uint32 shooter_handle = 10;
 
   uint64 victim = 5; // undefined if not a player
   int32 victim_team = 6;
   string victim_odf = 7;
+  uint32 victim_handle = 11;
 
   string ordnance_odf = 8; // undefined for environmental damage (water, other unknown sources)
   float amount = 9;
@@ -181,10 +186,12 @@ message UnitDestroyed {
   uint64 killer = 2; // undefined if killer was not a player
   uint32 killer_team = 3;
   string killer_odf = 4;
+  uint32 killer_handle = 8;
 
   uint64 victim = 5; // undefined if victim was not a player
   uint32 victim_team = 6;
   string victim_odf = 7;
+  uint32 victim_handle = 9;
 }
 
 // Shooter and undefined if they are not players, this is probably rare but it might occur in mods that use
@@ -234,6 +241,7 @@ message BuildEvent {
   uint32 teamnum = 4;
   string build_odf = 5;
   Vec3 build_position = 6; // Only defined for BUILD events
+  uint32 build_handle = 7; // Only defined for BUILD events
 }
 
 message PoolPlanted {

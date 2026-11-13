@@ -101,7 +101,9 @@ inline constexpr UnitDestroyed::Impl_::Impl_(
         tick_{0u},
         killer_team_{0u},
         victim_{::uint64_t{0u}},
-        victim_team_{0u} {}
+        victim_team_{0u},
+        killer_handle_{0u},
+        victim_handle_{0u} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR UnitDestroyed::UnitDestroyed(::_pbi::ConstantInitialized)
@@ -296,7 +298,9 @@ inline constexpr DamageDealt::Impl_::Impl_(
         shooter_team_{0},
         victim_{::uint64_t{0u}},
         victim_team_{0},
-        amount_{0} {}
+        amount_{0},
+        shooter_handle_{0u},
+        victim_handle_{0u} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR DamageDealt::DamageDealt(::_pbi::ConstantInitialized)
@@ -504,7 +508,8 @@ inline constexpr BuildEvent::Impl_::Impl_(
         tick_{0u},
         type_{static_cast< ::statsgate::BuildEventType >(0)},
         producer_{static_cast< ::statsgate::ProducerType >(0)},
-        teamnum_{0u} {}
+        teamnum_{0u},
+        build_handle_{0u} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR BuildEvent::BuildEvent(::_pbi::ConstantInitialized)
@@ -742,23 +747,27 @@ const ::uint32_t
         6,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_._has_bits_),
-        12, // hasbit index offset
+        14, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.tick_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.shooter_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.shooter_team_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.shooter_odf_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.shooter_handle_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.victim_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.victim_team_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.victim_odf_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.victim_handle_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.ordnance_odf_),
         PROTOBUF_FIELD_OFFSET(::statsgate::DamageDealt, _impl_.amount_),
         4,
         3,
         5,
         0,
+        9,
         6,
         7,
         1,
+        10,
         2,
         8,
         0x081, // bitmap
@@ -819,21 +828,25 @@ const ::uint32_t
         2,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_._has_bits_),
-        10, // hasbit index offset
+        12, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_.tick_),
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_.killer_),
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_.killer_team_),
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_.killer_odf_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_.killer_handle_),
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_.victim_),
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_.victim_team_),
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_.victim_odf_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::UnitDestroyed, _impl_.victim_handle_),
         3,
         2,
         4,
         0,
+        7,
         5,
         6,
         1,
+        8,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::UnitSniped, _impl_._has_bits_),
         10, // hasbit index offset
@@ -868,19 +881,21 @@ const ::uint32_t
         1,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_._has_bits_),
-        9, // hasbit index offset
+        10, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.tick_),
         PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.type_),
         PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.producer_),
         PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.teamnum_),
         PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.build_odf_),
         PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.build_position_),
+        PROTOBUF_FIELD_OFFSET(::statsgate::BuildEvent, _impl_.build_handle_),
         2,
         3,
         4,
         5,
         0,
         1,
+        6,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::statsgate::PoolPlanted, _impl_._has_bits_),
         6, // hasbit index offset
@@ -940,18 +955,18 @@ static const ::_pbi::MigrationSchema
         {70, sizeof(::statsgate::BulletInit)},
         {79, sizeof(::statsgate::BulletHit)},
         {96, sizeof(::statsgate::DamageDealt)},
-        {117, sizeof(::statsgate::PlayerState)},
-        {136, sizeof(::statsgate::AIState)},
-        {149, sizeof(::statsgate::ResourceState)},
-        {162, sizeof(::statsgate::UpdateTick)},
-        {173, sizeof(::statsgate::UnitDestroyed)},
-        {190, sizeof(::statsgate::UnitSniped)},
-        {207, sizeof(::statsgate::PickupPowerup)},
-        {222, sizeof(::statsgate::BuildEvent)},
-        {237, sizeof(::statsgate::PoolPlanted)},
-        {246, sizeof(::statsgate::MagnetForce)},
-        {265, sizeof(::statsgate::StatEvent)},
-        {278, sizeof(::statsgate::ClientStatSession)},
+        {121, sizeof(::statsgate::PlayerState)},
+        {140, sizeof(::statsgate::AIState)},
+        {153, sizeof(::statsgate::ResourceState)},
+        {166, sizeof(::statsgate::UpdateTick)},
+        {177, sizeof(::statsgate::UnitDestroyed)},
+        {198, sizeof(::statsgate::UnitSniped)},
+        {215, sizeof(::statsgate::PickupPowerup)},
+        {230, sizeof(::statsgate::BuildEvent)},
+        {247, sizeof(::statsgate::PoolPlanted)},
+        {256, sizeof(::statsgate::MagnetForce)},
+        {275, sizeof(::statsgate::StatEvent)},
+        {288, sizeof(::statsgate::ClientStatSession)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::statsgate::_Vec3_default_instance_._instance,
@@ -1001,87 +1016,90 @@ const char descriptor_table_protodef_statsgate_2eproto[] ABSL_ATTRIBUTE_SECTION_
     "etHit\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014"
     "ordnance_odf\030\003 \001(\t\022\016\n\006victim\030\004 \001(\004\022\022\n\nvi"
     "ctim_odf\030\005 \001(\t\022\023\n\013shooter_odf\030\006 \001(\t\022\032\n\022d"
-    "istance_to_target\030\007 \001(\002\"\266\001\n\013DamageDealt\022"
+    "istance_to_target\030\007 \001(\002\"\345\001\n\013DamageDealt\022"
     "\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014shoote"
-    "r_team\030\003 \001(\005\022\023\n\013shooter_odf\030\004 \001(\t\022\016\n\006vic"
-    "tim\030\005 \001(\004\022\023\n\013victim_team\030\006 \001(\005\022\022\n\nvictim"
-    "_odf\030\007 \001(\t\022\024\n\014ordnance_odf\030\010 \001(\t\022\016\n\006amou"
-    "nt\030\t \001(\002\"\264\001\n\013PlayerState\022\016\n\006player\030\001 \001(\004"
-    "\022!\n\010position\030\002 \001(\0132\017.statsgate.Vec3\022\r\n\005s"
-    "peed\030\003 \001(\002\022\016\n\006health\030\004 \001(\002\022\014\n\004ammo\030\005 \001(\002"
-    "\022\013\n\003odf\030\006 \001(\t\022\022\n\nhas_target\030\007 \001(\010\022$\n\013ori"
-    "entation\030\t \001(\0132\017.statsgate.Quat\"}\n\007AISta"
-    "te\022\013\n\003odf\030\001 \001(\t\022!\n\010position\030\002 \001(\0132\017.stat"
-    "sgate.Vec3\022$\n\013orientation\030\003 \001(\0132\017.statsg"
-    "ate.Quat\022\016\n\006health\030\004 \001(\002\022\014\n\004ammo\030\005 \001(\002\"\222"
-    "\001\n\rResourceState\022\025\n\rcurrent_scrap\030\001 \001(\r\022"
-    "\021\n\tmax_scrap\030\002 \001(\r\022,\n\014scrap_status\030\003 \001(\016"
-    "2\026.statsgate.ScrapStatus\022\022\n\npool_count\030\004"
-    " \001(\r\022\025\n\rupgrade_count\030\005 \001(\r\"\251\001\n\nUpdateTi"
-    "ck\022\014\n\004tick\030\001 \001(\r\022\'\n\007players\030\002 \003(\0132\026.stat"
-    "sgate.PlayerState\0221\n\017team1_resources\030\003 \001"
-    "(\0132\030.statsgate.ResourceState\0221\n\017team2_re"
-    "sources\030\004 \001(\0132\030.statsgate.ResourceState\""
-    "\217\001\n\rUnitDestroyed\022\014\n\004tick\030\001 \001(\r\022\016\n\006kille"
-    "r\030\002 \001(\004\022\023\n\013killer_team\030\003 \001(\r\022\022\n\nkiller_o"
-    "df\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022\023\n\013victim_team\030"
-    "\006 \001(\r\022\022\n\nvictim_odf\030\007 \001(\t\"\217\001\n\nUnitSniped"
-    "\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002 \001(\004\022\024\n\014shoot"
-    "er_team\030\003 \001(\r\022\023\n\013shooter_odf\030\004 \001(\t\022\016\n\006vi"
-    "ctim\030\005 \001(\004\022\023\n\013victim_team\030\006 \001(\r\022\022\n\nvicti"
-    "m_odf\030\007 \001(\t\"\201\001\n\rPickupPowerup\022\014\n\004tick\030\001 "
-    "\001(\r\022\016\n\006picker\030\002 \001(\004\022\023\n\013picker_team\030\003 \001(\r"
-    "\022\022\n\npicker_odf\030\004 \001(\t\022\024\n\014powerup_team\030\005 \001"
-    "(\r\022\023\n\013powerup_odf\030\006 \001(\t\"\273\001\n\nBuildEvent\022\014"
-    "\n\004tick\030\001 \001(\r\022\'\n\004type\030\002 \001(\0162\031.statsgate.B"
-    "uildEventType\022)\n\010producer\030\003 \001(\0162\027.statsg"
-    "ate.ProducerType\022\017\n\007teamnum\030\004 \001(\r\022\021\n\tbui"
-    "ld_odf\030\005 \001(\t\022\'\n\016build_position\030\006 \001(\0132\017.s"
-    "tatsgate.Vec3\"O\n\013PoolPlanted\022\014\n\004tick\030\001 \001"
-    "(\r\022\017\n\007teamnum\030\002 \001(\r\022!\n\010position\030\003 \001(\0132\017."
-    "statsgate.Vec3\"\312\001\n\013MagnetForce\022\014\n\004tick\030\001"
-    " \001(\r\022\024\n\014magnet_owner\030\002 \001(\004\022\023\n\013magnet_tea"
-    "m\030\003 \001(\r\022\022\n\nmagnet_odf\030\004 \001(\t\022.\n\rmagnet_ta"
-    "rget\030\005 \001(\0162\027.statsgate.MagnetTarget\022\025\n\rm"
-    "agnet_handle\030\006 \001(\r\022\023\n\013target_team\030\007 \001(\r\022"
-    "\022\n\ntarget_odf\030\010 \001(\t\"\373\003\n\tStatEvent\022,\n\013bul"
-    "let_init\030\001 \001(\0132\025.statsgate.BulletInitH\000\022"
-    "*\n\nbullet_hit\030\002 \001(\0132\024.statsgate.BulletHi"
-    "tH\000\022.\n\014damage_dealt\030\003 \001(\0132\026.statsgate.Da"
-    "mageDealtH\000\022,\n\013update_tick\030\005 \001(\0132\025.stats"
-    "gate.UpdateTickH\000\0222\n\016unit_destroyed\030\006 \001("
-    "\0132\030.statsgate.UnitDestroyedH\000\022,\n\013unit_sn"
-    "iped\030\007 \001(\0132\025.statsgate.UnitSnipedH\000\0222\n\016p"
-    "ickup_powerup\030\010 \001(\0132\030.statsgate.PickupPo"
-    "werupH\000\022,\n\013build_event\030\t \001(\0132\025.statsgate"
-    ".BuildEventH\000\022.\n\014pool_planted\030\n \001(\0132\026.st"
-    "atsgate.PoolPlantedH\000\022.\n\014magnet_force\030\013 "
-    "\001(\0132\026.statsgate.MagnetForceH\000B\014\n\nevent_t"
-    "ypeJ\004\010\004\020\005\"f\n\021ClientStatSession\022%\n\006header"
-    "\030\001 \001(\0132\025.statsgate.StatHeader\022*\n\014event_s"
-    "tream\030\002 \003(\0132\024.statsgate.StatEvent*L\n\004Rac"
-    "e\022\024\n\020RACE_UNSPECIFIED\020\000\022\r\n\tRACE_ISDF\020\001\022\016"
-    "\n\nRACE_SCION\020\002\022\017\n\013RACE_HADEAN\020\003*\202\001\n\007Outc"
-    "ome\022\027\n\023OUTCOME_UNSPECIFIED\020\000\022\026\n\021OUTCOME_"
-    "TEAM1_WIN\020\350\007\022\026\n\021OUTCOME_TEAM2_WIN\020\351\007\022\021\n\014"
-    "OUTCOME_DRAW\020\352\007\022\033\n\026OUTCOME_GAME_CANCELLE"
-    "D\020\353\007*\211\001\n\014RecorderType\022\035\n\031RECORDER_TYPE_U"
-    "NSPECIFIED\020\000\022\036\n\032RECORDER_TYPE_FREESTANDI"
-    "NG\020\001\022\034\n\030RECORDER_TYPE_HOSTED_DLL\020\002\022\034\n\030RE"
-    "CORDER_TYPE_HOSTED_LUA\020\003*\215\001\n\013ScrapStatus"
-    "\022\034\n\030SCRAP_STATUS_UNSPECIFIED\020\000\022\026\n\022SCRAP_"
-    "STATUS_GREEN\020\001\022\027\n\023SCRAP_STATUS_YELLOW\020\002\022"
-    "\024\n\020SCRAP_STATUS_RED\020\003\022\031\n\025SCRAP_STATUS_PA"
-    "RALLEL\020\004*\207\001\n\016BuildEventType\022 \n\034BUILD_EVE"
-    "NT_TYPE_UNSPECIFIED\020\000\022\032\n\026BUILD_EVENT_TYP"
-    "E_QUEUE\020\001\022\033\n\027BUILD_EVENT_TYPE_CANCEL\020\002\022\032"
-    "\n\026BUILD_EVENT_TYPE_BUILD\020\003*\201\001\n\014ProducerT"
-    "ype\022\035\n\031PRODUCER_TYPE_UNSPECIFIED\020\000\022\031\n\025PR"
-    "ODUCER_TYPE_FACTORY\020\001\022\035\n\031PRODUCER_TYPE_C"
-    "ONSTRUCTOR\020\002\022\030\n\024PRODUCER_TYPE_ARMORY\020\003*h"
-    "\n\014MagnetTarget\022\035\n\031MAGNET_TARGET_UNSPECIF"
-    "IED\020\000\022\035\n\031MAGNET_TARGET_GAME_OBJECT\020\001\022\032\n\026"
-    "MAGNET_TARGET_ORDNANCE\020\002b\010editionsp\350\007"
+    "r_team\030\003 \001(\005\022\023\n\013shooter_odf\030\004 \001(\t\022\026\n\016sho"
+    "oter_handle\030\n \001(\r\022\016\n\006victim\030\005 \001(\004\022\023\n\013vic"
+    "tim_team\030\006 \001(\005\022\022\n\nvictim_odf\030\007 \001(\t\022\025\n\rvi"
+    "ctim_handle\030\013 \001(\r\022\024\n\014ordnance_odf\030\010 \001(\t\022"
+    "\016\n\006amount\030\t \001(\002\"\264\001\n\013PlayerState\022\016\n\006playe"
+    "r\030\001 \001(\004\022!\n\010position\030\002 \001(\0132\017.statsgate.Ve"
+    "c3\022\r\n\005speed\030\003 \001(\002\022\016\n\006health\030\004 \001(\002\022\014\n\004amm"
+    "o\030\005 \001(\002\022\013\n\003odf\030\006 \001(\t\022\022\n\nhas_target\030\007 \001(\010"
+    "\022$\n\013orientation\030\t \001(\0132\017.statsgate.Quat\"}"
+    "\n\007AIState\022\013\n\003odf\030\001 \001(\t\022!\n\010position\030\002 \001(\013"
+    "2\017.statsgate.Vec3\022$\n\013orientation\030\003 \001(\0132\017"
+    ".statsgate.Quat\022\016\n\006health\030\004 \001(\002\022\014\n\004ammo\030"
+    "\005 \001(\002\"\222\001\n\rResourceState\022\025\n\rcurrent_scrap"
+    "\030\001 \001(\r\022\021\n\tmax_scrap\030\002 \001(\r\022,\n\014scrap_statu"
+    "s\030\003 \001(\0162\026.statsgate.ScrapStatus\022\022\n\npool_"
+    "count\030\004 \001(\r\022\025\n\rupgrade_count\030\005 \001(\r\"\251\001\n\nU"
+    "pdateTick\022\014\n\004tick\030\001 \001(\r\022\'\n\007players\030\002 \003(\013"
+    "2\026.statsgate.PlayerState\0221\n\017team1_resour"
+    "ces\030\003 \001(\0132\030.statsgate.ResourceState\0221\n\017t"
+    "eam2_resources\030\004 \001(\0132\030.statsgate.Resourc"
+    "eState\"\275\001\n\rUnitDestroyed\022\014\n\004tick\030\001 \001(\r\022\016"
+    "\n\006killer\030\002 \001(\004\022\023\n\013killer_team\030\003 \001(\r\022\022\n\nk"
+    "iller_odf\030\004 \001(\t\022\025\n\rkiller_handle\030\010 \001(\r\022\016"
+    "\n\006victim\030\005 \001(\004\022\023\n\013victim_team\030\006 \001(\r\022\022\n\nv"
+    "ictim_odf\030\007 \001(\t\022\025\n\rvictim_handle\030\t \001(\r\"\217"
+    "\001\n\nUnitSniped\022\014\n\004tick\030\001 \001(\r\022\017\n\007shooter\030\002"
+    " \001(\004\022\024\n\014shooter_team\030\003 \001(\r\022\023\n\013shooter_od"
+    "f\030\004 \001(\t\022\016\n\006victim\030\005 \001(\004\022\023\n\013victim_team\030\006"
+    " \001(\r\022\022\n\nvictim_odf\030\007 \001(\t\"\201\001\n\rPickupPower"
+    "up\022\014\n\004tick\030\001 \001(\r\022\016\n\006picker\030\002 \001(\004\022\023\n\013pick"
+    "er_team\030\003 \001(\r\022\022\n\npicker_odf\030\004 \001(\t\022\024\n\014pow"
+    "erup_team\030\005 \001(\r\022\023\n\013powerup_odf\030\006 \001(\t\"\321\001\n"
+    "\nBuildEvent\022\014\n\004tick\030\001 \001(\r\022\'\n\004type\030\002 \001(\0162"
+    "\031.statsgate.BuildEventType\022)\n\010producer\030\003"
+    " \001(\0162\027.statsgate.ProducerType\022\017\n\007teamnum"
+    "\030\004 \001(\r\022\021\n\tbuild_odf\030\005 \001(\t\022\'\n\016build_posit"
+    "ion\030\006 \001(\0132\017.statsgate.Vec3\022\024\n\014build_hand"
+    "le\030\007 \001(\r\"O\n\013PoolPlanted\022\014\n\004tick\030\001 \001(\r\022\017\n"
+    "\007teamnum\030\002 \001(\r\022!\n\010position\030\003 \001(\0132\017.stats"
+    "gate.Vec3\"\312\001\n\013MagnetForce\022\014\n\004tick\030\001 \001(\r\022"
+    "\024\n\014magnet_owner\030\002 \001(\004\022\023\n\013magnet_team\030\003 \001"
+    "(\r\022\022\n\nmagnet_odf\030\004 \001(\t\022.\n\rmagnet_target\030"
+    "\005 \001(\0162\027.statsgate.MagnetTarget\022\025\n\rmagnet"
+    "_handle\030\006 \001(\r\022\023\n\013target_team\030\007 \001(\r\022\022\n\nta"
+    "rget_odf\030\010 \001(\t\"\373\003\n\tStatEvent\022,\n\013bullet_i"
+    "nit\030\001 \001(\0132\025.statsgate.BulletInitH\000\022*\n\nbu"
+    "llet_hit\030\002 \001(\0132\024.statsgate.BulletHitH\000\022."
+    "\n\014damage_dealt\030\003 \001(\0132\026.statsgate.DamageD"
+    "ealtH\000\022,\n\013update_tick\030\005 \001(\0132\025.statsgate."
+    "UpdateTickH\000\0222\n\016unit_destroyed\030\006 \001(\0132\030.s"
+    "tatsgate.UnitDestroyedH\000\022,\n\013unit_sniped\030"
+    "\007 \001(\0132\025.statsgate.UnitSnipedH\000\0222\n\016pickup"
+    "_powerup\030\010 \001(\0132\030.statsgate.PickupPowerup"
+    "H\000\022,\n\013build_event\030\t \001(\0132\025.statsgate.Buil"
+    "dEventH\000\022.\n\014pool_planted\030\n \001(\0132\026.statsga"
+    "te.PoolPlantedH\000\022.\n\014magnet_force\030\013 \001(\0132\026"
+    ".statsgate.MagnetForceH\000B\014\n\nevent_typeJ\004"
+    "\010\004\020\005\"f\n\021ClientStatSession\022%\n\006header\030\001 \001("
+    "\0132\025.statsgate.StatHeader\022*\n\014event_stream"
+    "\030\002 \003(\0132\024.statsgate.StatEvent*L\n\004Race\022\024\n\020"
+    "RACE_UNSPECIFIED\020\000\022\r\n\tRACE_ISDF\020\001\022\016\n\nRAC"
+    "E_SCION\020\002\022\017\n\013RACE_HADEAN\020\003*\202\001\n\007Outcome\022\027"
+    "\n\023OUTCOME_UNSPECIFIED\020\000\022\026\n\021OUTCOME_TEAM1"
+    "_WIN\020\350\007\022\026\n\021OUTCOME_TEAM2_WIN\020\351\007\022\021\n\014OUTCO"
+    "ME_DRAW\020\352\007\022\033\n\026OUTCOME_GAME_CANCELLED\020\353\007*"
+    "\211\001\n\014RecorderType\022\035\n\031RECORDER_TYPE_UNSPEC"
+    "IFIED\020\000\022\036\n\032RECORDER_TYPE_FREESTANDING\020\001\022"
+    "\034\n\030RECORDER_TYPE_HOSTED_DLL\020\002\022\034\n\030RECORDE"
+    "R_TYPE_HOSTED_LUA\020\003*\215\001\n\013ScrapStatus\022\034\n\030S"
+    "CRAP_STATUS_UNSPECIFIED\020\000\022\026\n\022SCRAP_STATU"
+    "S_GREEN\020\001\022\027\n\023SCRAP_STATUS_YELLOW\020\002\022\024\n\020SC"
+    "RAP_STATUS_RED\020\003\022\031\n\025SCRAP_STATUS_PARALLE"
+    "L\020\004*\207\001\n\016BuildEventType\022 \n\034BUILD_EVENT_TY"
+    "PE_UNSPECIFIED\020\000\022\032\n\026BUILD_EVENT_TYPE_QUE"
+    "UE\020\001\022\033\n\027BUILD_EVENT_TYPE_CANCEL\020\002\022\032\n\026BUI"
+    "LD_EVENT_TYPE_BUILD\020\003*\201\001\n\014ProducerType\022\035"
+    "\n\031PRODUCER_TYPE_UNSPECIFIED\020\000\022\031\n\025PRODUCE"
+    "R_TYPE_FACTORY\020\001\022\035\n\031PRODUCER_TYPE_CONSTR"
+    "UCTOR\020\002\022\030\n\024PRODUCER_TYPE_ARMORY\020\003*h\n\014Mag"
+    "netTarget\022\035\n\031MAGNET_TARGET_UNSPECIFIED\020\000"
+    "\022\035\n\031MAGNET_TARGET_GAME_OBJECT\020\001\022\032\n\026MAGNE"
+    "T_TARGET_ORDNANCE\020\002b\010editionsp\350\007"
 };
 static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
     descriptor_table_statsgate_2eproto_deps[1] = {
@@ -1091,7 +1109,7 @@ static ::absl::once_flag descriptor_table_statsgate_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_statsgate_2eproto = {
     false,
     false,
-    4237,
+    4352,
     descriptor_table_protodef_statsgate_2eproto,
     "statsgate.proto",
     &descriptor_table_statsgate_2eproto_once,
@@ -3628,9 +3646,9 @@ DamageDealt::DamageDealt(
                offsetof(Impl_, shooter_),
            reinterpret_cast<const char*>(&from._impl_) +
                offsetof(Impl_, shooter_),
-           offsetof(Impl_, amount_) -
+           offsetof(Impl_, victim_handle_) -
                offsetof(Impl_, shooter_) +
-               sizeof(Impl_::amount_));
+               sizeof(Impl_::victim_handle_));
 
   // @@protoc_insertion_point(copy_constructor:statsgate.DamageDealt)
 }
@@ -3647,9 +3665,9 @@ inline void DamageDealt::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   ::memset(reinterpret_cast<char*>(&_impl_) +
                offsetof(Impl_, shooter_),
            0,
-           offsetof(Impl_, amount_) -
+           offsetof(Impl_, victim_handle_) -
                offsetof(Impl_, shooter_) +
-               sizeof(Impl_::amount_));
+               sizeof(Impl_::victim_handle_));
 }
 DamageDealt::~DamageDealt() {
   // @@protoc_insertion_point(destructor:statsgate.DamageDealt)
@@ -3711,16 +3729,16 @@ DamageDealt::GetClassData() const {
   return DamageDealt_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 9, 0, 71, 2>
+const ::_pbi::TcParseTable<4, 11, 0, 71, 2>
 DamageDealt::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_._has_bits_),
     0, // no _extensions_
-    9, 120,  // max_field_number, fast_idx_mask
+    11, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294966784,  // skipmap
+    4294965248,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    9,  // num_field_entries
+    11,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     DamageDealt_class_data_.base(),
@@ -3767,8 +3785,14 @@ DamageDealt::_table_ = {
     {::_pbi::TcParser::FastF32S1,
      {77, 8, 0,
       PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.amount_)}},
-    {::_pbi::TcParser::MiniParse, {}},
-    {::_pbi::TcParser::MiniParse, {}},
+    // uint32 shooter_handle = 10;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DamageDealt, _impl_.shooter_handle_), 9>(),
+     {80, 9, 0,
+      PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.shooter_handle_)}},
+    // uint32 victim_handle = 11;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(DamageDealt, _impl_.victim_handle_), 10>(),
+     {88, 10, 0,
+      PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.victim_handle_)}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
@@ -3794,6 +3818,10 @@ DamageDealt::_table_ = {
     {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.ordnance_odf_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // float amount = 9;
     {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.amount_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kFloat)},
+    // uint32 shooter_handle = 10;
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.shooter_handle_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint32 victim_handle = 11;
+    {PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.victim_handle_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
   }},
   // no aux_entries
   {{
@@ -3828,7 +3856,11 @@ PROTOBUF_NOINLINE void DamageDealt::Clear() {
         reinterpret_cast<char*>(&_impl_.victim_team_) -
         reinterpret_cast<char*>(&_impl_.shooter_)) + sizeof(_impl_.victim_team_));
   }
-  _impl_.amount_ = 0;
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+    ::memset(&_impl_.amount_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.victim_handle_) -
+        reinterpret_cast<char*>(&_impl_.amount_)) + sizeof(_impl_.victim_handle_));
+  }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -3918,6 +3950,20 @@ PROTOBUF_NOINLINE void DamageDealt::Clear() {
         9, this_._internal_amount(), target);
   }
 
+  // uint32 shooter_handle = 10;
+  if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        10, this_._internal_shooter_handle(), target);
+  }
+
+  // uint32 victim_handle = 11;
+  if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        11, this_._internal_victim_handle(), target);
+  }
+
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -3986,6 +4032,18 @@ PROTOBUF_NOINLINE void DamageDealt::Clear() {
           this_._internal_victim_team());
     }
   }
+  if (BatchCheckHasBit(cached_has_bits, 0x00000600U)) {
+    // uint32 shooter_handle = 10;
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_shooter_handle());
+    }
+    // uint32 victim_handle = 11;
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_victim_handle());
+    }
+  }
   return this_.MaybeComputeUnknownFieldsSize(total_size,
                                              &this_._impl_._cached_size_);
 }
@@ -4030,8 +4088,16 @@ void DamageDealt::MergeImpl(::google::protobuf::MessageLite& to_msg,
       _this->_impl_.victim_team_ = from._impl_.victim_team_;
     }
   }
-  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
-    _this->_impl_.amount_ = from._impl_.amount_;
+  if (BatchCheckHasBit(cached_has_bits, 0x00000700U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      _this->_impl_.amount_ = from._impl_.amount_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000200U)) {
+      _this->_impl_.shooter_handle_ = from._impl_.shooter_handle_;
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000400U)) {
+      _this->_impl_.victim_handle_ = from._impl_.victim_handle_;
+    }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
@@ -4056,8 +4122,8 @@ void DamageDealt::InternalSwap(DamageDealt* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.victim_odf_, &other->_impl_.victim_odf_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.ordnance_odf_, &other->_impl_.ordnance_odf_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.amount_)
-      + sizeof(DamageDealt::_impl_.amount_)
+      PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.victim_handle_)
+      + sizeof(DamageDealt::_impl_.victim_handle_)
       - PROTOBUF_FIELD_OFFSET(DamageDealt, _impl_.shooter_)>(
           reinterpret_cast<char*>(&_impl_.shooter_),
           reinterpret_cast<char*>(&other->_impl_.shooter_));
@@ -5717,9 +5783,9 @@ UnitDestroyed::UnitDestroyed(
                offsetof(Impl_, killer_),
            reinterpret_cast<const char*>(&from._impl_) +
                offsetof(Impl_, killer_),
-           offsetof(Impl_, victim_team_) -
+           offsetof(Impl_, victim_handle_) -
                offsetof(Impl_, killer_) +
-               sizeof(Impl_::victim_team_));
+               sizeof(Impl_::victim_handle_));
 
   // @@protoc_insertion_point(copy_constructor:statsgate.UnitDestroyed)
 }
@@ -5735,9 +5801,9 @@ inline void UnitDestroyed::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   ::memset(reinterpret_cast<char*>(&_impl_) +
                offsetof(Impl_, killer_),
            0,
-           offsetof(Impl_, victim_team_) -
+           offsetof(Impl_, victim_handle_) -
                offsetof(Impl_, killer_) +
-               sizeof(Impl_::victim_team_));
+               sizeof(Impl_::victim_handle_));
 }
 UnitDestroyed::~UnitDestroyed() {
   // @@protoc_insertion_point(destructor:statsgate.UnitDestroyed)
@@ -5798,16 +5864,16 @@ UnitDestroyed::GetClassData() const {
   return UnitDestroyed_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 7, 0, 52, 2>
+const ::_pbi::TcParseTable<4, 9, 0, 60, 2>
 UnitDestroyed::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_._has_bits_),
     0, // no _extensions_
-    7, 56,  // max_field_number, fast_idx_mask
+    9, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967168,  // skipmap
+    4294966784,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    7,  // num_field_entries
+    9,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     UnitDestroyed_class_data_.base(),
@@ -5846,6 +5912,20 @@ UnitDestroyed::_table_ = {
     {::_pbi::TcParser::FastUS1,
      {58, 1, 0,
       PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_.victim_odf_)}},
+    // uint32 killer_handle = 8;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(UnitDestroyed, _impl_.killer_handle_), 7>(),
+     {64, 7, 0,
+      PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_.killer_handle_)}},
+    // uint32 victim_handle = 9;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(UnitDestroyed, _impl_.victim_handle_), 8>(),
+     {72, 8, 0,
+      PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_.victim_handle_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
@@ -5863,10 +5943,14 @@ UnitDestroyed::_table_ = {
     {PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_.victim_team_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
     // string victim_odf = 7;
     {PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_.victim_odf_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // uint32 killer_handle = 8;
+    {PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_.killer_handle_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
+    // uint32 victim_handle = 9;
+    {PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_.victim_handle_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
   }},
   // no aux_entries
   {{
-    "\27\0\0\0\12\0\0\12"
+    "\27\0\0\0\12\0\0\12\0\0\0\0\0\0\0\0"
     "statsgate.UnitDestroyed"
     "killer_odf"
     "victim_odf"
@@ -5888,11 +5972,12 @@ PROTOBUF_NOINLINE void UnitDestroyed::Clear() {
       _impl_.victim_odf_.ClearNonDefaultToEmpty();
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000007cU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x000000fcU)) {
     ::memset(&_impl_.killer_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.victim_team_) -
-        reinterpret_cast<char*>(&_impl_.killer_)) + sizeof(_impl_.victim_team_));
+        reinterpret_cast<char*>(&_impl_.killer_handle_) -
+        reinterpret_cast<char*>(&_impl_.killer_)) + sizeof(_impl_.killer_handle_));
   }
+  _impl_.victim_handle_ = 0u;
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -5967,6 +6052,20 @@ PROTOBUF_NOINLINE void UnitDestroyed::Clear() {
     target = stream->WriteStringMaybeAliased(7, _s, target);
   }
 
+  // uint32 killer_handle = 8;
+  if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        8, this_._internal_killer_handle(), target);
+  }
+
+  // uint32 victim_handle = 9;
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        9, this_._internal_victim_handle(), target);
+  }
+
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -5992,7 +6091,7 @@ PROTOBUF_NOINLINE void UnitDestroyed::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
     // string killer_odf = 4;
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -6028,6 +6127,18 @@ PROTOBUF_NOINLINE void UnitDestroyed::Clear() {
       total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
           this_._internal_victim_team());
     }
+    // uint32 killer_handle = 8;
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_killer_handle());
+    }
+  }
+   {
+    // uint32 victim_handle = 9;
+    if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_victim_handle());
+    }
   }
   return this_.MaybeComputeUnknownFieldsSize(total_size,
                                              &this_._impl_._cached_size_);
@@ -6047,7 +6158,7 @@ void UnitDestroyed::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x000000ffU)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       _this->_internal_set_killer_odf(from._internal_killer_odf());
     }
@@ -6069,6 +6180,12 @@ void UnitDestroyed::MergeImpl(::google::protobuf::MessageLite& to_msg,
     if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       _this->_impl_.victim_team_ = from._impl_.victim_team_;
     }
+    if (CheckHasBit(cached_has_bits, 0x00000080U)) {
+      _this->_impl_.killer_handle_ = from._impl_.killer_handle_;
+    }
+  }
+  if (CheckHasBit(cached_has_bits, 0x00000100U)) {
+    _this->_impl_.victim_handle_ = from._impl_.victim_handle_;
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
@@ -6092,8 +6209,8 @@ void UnitDestroyed::InternalSwap(UnitDestroyed* PROTOBUF_RESTRICT PROTOBUF_NONNU
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.killer_odf_, &other->_impl_.killer_odf_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.victim_odf_, &other->_impl_.victim_odf_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_.victim_team_)
-      + sizeof(UnitDestroyed::_impl_.victim_team_)
+      PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_.victim_handle_)
+      + sizeof(UnitDestroyed::_impl_.victim_handle_)
       - PROTOBUF_FIELD_OFFSET(UnitDestroyed, _impl_.killer_)>(
           reinterpret_cast<char*>(&_impl_.killer_),
           reinterpret_cast<char*>(&other->_impl_.killer_));
@@ -6990,9 +7107,9 @@ BuildEvent::BuildEvent(
                offsetof(Impl_, tick_),
            reinterpret_cast<const char*>(&from._impl_) +
                offsetof(Impl_, tick_),
-           offsetof(Impl_, teamnum_) -
+           offsetof(Impl_, build_handle_) -
                offsetof(Impl_, tick_) +
-               sizeof(Impl_::teamnum_));
+               sizeof(Impl_::build_handle_));
 
   // @@protoc_insertion_point(copy_constructor:statsgate.BuildEvent)
 }
@@ -7007,9 +7124,9 @@ inline void BuildEvent::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   ::memset(reinterpret_cast<char*>(&_impl_) +
                offsetof(Impl_, build_position_),
            0,
-           offsetof(Impl_, teamnum_) -
+           offsetof(Impl_, build_handle_) -
                offsetof(Impl_, build_position_) +
-               sizeof(Impl_::teamnum_));
+               sizeof(Impl_::build_handle_));
 }
 BuildEvent::~BuildEvent() {
   // @@protoc_insertion_point(destructor:statsgate.BuildEvent)
@@ -7070,16 +7187,16 @@ BuildEvent::GetClassData() const {
   return BuildEvent_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 6, 1, 38, 2>
+const ::_pbi::TcParseTable<3, 7, 1, 38, 2>
 BuildEvent::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_._has_bits_),
     0, // no _extensions_
-    6, 56,  // max_field_number, fast_idx_mask
+    7, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967232,  // skipmap
+    4294967168,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    6,  // num_field_entries
+    7,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     BuildEvent_class_data_.base(),
@@ -7114,7 +7231,10 @@ BuildEvent::_table_ = {
     {::_pbi::TcParser::FastMtS1,
      {50, 1, 0,
       PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.build_position_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+    // uint32 build_handle = 7;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(BuildEvent, _impl_.build_handle_), 6>(),
+     {56, 6, 0,
+      PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.build_handle_)}},
   }}, {{
     65535, 65535
   }}, {{
@@ -7130,6 +7250,8 @@ BuildEvent::_table_ = {
     {PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.build_odf_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // .statsgate.Vec3 build_position = 6;
     {PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.build_position_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // uint32 build_handle = 7;
+    {PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.build_handle_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt32)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::statsgate::Vec3>()},
@@ -7157,10 +7279,10 @@ PROTOBUF_NOINLINE void BuildEvent::Clear() {
       _impl_.build_position_->Clear();
     }
   }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003cU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007cU)) {
     ::memset(&_impl_.tick_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.teamnum_) -
-        reinterpret_cast<char*>(&_impl_.tick_)) + sizeof(_impl_.teamnum_));
+        reinterpret_cast<char*>(&_impl_.build_handle_) -
+        reinterpret_cast<char*>(&_impl_.tick_)) + sizeof(_impl_.build_handle_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -7228,6 +7350,13 @@ PROTOBUF_NOINLINE void BuildEvent::Clear() {
         stream);
   }
 
+  // uint32 build_handle = 7;
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        7, this_._internal_build_handle(), target);
+  }
+
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -7253,7 +7382,7 @@ PROTOBUF_NOINLINE void BuildEvent::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
     // string build_odf = 5;
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -7284,6 +7413,11 @@ PROTOBUF_NOINLINE void BuildEvent::Clear() {
       total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
           this_._internal_teamnum());
     }
+    // uint32 build_handle = 7;
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+          this_._internal_build_handle());
+    }
   }
   return this_.MaybeComputeUnknownFieldsSize(total_size,
                                              &this_._impl_._cached_size_);
@@ -7304,7 +7438,7 @@ void BuildEvent::MergeImpl(::google::protobuf::MessageLite& to_msg,
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       _this->_internal_set_build_odf(from._internal_build_odf());
     }
@@ -7328,6 +7462,9 @@ void BuildEvent::MergeImpl(::google::protobuf::MessageLite& to_msg,
     if (CheckHasBit(cached_has_bits, 0x00000020U)) {
       _this->_impl_.teamnum_ = from._impl_.teamnum_;
     }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
+      _this->_impl_.build_handle_ = from._impl_.build_handle_;
+    }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
@@ -7350,8 +7487,8 @@ void BuildEvent::InternalSwap(BuildEvent* PROTOBUF_RESTRICT PROTOBUF_NONNULL oth
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.build_odf_, &other->_impl_.build_odf_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.teamnum_)
-      + sizeof(BuildEvent::_impl_.teamnum_)
+      PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.build_handle_)
+      + sizeof(BuildEvent::_impl_.build_handle_)
       - PROTOBUF_FIELD_OFFSET(BuildEvent, _impl_.build_position_)>(
           reinterpret_cast<char*>(&_impl_.build_position_),
           reinterpret_cast<char*>(&other->_impl_.build_position_));

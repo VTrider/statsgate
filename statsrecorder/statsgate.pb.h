@@ -1086,6 +1086,8 @@ class UnitDestroyed final : public ::google::protobuf::Message
     kKillerTeamFieldNumber = 3,
     kVictimFieldNumber = 5,
     kVictimTeamFieldNumber = 6,
+    kKillerHandleFieldNumber = 8,
+    kVictimHandleFieldNumber = 9,
   };
   // string killer_odf = 4;
   bool has_killer_odf() const;
@@ -1174,12 +1176,34 @@ class UnitDestroyed final : public ::google::protobuf::Message
   void _internal_set_victim_team(::uint32_t value);
 
   public:
+  // uint32 killer_handle = 8;
+  bool has_killer_handle() const;
+  void clear_killer_handle() ;
+  ::uint32_t killer_handle() const;
+  void set_killer_handle(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_killer_handle() const;
+  void _internal_set_killer_handle(::uint32_t value);
+
+  public:
+  // uint32 victim_handle = 9;
+  bool has_victim_handle() const;
+  void clear_victim_handle() ;
+  ::uint32_t victim_handle() const;
+  void set_victim_handle(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_victim_handle() const;
+  void _internal_set_victim_handle(::uint32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:statsgate.UnitDestroyed)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 7,
-                                   0, 52,
+  static const ::google::protobuf::internal::TcParseTable<4, 9,
+                                   0, 60,
                                    2>
       _table_;
 
@@ -1207,6 +1231,8 @@ class UnitDestroyed final : public ::google::protobuf::Message
     ::uint32_t killer_team_;
     ::uint64_t victim_;
     ::uint32_t victim_team_;
+    ::uint32_t killer_handle_;
+    ::uint32_t victim_handle_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -2620,6 +2646,8 @@ class DamageDealt final : public ::google::protobuf::Message
     kVictimFieldNumber = 5,
     kVictimTeamFieldNumber = 6,
     kAmountFieldNumber = 9,
+    kShooterHandleFieldNumber = 10,
+    kVictimHandleFieldNumber = 11,
   };
   // string shooter_odf = 4;
   bool has_shooter_odf() const;
@@ -2735,11 +2763,33 @@ class DamageDealt final : public ::google::protobuf::Message
   void _internal_set_amount(float value);
 
   public:
+  // uint32 shooter_handle = 10;
+  bool has_shooter_handle() const;
+  void clear_shooter_handle() ;
+  ::uint32_t shooter_handle() const;
+  void set_shooter_handle(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_shooter_handle() const;
+  void _internal_set_shooter_handle(::uint32_t value);
+
+  public:
+  // uint32 victim_handle = 11;
+  bool has_victim_handle() const;
+  void clear_victim_handle() ;
+  ::uint32_t victim_handle() const;
+  void set_victim_handle(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_victim_handle() const;
+  void _internal_set_victim_handle(::uint32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:statsgate.DamageDealt)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 9,
+  static const ::google::protobuf::internal::TcParseTable<4, 11,
                                    0, 71,
                                    2>
       _table_;
@@ -2770,6 +2820,8 @@ class DamageDealt final : public ::google::protobuf::Message
     ::uint64_t victim_;
     ::int32_t victim_team_;
     float amount_;
+    ::uint32_t shooter_handle_;
+    ::uint32_t victim_handle_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -4399,6 +4451,7 @@ class BuildEvent final : public ::google::protobuf::Message
     kTypeFieldNumber = 2,
     kProducerFieldNumber = 3,
     kTeamnumFieldNumber = 4,
+    kBuildHandleFieldNumber = 7,
   };
   // string build_odf = 5;
   bool has_build_odf() const;
@@ -4475,11 +4528,22 @@ class BuildEvent final : public ::google::protobuf::Message
   void _internal_set_teamnum(::uint32_t value);
 
   public:
+  // uint32 build_handle = 7;
+  bool has_build_handle() const;
+  void clear_build_handle() ;
+  ::uint32_t build_handle() const;
+  void set_build_handle(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_build_handle() const;
+  void _internal_set_build_handle(::uint32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:statsgate.BuildEvent)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 6,
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
                                    1, 38,
                                    2>
       _table_;
@@ -4507,6 +4571,7 @@ class BuildEvent final : public ::google::protobuf::Message
     int type_;
     int producer_;
     ::uint32_t teamnum_;
+    ::uint32_t build_handle_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -7386,6 +7451,35 @@ inline void DamageDealt::set_allocated_shooter_odf(::std::string* PROTOBUF_NULLA
   // @@protoc_insertion_point(field_set_allocated:statsgate.DamageDealt.shooter_odf)
 }
 
+// uint32 shooter_handle = 10;
+inline bool DamageDealt::has_shooter_handle() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000200U);
+  return value;
+}
+inline void DamageDealt::clear_shooter_handle() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.shooter_handle_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000200U);
+}
+inline ::uint32_t DamageDealt::shooter_handle() const {
+  // @@protoc_insertion_point(field_get:statsgate.DamageDealt.shooter_handle)
+  return _internal_shooter_handle();
+}
+inline void DamageDealt::set_shooter_handle(::uint32_t value) {
+  _internal_set_shooter_handle(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000200U);
+  // @@protoc_insertion_point(field_set:statsgate.DamageDealt.shooter_handle)
+}
+inline ::uint32_t DamageDealt::_internal_shooter_handle() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.shooter_handle_;
+}
+inline void DamageDealt::_internal_set_shooter_handle(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.shooter_handle_ = value;
+}
+
 // uint64 victim = 5;
 inline bool DamageDealt::has_victim() const {
   bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
@@ -7511,6 +7605,35 @@ inline void DamageDealt::set_allocated_victim_odf(::std::string* PROTOBUF_NULLAB
     _impl_.victim_odf_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:statsgate.DamageDealt.victim_odf)
+}
+
+// uint32 victim_handle = 11;
+inline bool DamageDealt::has_victim_handle() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000400U);
+  return value;
+}
+inline void DamageDealt::clear_victim_handle() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.victim_handle_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000400U);
+}
+inline ::uint32_t DamageDealt::victim_handle() const {
+  // @@protoc_insertion_point(field_get:statsgate.DamageDealt.victim_handle)
+  return _internal_victim_handle();
+}
+inline void DamageDealt::set_victim_handle(::uint32_t value) {
+  _internal_set_victim_handle(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000400U);
+  // @@protoc_insertion_point(field_set:statsgate.DamageDealt.victim_handle)
+}
+inline ::uint32_t DamageDealt::_internal_victim_handle() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.victim_handle_;
+}
+inline void DamageDealt::_internal_set_victim_handle(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.victim_handle_ = value;
 }
 
 // string ordnance_odf = 8;
@@ -8952,6 +9075,35 @@ inline void UnitDestroyed::set_allocated_killer_odf(::std::string* PROTOBUF_NULL
   // @@protoc_insertion_point(field_set_allocated:statsgate.UnitDestroyed.killer_odf)
 }
 
+// uint32 killer_handle = 8;
+inline bool UnitDestroyed::has_killer_handle() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000080U);
+  return value;
+}
+inline void UnitDestroyed::clear_killer_handle() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.killer_handle_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000080U);
+}
+inline ::uint32_t UnitDestroyed::killer_handle() const {
+  // @@protoc_insertion_point(field_get:statsgate.UnitDestroyed.killer_handle)
+  return _internal_killer_handle();
+}
+inline void UnitDestroyed::set_killer_handle(::uint32_t value) {
+  _internal_set_killer_handle(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
+  // @@protoc_insertion_point(field_set:statsgate.UnitDestroyed.killer_handle)
+}
+inline ::uint32_t UnitDestroyed::_internal_killer_handle() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.killer_handle_;
+}
+inline void UnitDestroyed::_internal_set_killer_handle(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.killer_handle_ = value;
+}
+
 // uint64 victim = 5;
 inline bool UnitDestroyed::has_victim() const {
   bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000020U);
@@ -9077,6 +9229,35 @@ inline void UnitDestroyed::set_allocated_victim_odf(::std::string* PROTOBUF_NULL
     _impl_.victim_odf_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:statsgate.UnitDestroyed.victim_odf)
+}
+
+// uint32 victim_handle = 9;
+inline bool UnitDestroyed::has_victim_handle() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000100U);
+  return value;
+}
+inline void UnitDestroyed::clear_victim_handle() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.victim_handle_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000100U);
+}
+inline ::uint32_t UnitDestroyed::victim_handle() const {
+  // @@protoc_insertion_point(field_get:statsgate.UnitDestroyed.victim_handle)
+  return _internal_victim_handle();
+}
+inline void UnitDestroyed::set_victim_handle(::uint32_t value) {
+  _internal_set_victim_handle(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000100U);
+  // @@protoc_insertion_point(field_set:statsgate.UnitDestroyed.victim_handle)
+}
+inline ::uint32_t UnitDestroyed::_internal_victim_handle() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.victim_handle_;
+}
+inline void UnitDestroyed::_internal_set_victim_handle(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.victim_handle_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -9910,6 +10091,35 @@ inline void BuildEvent::set_allocated_build_position(::statsgate::Vec3* PROTOBUF
 
   _impl_.build_position_ = reinterpret_cast<::statsgate::Vec3*>(value);
   // @@protoc_insertion_point(field_set_allocated:statsgate.BuildEvent.build_position)
+}
+
+// uint32 build_handle = 7;
+inline bool BuildEvent::has_build_handle() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
+  return value;
+}
+inline void BuildEvent::clear_build_handle() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.build_handle_ = 0u;
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000040U);
+}
+inline ::uint32_t BuildEvent::build_handle() const {
+  // @@protoc_insertion_point(field_get:statsgate.BuildEvent.build_handle)
+  return _internal_build_handle();
+}
+inline void BuildEvent::set_build_handle(::uint32_t value) {
+  _internal_set_build_handle(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  // @@protoc_insertion_point(field_set:statsgate.BuildEvent.build_handle)
+}
+inline ::uint32_t BuildEvent::_internal_build_handle() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.build_handle_;
+}
+inline void BuildEvent::_internal_set_build_handle(::uint32_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.build_handle_ = value;
 }
 
 // -------------------------------------------------------------------

@@ -264,11 +264,13 @@ namespace statsgate
 			unit->set_killer(*killer);
 		unit->set_killer_team(killer_team);
 		unit->set_killer_odf(std::move(killer_odf));
+        unit->set_killer_handle(KillersHandle);
 
 		if (auto victim = is_player(DeadObjectHandle))
 			unit->set_victim(*victim);
 		unit->set_victim_team(GetTeamNum(DeadObjectHandle));
 		unit->set_victim_odf(std::move(victim_odf));
+        unit->set_victim_handle(DeadObjectHandle);
 	}
 
 	void stat_client::record_bullet_hit(Handle shooterHandle, Handle victimHandle, [[maybe_unused]] int ordnanceTeam, const char* pOrdnanceODF)
@@ -373,12 +375,14 @@ namespace statsgate
 
 		damage->set_shooter_team(GetTeamNum(dmg.owner));
 		damage->set_shooter_odf(get_odf(dmg.owner));
+        damage->set_shooter_handle(dmg.owner);
 
 		if (auto victim = is_player(h))
 			damage->set_victim(*victim);
 
 		damage->set_victim_team(GetTeamNum(h));
 		damage->set_victim_odf(get_odf(h));
+        damage->set_victim_handle(h);
 
 		if (pContext) // pContext can be null if the damage is water and some other weird stuff
 			damage->set_ordnance_odf(pContext);
@@ -414,6 +418,7 @@ namespace statsgate
 			message_pos.set_y(pos.y);
 			message_pos.set_z(pos.z);
 			*build_event->mutable_build_position() = message_pos;
+            build_event->set_build_handle(buildItem);
 		}
 	}
 
