@@ -242,6 +242,7 @@ message BuildEvent {
   string build_odf = 5;
   Vec3 build_position = 6; // Only defined for BUILD events
   uint32 build_handle = 7; // Only defined for BUILD events
+  Quat build_orientation = 8;
 }
 
 message PoolPlanted {

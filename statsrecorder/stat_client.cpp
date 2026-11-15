@@ -4,6 +4,9 @@
 #include "command.h"
 
 #include <ExtraUtils.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 #include <google/protobuf/stubs/common.h>
 #include <google/protobuf/util/time_util.h>
 #include <google/protobuf/util/json_util.h>
@@ -419,6 +422,22 @@ namespace statsgate
 			message_pos.set_z(pos.z);
 			*build_event->mutable_build_position() = message_pos;
             build_event->set_build_handle(buildItem);
+
+            Matrix m;
+            GetPosition(buildItem, m);
+            glm::mat3 mat(m.right.x, m.right.y, m.right.z, 
+                          m.up.x, m.up.y, m.up.z, 
+                          m.front.x, m.front.y, m.front.z
+            );
+            glm::quat q(mat);
+
+            statsgate::Quat mq;
+            mq.set_x(q.x);
+            mq.set_y(q.y);
+            mq.set_z(q.z);
+            mq.set_w(q.w);
+            
+            *build_event->mutable_build_orientation() = mq;
 		}
 	}
 

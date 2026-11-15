@@ -4447,6 +4447,7 @@ class BuildEvent final : public ::google::protobuf::Message
   enum : int {
     kBuildOdfFieldNumber = 5,
     kBuildPositionFieldNumber = 6,
+    kBuildOrientationFieldNumber = 8,
     kTickFieldNumber = 1,
     kTypeFieldNumber = 2,
     kProducerFieldNumber = 3,
@@ -4482,6 +4483,21 @@ class BuildEvent final : public ::google::protobuf::Message
   private:
   const ::statsgate::Vec3& _internal_build_position() const;
   ::statsgate::Vec3* PROTOBUF_NONNULL _internal_mutable_build_position();
+
+  public:
+  // .statsgate.Quat build_orientation = 8;
+  bool has_build_orientation() const;
+  void clear_build_orientation() ;
+  const ::statsgate::Quat& build_orientation() const;
+  [[nodiscard]] ::statsgate::Quat* PROTOBUF_NULLABLE release_build_orientation();
+  ::statsgate::Quat* PROTOBUF_NONNULL mutable_build_orientation();
+  void set_allocated_build_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_build_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value);
+  ::statsgate::Quat* PROTOBUF_NULLABLE unsafe_arena_release_build_orientation();
+
+  private:
+  const ::statsgate::Quat& _internal_build_orientation() const;
+  ::statsgate::Quat* PROTOBUF_NONNULL _internal_mutable_build_orientation();
 
   public:
   // uint32 tick = 1;
@@ -4543,8 +4559,8 @@ class BuildEvent final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 7,
-                                   1, 38,
+  static const ::google::protobuf::internal::TcParseTable<3, 8,
+                                   2, 46,
                                    2>
       _table_;
 
@@ -4567,6 +4583,7 @@ class BuildEvent final : public ::google::protobuf::Message
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr build_odf_;
     ::statsgate::Vec3* PROTOBUF_NULLABLE build_position_;
+    ::statsgate::Quat* PROTOBUF_NULLABLE build_orientation_;
     ::uint32_t tick_;
     int type_;
     int producer_;
@@ -9811,14 +9828,14 @@ inline void PickupPowerup::set_allocated_powerup_odf(::std::string* PROTOBUF_NUL
 
 // uint32 tick = 1;
 inline bool BuildEvent::has_tick() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
   return value;
 }
 inline void BuildEvent::clear_tick() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.tick_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000004U);
+                  0x00000008U);
 }
 inline ::uint32_t BuildEvent::tick() const {
   // @@protoc_insertion_point(field_get:statsgate.BuildEvent.tick)
@@ -9826,7 +9843,7 @@ inline ::uint32_t BuildEvent::tick() const {
 }
 inline void BuildEvent::set_tick(::uint32_t value) {
   _internal_set_tick(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
   // @@protoc_insertion_point(field_set:statsgate.BuildEvent.tick)
 }
 inline ::uint32_t BuildEvent::_internal_tick() const {
@@ -9840,14 +9857,14 @@ inline void BuildEvent::_internal_set_tick(::uint32_t value) {
 
 // .statsgate.BuildEventType type = 2;
 inline bool BuildEvent::has_type() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
   return value;
 }
 inline void BuildEvent::clear_type() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.type_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000008U);
+                  0x00000010U);
 }
 inline ::statsgate::BuildEventType BuildEvent::type() const {
   // @@protoc_insertion_point(field_get:statsgate.BuildEvent.type)
@@ -9855,7 +9872,7 @@ inline ::statsgate::BuildEventType BuildEvent::type() const {
 }
 inline void BuildEvent::set_type(::statsgate::BuildEventType value) {
   _internal_set_type(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
   // @@protoc_insertion_point(field_set:statsgate.BuildEvent.type)
 }
 inline ::statsgate::BuildEventType BuildEvent::_internal_type() const {
@@ -9869,14 +9886,14 @@ inline void BuildEvent::_internal_set_type(::statsgate::BuildEventType value) {
 
 // .statsgate.ProducerType producer = 3;
 inline bool BuildEvent::has_producer() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000020U);
   return value;
 }
 inline void BuildEvent::clear_producer() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.producer_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000010U);
+                  0x00000020U);
 }
 inline ::statsgate::ProducerType BuildEvent::producer() const {
   // @@protoc_insertion_point(field_get:statsgate.BuildEvent.producer)
@@ -9884,7 +9901,7 @@ inline ::statsgate::ProducerType BuildEvent::producer() const {
 }
 inline void BuildEvent::set_producer(::statsgate::ProducerType value) {
   _internal_set_producer(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
   // @@protoc_insertion_point(field_set:statsgate.BuildEvent.producer)
 }
 inline ::statsgate::ProducerType BuildEvent::_internal_producer() const {
@@ -9898,14 +9915,14 @@ inline void BuildEvent::_internal_set_producer(::statsgate::ProducerType value) 
 
 // uint32 teamnum = 4;
 inline bool BuildEvent::has_teamnum() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000020U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
   return value;
 }
 inline void BuildEvent::clear_teamnum() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.teamnum_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000020U);
+                  0x00000040U);
 }
 inline ::uint32_t BuildEvent::teamnum() const {
   // @@protoc_insertion_point(field_get:statsgate.BuildEvent.teamnum)
@@ -9913,7 +9930,7 @@ inline ::uint32_t BuildEvent::teamnum() const {
 }
 inline void BuildEvent::set_teamnum(::uint32_t value) {
   _internal_set_teamnum(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
   // @@protoc_insertion_point(field_set:statsgate.BuildEvent.teamnum)
 }
 inline ::uint32_t BuildEvent::_internal_teamnum() const {
@@ -10095,14 +10112,14 @@ inline void BuildEvent::set_allocated_build_position(::statsgate::Vec3* PROTOBUF
 
 // uint32 build_handle = 7;
 inline bool BuildEvent::has_build_handle() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000040U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000080U);
   return value;
 }
 inline void BuildEvent::clear_build_handle() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.build_handle_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000040U);
+                  0x00000080U);
 }
 inline ::uint32_t BuildEvent::build_handle() const {
   // @@protoc_insertion_point(field_get:statsgate.BuildEvent.build_handle)
@@ -10110,7 +10127,7 @@ inline ::uint32_t BuildEvent::build_handle() const {
 }
 inline void BuildEvent::set_build_handle(::uint32_t value) {
   _internal_set_build_handle(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000080U);
   // @@protoc_insertion_point(field_set:statsgate.BuildEvent.build_handle)
 }
 inline ::uint32_t BuildEvent::_internal_build_handle() const {
@@ -10120,6 +10137,105 @@ inline ::uint32_t BuildEvent::_internal_build_handle() const {
 inline void BuildEvent::_internal_set_build_handle(::uint32_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.build_handle_ = value;
+}
+
+// .statsgate.Quat build_orientation = 8;
+inline bool BuildEvent::has_build_orientation() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  PROTOBUF_ASSUME(!value || _impl_.build_orientation_ != nullptr);
+  return value;
+}
+inline void BuildEvent::clear_build_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.build_orientation_ != nullptr) _impl_.build_orientation_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline const ::statsgate::Quat& BuildEvent::_internal_build_orientation() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::statsgate::Quat* p = _impl_.build_orientation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::statsgate::Quat&>(::statsgate::_Quat_default_instance_);
+}
+inline const ::statsgate::Quat& BuildEvent::build_orientation() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.BuildEvent.build_orientation)
+  return _internal_build_orientation();
+}
+inline void BuildEvent::unsafe_arena_set_allocated_build_orientation(
+    ::statsgate::Quat* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.build_orientation_);
+  }
+  _impl_.build_orientation_ = reinterpret_cast<::statsgate::Quat*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.BuildEvent.build_orientation)
+}
+inline ::statsgate::Quat* PROTOBUF_NULLABLE BuildEvent::release_build_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::Quat* released = _impl_.build_orientation_;
+  _impl_.build_orientation_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::statsgate::Quat* PROTOBUF_NULLABLE BuildEvent::unsafe_arena_release_build_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.BuildEvent.build_orientation)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::Quat* temp = _impl_.build_orientation_;
+  _impl_.build_orientation_ = nullptr;
+  return temp;
+}
+inline ::statsgate::Quat* PROTOBUF_NONNULL BuildEvent::_internal_mutable_build_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.build_orientation_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::statsgate::Quat>(GetArena());
+    _impl_.build_orientation_ = reinterpret_cast<::statsgate::Quat*>(p);
+  }
+  return _impl_.build_orientation_;
+}
+inline ::statsgate::Quat* PROTOBUF_NONNULL BuildEvent::mutable_build_orientation()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::statsgate::Quat* _msg = _internal_mutable_build_orientation();
+  // @@protoc_insertion_point(field_mutable:statsgate.BuildEvent.build_orientation)
+  return _msg;
+}
+inline void BuildEvent::set_allocated_build_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.build_orientation_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+
+  _impl_.build_orientation_ = reinterpret_cast<::statsgate::Quat*>(value);
+  // @@protoc_insertion_point(field_set_allocated:statsgate.BuildEvent.build_orientation)
 }
 
 // -------------------------------------------------------------------
