@@ -15,5 +15,7 @@ namespace statsgate
 
 		client = std::make_unique<stat_client>(stat_client::type::hosted_dll, nullptr);
 		client->start_hosted();
+
+        return startup_result::success;
 	}
 }

@@ -12,7 +12,7 @@ namespace statsgate
 
 	int start_lua_client([[maybe_unused]] lua_State* L)
 	{
-        auto result = client->start_hosted();
+        // auto result = client->start_hosted();
 		return 0;
 	}
 
