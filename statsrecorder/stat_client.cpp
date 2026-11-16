@@ -2,6 +2,7 @@
 
 #include "ScriptUtils.h"
 #include "command.h"
+#include "dll_client.h"
 
 #include <ExtraUtils.h>
 #include <glm/glm.hpp>
@@ -34,14 +35,14 @@
 
 namespace statsgate
 {
-	MisnExport stat_client::export_funcs{
+	MisnExport stat_client::export_funcs {
         .AddObject = stat_client::AddObject,
 		.Update = stat_client::Update, 
 		.PostRun = stat_client::PostRun,
 		.ObjectKilled = stat_client::ObjectKilled
 	};
 
-	MisnExport2 stat_client::export2_funcs{
+	MisnExport2 stat_client::export2_funcs {
 		.m_pPreOrdnanceHitCallback = stat_client::BulletHit,
 		.m_pPreSnipeCallback = stat_client::PreSnipe,
 		.m_pPostBulletInitCallback = stat_client::BulletInit,
@@ -167,16 +168,18 @@ namespace statsgate
 		hooks.update();
 	}
 
-	void stat_client::start_hosted()
+	startup_result stat_client::start_hosted()
 	{
 		if (client_type != type::hosted_dll &&
 			client_type != type::hosted_lua) [[unlikely]]
-			throw stat_exception("This function isn't supported on non-hosted clients"); // TODO: maybe don't throw exception across dll lol idk
+            return startup_result::failed_internal_error;
 
 		if (client_config.enable_recorder == false)
-			return;
+			return startup_result::failed_user_disabled;
 
 		hooks.apply_hooks();
+
+        return startup_result::success;
 	}
 
 	void stat_client::record_update()

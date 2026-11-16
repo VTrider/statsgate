@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 4.0)
 add_library(statsgate SHARED)
 
 target_include_directories(statsgate PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(statsgate PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_include_directories(statsgate PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 target_sources(statsgate PRIVATE

@@ -12,8 +12,6 @@ namespace statsgate
 
 	bool check_singleton();
 
-	extern "C" __declspec(dllexport) void DLLAPI start_dll_client();
-
 	class stat_exception : public std::runtime_error 
 	{
 	public:

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "dll_client.h"
 #include "mission_hook.h"
 #include "statsgate.h"
 #include "statsgate.pb.h"
@@ -60,7 +61,7 @@ namespace statsgate
 		void poll_mission_change();
 
 		// Hosted client function
-		void start_hosted();
+		startup_result start_hosted();
 
 		void record_update();
 		void record_object_killed(Handle DeadObjectHandle, Handle KillersHandle);
