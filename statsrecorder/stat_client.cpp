@@ -426,20 +426,8 @@ namespace statsgate
 			*build_event->mutable_build_position() = message_pos;
             build_event->set_build_handle(buildItem);
 
-            Matrix m;
-            GetPosition(buildItem, m);
-            glm::mat3 mat(m.right.x, m.right.y, m.right.z, 
-                          m.up.x, m.up.y, m.up.z, 
-                          m.front.x, m.front.y, m.front.z
-            );
-            glm::quat q(mat);
+            Quat mq = get_obj_orientation(buildItem);
 
-            statsgate::Quat mq;
-            mq.set_x(q.x);
-            mq.set_y(q.y);
-            mq.set_z(q.z);
-            mq.set_w(q.w);
-            
             *build_event->mutable_build_orientation() = mq;
 		}
 	}
@@ -478,6 +466,7 @@ namespace statsgate
         message_pos->set_x(pos.x);
         message_pos->set_y(pos.y);
         message_pos->set_z(pos.z);
+        *plant->mutable_orientation() = get_obj_orientation(h);
     }
 	
 	//struct MagnetForceInfo
@@ -857,4 +846,23 @@ namespace statsgate
 		GetObjInfo(h, Get_GOClass, odf);
 		return std::string(odf);
 	}
+
+    statsgate::Quat stat_client::get_obj_orientation(Handle h)
+    {
+        Matrix m;
+        GetPosition(h, m);
+        glm::mat3 mat(m.right.x, m.right.y, m.right.z, 
+                      m.up.x, m.up.y, m.up.z, 
+                      m.front.x, m.front.y, m.front.z
+        );
+        glm::quat q(mat);
+
+        statsgate::Quat mq;
+        mq.set_x(q.x);
+        mq.set_y(q.y);
+        mq.set_z(q.z);
+        mq.set_w(q.w);
+
+        return mq;
+    }
 }

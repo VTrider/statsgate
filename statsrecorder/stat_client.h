@@ -144,6 +144,7 @@ namespace statsgate
 		uint32_t get_upgrade_count(int teamnum);
 		ScrapStatus get_scrap_status(int teamnum);
 		std::string get_gameobj_class(Handle h);
+        statsgate::Quat get_obj_orientation(Handle h);
 	};
 }
 

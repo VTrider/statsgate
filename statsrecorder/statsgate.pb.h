@@ -3930,6 +3930,7 @@ class PoolPlanted final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kPositionFieldNumber = 3,
+    kOrientationFieldNumber = 4,
     kTickFieldNumber = 1,
     kTeamnumFieldNumber = 2,
   };
@@ -3946,6 +3947,21 @@ class PoolPlanted final : public ::google::protobuf::Message
   private:
   const ::statsgate::Vec3& _internal_position() const;
   ::statsgate::Vec3* PROTOBUF_NONNULL _internal_mutable_position();
+
+  public:
+  // .statsgate.Quat orientation = 4;
+  bool has_orientation() const;
+  void clear_orientation() ;
+  const ::statsgate::Quat& orientation() const;
+  [[nodiscard]] ::statsgate::Quat* PROTOBUF_NULLABLE release_orientation();
+  ::statsgate::Quat* PROTOBUF_NONNULL mutable_orientation();
+  void set_allocated_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value);
+  ::statsgate::Quat* PROTOBUF_NULLABLE unsafe_arena_release_orientation();
+
+  private:
+  const ::statsgate::Quat& _internal_orientation() const;
+  ::statsgate::Quat* PROTOBUF_NONNULL _internal_mutable_orientation();
 
   public:
   // uint32 tick = 1;
@@ -3974,8 +3990,8 @@ class PoolPlanted final : public ::google::protobuf::Message
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
-                                   1, 0,
+  static const ::google::protobuf::internal::TcParseTable<2, 4,
+                                   2, 0,
                                    2>
       _table_;
 
@@ -3997,6 +4013,7 @@ class PoolPlanted final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::statsgate::Vec3* PROTOBUF_NULLABLE position_;
+    ::statsgate::Quat* PROTOBUF_NULLABLE orientation_;
     ::uint32_t tick_;
     ::uint32_t teamnum_;
     PROTOBUF_TSAN_DECLARE_MEMBER
@@ -10244,14 +10261,14 @@ inline void BuildEvent::set_allocated_build_orientation(::statsgate::Quat* PROTO
 
 // uint32 tick = 1;
 inline bool PoolPlanted::has_tick() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
   return value;
 }
 inline void PoolPlanted::clear_tick() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.tick_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000002U);
+                  0x00000004U);
 }
 inline ::uint32_t PoolPlanted::tick() const {
   // @@protoc_insertion_point(field_get:statsgate.PoolPlanted.tick)
@@ -10259,7 +10276,7 @@ inline ::uint32_t PoolPlanted::tick() const {
 }
 inline void PoolPlanted::set_tick(::uint32_t value) {
   _internal_set_tick(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
   // @@protoc_insertion_point(field_set:statsgate.PoolPlanted.tick)
 }
 inline ::uint32_t PoolPlanted::_internal_tick() const {
@@ -10273,14 +10290,14 @@ inline void PoolPlanted::_internal_set_tick(::uint32_t value) {
 
 // uint32 teamnum = 2;
 inline bool PoolPlanted::has_teamnum() const {
-  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000004U);
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
   return value;
 }
 inline void PoolPlanted::clear_teamnum() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.teamnum_ = 0u;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000004U);
+                  0x00000008U);
 }
 inline ::uint32_t PoolPlanted::teamnum() const {
   // @@protoc_insertion_point(field_get:statsgate.PoolPlanted.teamnum)
@@ -10288,7 +10305,7 @@ inline ::uint32_t PoolPlanted::teamnum() const {
 }
 inline void PoolPlanted::set_teamnum(::uint32_t value) {
   _internal_set_teamnum(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
   // @@protoc_insertion_point(field_set:statsgate.PoolPlanted.teamnum)
 }
 inline ::uint32_t PoolPlanted::_internal_teamnum() const {
@@ -10397,6 +10414,105 @@ inline void PoolPlanted::set_allocated_position(::statsgate::Vec3* PROTOBUF_NULL
 
   _impl_.position_ = reinterpret_cast<::statsgate::Vec3*>(value);
   // @@protoc_insertion_point(field_set_allocated:statsgate.PoolPlanted.position)
+}
+
+// .statsgate.Quat orientation = 4;
+inline bool PoolPlanted::has_orientation() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000002U);
+  PROTOBUF_ASSUME(!value || _impl_.orientation_ != nullptr);
+  return value;
+}
+inline void PoolPlanted::clear_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.orientation_ != nullptr) _impl_.orientation_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::statsgate::Quat& PoolPlanted::_internal_orientation() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::statsgate::Quat* p = _impl_.orientation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::statsgate::Quat&>(::statsgate::_Quat_default_instance_);
+}
+inline const ::statsgate::Quat& PoolPlanted::orientation() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:statsgate.PoolPlanted.orientation)
+  return _internal_orientation();
+}
+inline void PoolPlanted::unsafe_arena_set_allocated_orientation(
+    ::statsgate::Quat* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.orientation_);
+  }
+  _impl_.orientation_ = reinterpret_cast<::statsgate::Quat*>(value);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:statsgate.PoolPlanted.orientation)
+}
+inline ::statsgate::Quat* PROTOBUF_NULLABLE PoolPlanted::release_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::Quat* released = _impl_.orientation_;
+  _impl_.orientation_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::statsgate::Quat* PROTOBUF_NULLABLE PoolPlanted::unsafe_arena_release_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:statsgate.PoolPlanted.orientation)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::Quat* temp = _impl_.orientation_;
+  _impl_.orientation_ = nullptr;
+  return temp;
+}
+inline ::statsgate::Quat* PROTOBUF_NONNULL PoolPlanted::_internal_mutable_orientation() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.orientation_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::statsgate::Quat>(GetArena());
+    _impl_.orientation_ = reinterpret_cast<::statsgate::Quat*>(p);
+  }
+  return _impl_.orientation_;
+}
+inline ::statsgate::Quat* PROTOBUF_NONNULL PoolPlanted::mutable_orientation()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::statsgate::Quat* _msg = _internal_mutable_orientation();
+  // @@protoc_insertion_point(field_mutable:statsgate.PoolPlanted.orientation)
+  return _msg;
+}
+inline void PoolPlanted::set_allocated_orientation(::statsgate::Quat* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.orientation_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = value->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+
+  _impl_.orientation_ = reinterpret_cast<::statsgate::Quat*>(value);
+  // @@protoc_insertion_point(field_set_allocated:statsgate.PoolPlanted.orientation)
 }
 
 // -------------------------------------------------------------------

@@ -249,6 +249,7 @@ message PoolPlanted {
   uint32 tick = 1;
   uint32 teamnum = 2;
   Vec3 position = 3;
+  Quat orientation = 4;
 }
 
 // This describes whether an object or an ordnance was pushed/deflected
