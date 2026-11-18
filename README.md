@@ -9,7 +9,7 @@ In the future it will support hosted mode where a lua or dll mission can impleme
 
 Things you need:
 - [Extra Utilities 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3515140097) (the workshop item just needs to be installed)
-- BZCC Version >= 2.0.207 (latest devtest)
+- BZCC Version >= 2.0.208 (latest devtest)
 - Stat recorder app (currently just the development version linked below)
 
 [Download the nightly build here](https://nightly.link/VTrider/statsgate/workflows/build/main/statsgate-nightly.zip)
